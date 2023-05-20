@@ -1,12 +1,12 @@
 CREATE DATABASE Turisticka_agencija;
 USE Turisticka_agencija;
 
--- DROP DATABASE IF EXISTS Travel_Agency;
+-- DROP DATABASE IF EXISTS Turisticka_agencija;
 
 CREATE TABLE Osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(128) NOT NULL,
-    opis VARCHAR(256) DEFAULT "",
+    opis TINYTEXT,
     cijena NUMERIC(10, 2) NOT NULL
 );
 
@@ -27,10 +27,16 @@ CREATE TABLE Rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT NOT NULL REFERENCES Korisnik (id) ON DELETE CASCADE,
     paket_id INT NOT NULL REFERENCES Paket (id) ON DELETE CASCADE,
-    naziv VARCHAR(128),
-    davatelj VARCHAR(128),
+    naziv VARCHAR(64),
+    davatelj VARCHAR(64),
     datum DATETIME,
     cijena NUMERIC(10, 2)
+);
+
+CREATE TABLE Posebni_zahtjev (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    rezervacija_id INT NOT NULL REFERENCES Rezervacija (id) ON DELETE CASCADE,
+    opis TEXT(500)
 );
 
 CREATE TABLE Osiguranje_Rezervacije (
