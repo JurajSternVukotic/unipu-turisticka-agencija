@@ -3,6 +3,7 @@ USE Turisticka_agencija;
 
 -- DROP DATABASE IF EXISTS Turisticka_agencija;
 
+-- Alanov dio
 CREATE TABLE Osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(128) NOT NULL,
@@ -50,4 +51,33 @@ CREATE TABLE Uplata (
     metoda ENUM('gotovina', 'kredit', 'debit', 'ček', 'redirect', 'transfer', 'voucher', 'wallet', 'ostalo') NOT NULL,
     kolicina NUMERIC(10, 2) NOT NULL,
     datum DATETIME NOT NULL
+);
+
+-- Jurjev dio
+CREATE TABLE Grad(
+	id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE Adresa(
+	id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE Drzava(
+	id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE Stavka_Korisnicke_Podrske(
+	id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE Paket(
+	id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE Putni_Plan(
+	id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE Putni_Plan_Stavka(
+	id INT AUTO_INCREMENT PRIMARY KEY
 );
