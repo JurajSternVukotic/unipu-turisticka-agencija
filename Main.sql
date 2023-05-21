@@ -122,9 +122,9 @@ CREATE TABLE Putni_Plan_Stavka(
     trajanje_u_minutama INT
 );
 
-//Mateo i Karlo
+-- Mateo i Karlo
 
-// Tko bude imao guide neka nam napomene kako je tocno preveo da mozemo preimenovat zadnju zablicu
+-- Tko bude imao guide neka nam napomene kako je tocno preveo da mozemo preimenovat zadnju zablicu
 
 CREATE TABLE zaposlenik (
 	id INT PRIMARY KEY,
