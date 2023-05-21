@@ -48,7 +48,7 @@ CREATE TABLE Osiguranje_Rezervacije (
 CREATE TABLE Uplata (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     rezervacija_id INT NOT NULL REFERENCES Rezervacija (id)  ON DELETE CASCADE,
-    metoda ENUM('gotovina', 'kredit', 'debit', 'ček', 'redirect', 'transfer', 'voucher', 'wallet', 'ostalo') NOT NULL,
+    metoda ENUM('gotovina', 'kredit', 'debit', 'cek', 'redirect', 'transfer', 'voucher', 'wallet', 'ostalo') NOT NULL,
     kolicina NUMERIC(10, 2) NOT NULL,
     datum DATETIME NOT NULL
 );
@@ -132,15 +132,15 @@ CREATE TABLE zaposlenik (
     prezime VARCHAR(30),
     broj_mobitela INT,
     adresa_id INT,
-    plaća INT);
+    placa INT);
 
 
 CREATE TABLE adresa (
 	id INT PRIMARY KEY,
-    država VARCHAR(30),
+    drzava VARCHAR(30),
     grad VARCHAR (30),
     ulica VARCHAR (50),
-    poštanski_broj INT
+    postanski_broj INT
 );
 
 CREATE TABLE pozicija (
@@ -196,3 +196,61 @@ CREATE TABLE recenzija_aktivnosti(
 CREATE TABLE recenzija_guide(
 	id_guide INT,
     id_recenzija INT);
+    
+-- lucijin dio
+CREATE TABLE Vodic (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(50),
+  prezime VARCHAR(50),
+  datum_rodenja DATE,
+  kontaktni_broj VARCHAR(15),
+  email VARCHAR(100),
+  jezik_pricanja VARCHAR(50),
+  godine_iskustva INT
+);
+
+CREATE TABLE Transport (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak'),
+  kapacitet INT,
+  cijena DECIMAL(10,2),
+  ime_dobavljaca VARCHAR(100),
+  kontakt_dobavljaca VARCHAR(15),
+  vrijeme_odlaska DATETIME,
+  vrijeme_dolaska  DATETIME
+);
+
+CREATE TABLE Aktivnosti (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(100),
+  opis TEXT,
+  cijena DECIMAL(10,2),
+  lokacija VARCHAR(100),
+  duracije INT,
+  pocetak_aktivnosti TIME,
+  kvaliteta VARCHAR(100)
+);
+
+CREATE TABLE Turisticko_odrediste (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(100),
+  id_kontinent VARCHAR(100),
+  id_drzava VARCHAR(50),
+  grad VARCHAR(50),
+  popularne_atrakcije VARCHAR(100)
+);
+
+CREATE TABLE Hotel (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(100),
+  star_Rating INT,
+  adresa VARCHAR(200),
+  kontaktni_broj VARCHAR(15),
+  email VARCHAR(100),
+  slobodne_sobe INT,
+  pogodnosti TEXT,
+  turisticko_odrediste_Id INT NOT NULL REFERENCES Turisticko_odrediste (id) ON DELETE CASCADE
+);
+
+
+    
