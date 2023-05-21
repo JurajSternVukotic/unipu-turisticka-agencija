@@ -1,4 +1,4 @@
-CREATE DATABASE Turisticka_agencija;
+    CREATE DATABASE Turisticka_agencija;
 USE Turisticka_agencija;
 
 -- DROP DATABASE IF EXISTS Turisticka_agencija;
@@ -121,3 +121,78 @@ CREATE TABLE Putni_Plan_Stavka(
     pocetak TIME,
     trajanje_u_minutama INT
 );
+
+//Mateo i Karlo
+
+// Tko bude imao guide neka nam napomene kako je tocno preveo da mozemo preimenovat zadnju zablicu
+
+CREATE TABLE zaposlenik (
+	id INT PRIMARY KEY,
+    ime VARCHAR(20),
+    prezime VARCHAR(30),
+    broj_mobitela INT,
+    adresa_id INT,
+    plaća INT);
+
+
+CREATE TABLE adresa (
+	id INT PRIMARY KEY,
+    država VARCHAR(30),
+    grad VARCHAR (30),
+    ulica VARCHAR (50),
+    poštanski_broj INT
+);
+
+CREATE TABLE pozicija (
+	id INT PRIMARY KEY,
+    ime_pozicije CHAR (30),
+    opis_pozicije TEXT(500));
+
+CREATE TABLE radna_smjena (
+	employee_id int,
+    smjena INT,
+    datum DATE);
+
+CREATE TABLE pozicija_zaposlenika (
+	id_zaposlenik INT ,
+    id_pozicija INT );
+
+
+CREATE TABLE korisnik (
+	id INT PRIMARY KEY,
+    ime VARCHAR(20),
+    prezime VARCHAR(30),
+    broj_mobitela INT,
+    adresa_id INT,
+    email VARCHAR (100));
+
+CREATE TABLE recenzija(
+	id INT PRIMARY KEY,
+    korisnik_id INT,
+    ocjena INT,
+    komentar TEXT(500),
+    datum date);
+
+CREATE TABLE recenzija_prijevoza(
+	id_prijevoz INT,
+    id_recenzija INT);
+
+CREATE TABLE recenzija_hotela(
+	id_hotel INT,
+    id_recenzija INT);
+
+CREATE TABLE recenzija_paketa(
+	id_paket INT,
+    id_recenzija INT);
+
+CREATE TABLE recenzija_zaposlenika(
+	id_zaposelnik INT,
+    id_recenzija INT);
+
+CREATE TABLE recenzija_aktivnosti(
+	id_aktivnost INT,
+    id_recenzija INT);
+
+CREATE TABLE recenzija_guide(
+	id_guide INT,
+    id_recenzija INT);
