@@ -55,29 +55,69 @@ CREATE TABLE Uplata (
 
 -- Jurjev dio
 CREATE TABLE Grad(
-	id INT AUTO_INCREMENT PRIMARY KEY
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    naziv VARCHAR(64),
+    opis TEXT(500),
+    Postanski_Broj VARCHAR(32)
 );
 
 CREATE TABLE Adresa(
-	id INT AUTO_INCREMENT PRIMARY KEY
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	naziv VARCHAR(64)
+);
+
+CREATE TABLE Grad_Adrese(
+	id_grad INT NOT NULL REFERENCES Grad (id) ON DELETE CASCADE,
+    id_adresa INT NOT NULL REFERENCES Adresa (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Drzava(
-	id INT AUTO_INCREMENT PRIMARY KEY
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    naziv VARCHAR(64),
+    opis TEXT(500),
+    valuta VARCHAR(32),
+    tecaj_u_eurima DECIMAL(5,10),
+    dokumenti_za_ulaz TEXT(500),
+    jezik VARCHAR(32),
+    pozivni_broj INT
+);
+
+CREATE TABLE Drzava_Grada(
+	id_Drzava INT NOT NULL REFERENCES Drzava (id) ON DELETE CASCADE,
+    id_Grad INT NOT NULL REFERENCES Grad (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Stavka_Korisnicke_Podrske(
-	id INT AUTO_INCREMENT PRIMARY KEY
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    # Mozda treba napraviti specijalnu tablicu sa id stavke, id korisnika i id zaposnelika???
+	id_korisnik INT NOT NULL REFERENCES Korisnik (id) ON DELETE CASCADE,
+    id_zaposlenik INT NOT NULL REFERENCES Zaposlenik (id) ON DELETE CASCADE,
+    vrsta_problema ENUM ('Placanje', 'Rezervacija', 'Problemi sa zaposlenicima', 'Tehnicki problemi', 'Povrat novca', 'Drugo'),
+    opis_problema TEXT (500),
+    status_problema ENUM('Zaprimljeno', 'U obradi', 'Na cekanju', 'Rjeseno')
 );
 
 CREATE TABLE Paket(
-	id INT AUTO_INCREMENT PRIMARY KEY
-);
-
-CREATE TABLE Putni_Plan(
-	id INT AUTO_INCREMENT PRIMARY KEY
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    naziv VARCHAR (64),
+    opis TEXT (1000),
+    min_ljudi INT,
+    max_ljudi INT,
+    popunjenih_mjesta INT,
+    pocetak_puta DATE,
+    kraj_puta DATE,
+    cijena_po_turistu DECIMAL(12,2)
 );
 
 CREATE TABLE Putni_Plan_Stavka(
-	id INT AUTO_INCREMENT PRIMARY KEY
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    id_paket INT NOT NULL REFERENCES Paket (id) ON DELETE CASCADE,
+    id_transport INT NOT NULL REFERENCES transport (id) ON DELETE CASCADE,
+    id_odrediste INT NOT NULL REFERENCES odrediste (id) ON DELETE CASCADE,
+    id_aktivnost INT NOT NULL REFERENCES aktivnost (id) ON DELETE CASCADE,
+    id_vodic INT NOT NULL REFERENCES vodic (id) ON DELETE CASCADE,
+    opis TEXT(500),
+    upute TEXT(500),
+    pocetak TIME,
+    trajanje_u_minutama INT
 );
