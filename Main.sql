@@ -124,78 +124,109 @@ CREATE TABLE Putni_Plan_Stavka(
 
 -- Mateo i Karlo
 
--- Tko bude imao guide neka nam napomene kako je tocno preveo da mozemo preimenovat zadnju zablicu
 
-CREATE TABLE zaposlenik (
+CREATE TABLE Zaposlenik (
 	id INT PRIMARY KEY,
-    ime VARCHAR(20),
-    prezime VARCHAR(30),
-    broj_mobitela INT,
-    adresa_id INT,
-    placa INT);
+    ime VARCHAR(20) NOT NULL,
+    prezime VARCHAR(30) NOT NULL,
+    broj_mobitela INT NOT NULL,
+    adresa_id INT NOT NULL,
+    placa INT NOT NULL,
+    UNIQUE (broj_mobitela),
+    FOREIGN KEY (adresa_id) REFERENCES Adresa(id)
+    );
 
 
-CREATE TABLE adresa (
+CREATE TABLE Adresa (
 	id INT PRIMARY KEY,
-    drzava VARCHAR(30),
-    grad VARCHAR (30),
-    ulica VARCHAR (50),
-    postanski_broj INT
+    drzava VARCHAR(30) NOT NULL,
+    grad VARCHAR (30) NOT NULL,
+    ulica VARCHAR (50) NOT NULL,
+    postanski_broj INT NOT NULL
 );
 
-CREATE TABLE pozicija (
+CREATE TABLE Pozicija (
 	id INT PRIMARY KEY,
-    ime_pozicije CHAR (30),
+    ime_pozicije CHAR (30) NOT NULL,
     opis_pozicije TEXT(500));
 
-CREATE TABLE radna_smjena (
-	employee_id int,
-    smjena INT,
-    datum DATE);
+CREATE TABLE Radna_smjena (
+	zaposlenik_id INT NOT NULL,
+    smjena INT NOT NULL,
+    datum DATE NOT NULL,
+    FOREIGN KEY (zaposlenik_id) REFERENCES Zaposlenik(id)
+    );
 
-CREATE TABLE pozicija_zaposlenika (
-	id_zaposlenik INT ,
-    id_pozicija INT );
+CREATE TABLE Pozicija_zaposlenika (
+	id_zaposlenik INT NOT NULL,
+    id_pozicija INT NOT NULL,
+    FOREIGN KEY (id_zaposlenik) REFERENCES Zaposelnik(id),
+    FOREIGN KEY (id_pozicija) REFERENCES Pozicija(id)
+    );
 
 
-CREATE TABLE korisnik (
+CREATE TABLE Korisnik (
 	id INT PRIMARY KEY,
-    ime VARCHAR(20),
-    prezime VARCHAR(30),
-    broj_mobitela INT,
-    adresa_id INT,
-    email VARCHAR (100));
+    ime VARCHAR(20) NOT NULL,
+    prezime VARCHAR(30) NOT NULL,
+    broj_mobitela INT NOT NULL,
+    adresa_id INT NOT NULL,
+    email VARCHAR (100)NOT NULL,
+    UNIQUE (broj_mobitela, email),
+    FOREIGN KEY (adresa_id) REFERENCES Adresa(id)
+    );
 
-CREATE TABLE recenzija(
+CREATE TABLE Recenzija(
 	id INT PRIMARY KEY,
-    korisnik_id INT,
-    ocjena INT,
-    komentar TEXT(500),
-    datum date);
+    korisnik_id INT NOT NULL,
+    ocjena INT NOT NULL,
+    komentar TEXT(500) ,
+    datum date NOT NULL,
+    CHECK (ocjena > 0 AND ocjena < 6),
+    FOREIGN KEY (korisnik_id) REFERENCES Korisnik(id)
+    );
 
-CREATE TABLE recenzija_prijevoza(
-	id_prijevoz INT,
-    id_recenzija INT);
+CREATE TABLE Recenzija_transporta(
+	id_transport INT NOT NULL,
+    id_recenzija INT NOT NULL,
+    FOREIGN KEY (id_transport) REFERENCES Transport(id),
+    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    );
 
-CREATE TABLE recenzija_hotela(
-	id_hotel INT,
-    id_recenzija INT);
+CREATE TABLE Recenzija_hotela(
+	id_hotel INT NOT NULL,
+    id_recenzija INT NOT NULL,
+    FOREIGN KEY (id_hotel) REFERENCES Hotel(id),
+    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    );
 
-CREATE TABLE recenzija_paketa(
-	id_paket INT,
-    id_recenzija INT);
+CREATE TABLE Recenzija_paketa(
+	id_paket INT NOT NULL,
+    id_recenzija INT NOT NULL,
+    FOREIGN KEY (id_paket) REFERENCES Paket(id),
+    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    );
 
-CREATE TABLE recenzija_zaposlenika(
-	id_zaposelnik INT,
-    id_recenzija INT);
+CREATE TABLE Recenzija_zaposlenika(
+	id_zaposelnik INT NOT NULL,
+    id_recenzija INT NOT NULL,
+    FOREIGN KEY (id_zaposelnik) REFERENCES Zaposlenik(id),
+    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    );
 
-CREATE TABLE recenzija_aktivnosti(
-	id_aktivnost INT,
-    id_recenzija INT);
+CREATE TABLE Recenzija_aktivnosti(
+	id_aktivnost INT NOT NULL,
+    id_recenzija INT NOT NULL,
+    FOREIGN KEY (id_aktivnost) REFERENCES Aktivnosti(id),
+    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    );
 
-CREATE TABLE recenzija_guide(
-	id_guide INT,
-    id_recenzija INT);
+CREATE TABLE Recenzija_vodica(
+	id_vodic INT NOT NULL,
+    id_recenzija INT NOT NULL,
+    FOREIGN KEY (id_vodic) REFERENCES Vodic(id),
+    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    );
     
 -- lucijin dio
 CREATE TABLE Vodic (
