@@ -127,7 +127,7 @@ CREATE TABLE Putni_Plan_Stavka(
     
 -- lucijin dio
 CREATE TABLE Vodic (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(50),
   prezime VARCHAR(50),
   datum_rodenja DATE,
@@ -138,7 +138,7 @@ CREATE TABLE Vodic (
 );
 
 CREATE TABLE Transport (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak'),
   kapacitet INT,
   cijena DECIMAL(10,2),
@@ -149,7 +149,7 @@ CREATE TABLE Transport (
 );
 
 CREATE TABLE Aktivnosti (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100),
   opis TEXT,
   cijena DECIMAL(10,2),
@@ -160,7 +160,7 @@ CREATE TABLE Aktivnosti (
 );
 
 CREATE TABLE Turisticko_odrediste (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100),
   id_kontinent VARCHAR(100),
   id_drzava VARCHAR(50),
@@ -169,7 +169,7 @@ CREATE TABLE Turisticko_odrediste (
 );
 
 CREATE TABLE Hotel (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100),
   star_Rating INT,
   adresa VARCHAR(200),
@@ -184,7 +184,7 @@ CREATE TABLE Hotel (
 
 
 CREATE TABLE Zaposlenik (
-	id INT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(20) NOT NULL,
     prezime VARCHAR(30) NOT NULL,
     broj_mobitela INT NOT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE Zaposlenik (
 
 
 #CREATE TABLE Adresa (
-#	id INT PRIMARY KEY,
+#	id INT AUTO_INCREMENT PRIMARY KEY,
 #    drzava VARCHAR(30) NOT NULL,
 #    grad VARCHAR (30) NOT NULL,
 #    ulica VARCHAR (50) NOT NULL,
@@ -204,7 +204,7 @@ CREATE TABLE Zaposlenik (
 #);
 
 CREATE TABLE Pozicija (
-	id INT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
     ime_pozicije CHAR (30) NOT NULL,
     opis_pozicije TEXT(500));
 
@@ -224,7 +224,7 @@ CREATE TABLE Pozicija_zaposlenika (
 
 
 CREATE TABLE Korisnik (
-	id INT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(20) NOT NULL,
     prezime VARCHAR(30) NOT NULL,
     broj_mobitela INT NOT NULL,
@@ -235,7 +235,7 @@ CREATE TABLE Korisnik (
     );
 
 CREATE TABLE Recenzija(
-	id INT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT NOT NULL,
     ocjena INT NOT NULL,
     komentar TEXT(500) ,
