@@ -1,7 +1,8 @@
-    CREATE DATABASE Turisticka_agencija;
+DROP DATABASE IF EXISTS Turisticka_agencija;
+
+CREATE DATABASE Turisticka_agencija;
 USE Turisticka_agencija;
 
--- DROP DATABASE IF EXISTS Turisticka_agencija;
 
 -- Alanov dio
 CREATE TABLE Osiguranje (
@@ -76,7 +77,7 @@ CREATE TABLE Drzava(
     naziv VARCHAR(64),
     opis TEXT(500),
     valuta VARCHAR(32),
-    tecaj_u_eurima DECIMAL(5,10),
+    cijena NUMERIC(10, 2),
     dokumenti_za_ulaz TEXT(500),
     jezik VARCHAR(32),
     pozivni_broj INT
