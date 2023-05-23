@@ -123,6 +123,63 @@ CREATE TABLE Putni_Plan_Stavka(
     trajanje_u_minutama INT
 );
 
+
+    
+-- lucijin dio
+CREATE TABLE Vodic (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(50),
+  prezime VARCHAR(50),
+  datum_rodenja DATE,
+  kontaktni_broj VARCHAR(15),
+  email VARCHAR(100),
+  jezik_pricanja VARCHAR(50),
+  godine_iskustva INT
+);
+
+CREATE TABLE Transport (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak'),
+  kapacitet INT,
+  cijena DECIMAL(10,2),
+  ime_dobavljaca VARCHAR(100),
+  kontakt_dobavljaca VARCHAR(15),
+  vrijeme_odlaska DATETIME,
+  vrijeme_dolaska  DATETIME
+);
+
+CREATE TABLE Aktivnosti (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(100),
+  opis TEXT,
+  cijena DECIMAL(10,2),
+  lokacija VARCHAR(100),
+  duracije INT,
+  pocetak_aktivnosti TIME,
+  kvaliteta VARCHAR(100)
+);
+
+CREATE TABLE Turisticko_odrediste (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(100),
+  id_kontinent VARCHAR(100),
+  id_drzava VARCHAR(50),
+  grad VARCHAR(50),
+  popularne_atrakcije VARCHAR(100)
+);
+
+CREATE TABLE Hotel (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  ime VARCHAR(100),
+  star_Rating INT,
+  adresa VARCHAR(200),
+  kontaktni_broj VARCHAR(15),
+  email VARCHAR(100),
+  slobodne_sobe INT,
+  pogodnosti TEXT,
+  turisticko_odrediste_Id INT NOT NULL REFERENCES Turisticko_odrediste (id) ON DELETE CASCADE
+);
+
 -- Mateo i Karlo
 
 
@@ -138,13 +195,13 @@ CREATE TABLE Zaposlenik (
     );
 
 
-CREATE TABLE Adresa (
-	id INT PRIMARY KEY,
-    drzava VARCHAR(30) NOT NULL,
-    grad VARCHAR (30) NOT NULL,
-    ulica VARCHAR (50) NOT NULL,
-    postanski_broj INT NOT NULL
-);
+#CREATE TABLE Adresa (
+#	id INT PRIMARY KEY,
+#    drzava VARCHAR(30) NOT NULL,
+#    grad VARCHAR (30) NOT NULL,
+#    ulica VARCHAR (50) NOT NULL,
+#    postanski_broj INT NOT NULL
+#);
 
 CREATE TABLE Pozicija (
 	id INT PRIMARY KEY,
@@ -161,7 +218,7 @@ CREATE TABLE Radna_smjena (
 CREATE TABLE Pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL,
     id_pozicija INT NOT NULL,
-    FOREIGN KEY (id_zaposlenik) REFERENCES Zaposelnik(id),
+    FOREIGN KEY (id_zaposlenik) REFERENCES Zaposlenik(id),
     FOREIGN KEY (id_pozicija) REFERENCES Pozicija(id)
     );
 
@@ -228,61 +285,6 @@ CREATE TABLE Recenzija_vodica(
     FOREIGN KEY (id_vodic) REFERENCES Vodic(id),
     FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
     );
-    
--- lucijin dio
-CREATE TABLE Vodic (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  ime VARCHAR(50),
-  prezime VARCHAR(50),
-  datum_rodenja DATE,
-  kontaktni_broj VARCHAR(15),
-  email VARCHAR(100),
-  jezik_pricanja VARCHAR(50),
-  godine_iskustva INT
-);
-
-CREATE TABLE Transport (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak'),
-  kapacitet INT,
-  cijena DECIMAL(10,2),
-  ime_dobavljaca VARCHAR(100),
-  kontakt_dobavljaca VARCHAR(15),
-  vrijeme_odlaska DATETIME,
-  vrijeme_dolaska  DATETIME
-);
-
-CREATE TABLE Aktivnosti (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  ime VARCHAR(100),
-  opis TEXT,
-  cijena DECIMAL(10,2),
-  lokacija VARCHAR(100),
-  duracije INT,
-  pocetak_aktivnosti TIME,
-  kvaliteta VARCHAR(100)
-);
-
-CREATE TABLE Turisticko_odrediste (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  ime VARCHAR(100),
-  id_kontinent VARCHAR(100),
-  id_drzava VARCHAR(50),
-  grad VARCHAR(50),
-  popularne_atrakcije VARCHAR(100)
-);
-
-CREATE TABLE Hotel (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  ime VARCHAR(100),
-  star_Rating INT,
-  adresa VARCHAR(200),
-  kontaktni_broj VARCHAR(15),
-  email VARCHAR(100),
-  slobodne_sobe INT,
-  pogodnosti TEXT,
-  turisticko_odrediste_Id INT NOT NULL REFERENCES Turisticko_odrediste (id) ON DELETE CASCADE
-);
 
 
     
