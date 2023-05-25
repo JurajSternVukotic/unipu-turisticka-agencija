@@ -121,15 +121,15 @@ CREATE TABLE Paket(
 
 CREATE TABLE Putni_Plan_Stavka(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
-    id_paket INT NOT NULL REFERENCES Paket (id) ON DELETE CASCADE,
-    id_transport INT NOT NULL REFERENCES transport (id) ON DELETE CASCADE,
-    id_odrediste INT NOT NULL REFERENCES odrediste (id) ON DELETE CASCADE,
-    id_aktivnost INT NOT NULL REFERENCES aktivnost (id) ON DELETE CASCADE,
-    id_vodic INT NOT NULL REFERENCES vodic (id) ON DELETE CASCADE,
-    opis TEXT(500),
-    upute TEXT(500),
-    pocetak TIME,
-    trajanje_u_minutama INT
+    id_paket INT NOT NULL REFERENCES Paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
+    id_transport INT NOT NULL REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
+    id_odrediste INT NOT NULL REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
+    id_aktivnost INT NOT NULL REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
+    id_vodic INT REFERENCES vodic (id) ON DELETE CASCADE, # poveznica na vodica ako ova stavka ukljucuje jednog 
+    opis TEXT(500) NOT NULL, # opis sto se dogadja u ovoj stavci
+    upute TEXT(500), # dodatne upute ako su potrebne
+    pocetak DATETIME NOT NULL, # kada pocinje ovaj dio puta 
+    trajanje_u_minutama INT # koliko dugo traje u minutama dio puta okvirno, ne mora biti ukljuceno, u slucaju npr. idenja natrag u hotel
 );
 
 
