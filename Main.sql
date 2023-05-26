@@ -231,55 +231,48 @@ CREATE TABLE hotel (
 -- Mateo i Karlo
 
 
+
 CREATE TABLE zaposlenik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(20) NOT NULL,
-    prezime VARCHAR(30) NOT NULL,
-    broj_mobitela INT NOT NULL,
+    ime VARCHAR(50) NOT NULL,
+    prezime VARCHAR(50) NOT NULL,
+    broj_mobitela VARCHAR(15) NOT NULL,
     adresa_id INT NOT NULL,
     placa INT NOT NULL,
     UNIQUE (broj_mobitela),
-    FOREIGN KEY (adresa_id) REFERENCES adresa(id)
+    FOREIGN KEY (adresa_id) REFERENCES adresa(id) ON DELETE CASCADE
     );
 
 
-#CREATE TABLE Adresa (
-#	id INT AUTO_INCREMENT PRIMARY KEY,
-#    drzava VARCHAR(30) NOT NULL,
-#    grad VARCHAR (30) NOT NULL,
-#    ulica VARCHAR (50) NOT NULL,
-#    postanski_broj INT NOT NULL
-#);
-
 CREATE TABLE pozicija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime_pozicije CHAR (30) NOT NULL,
+    ime_pozicije ENUM ('recepcioner', 'putni agent', 'računovođa', 'promotor', 'IT podrška') NOT NULL,
     opis_pozicije TEXT(500));
 
 CREATE TABLE radna_smjena (
 	zaposlenik_id INT NOT NULL,
-    smjena INT NOT NULL,
+    smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
     datum DATE NOT NULL,
-    FOREIGN KEY (zaposlenik_id) REFERENCES zaposlenik(id)
+    FOREIGN KEY (zaposlenik_id) REFERENCES zaposlenik(id) ON DELETE CASCADE
     );
 
 CREATE TABLE pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL,
     id_pozicija INT NOT NULL,
-    FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik(id),
-    FOREIGN KEY (id_pozicija) REFERENCES pozicija(id)
+    FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_pozicija) REFERENCES pozicija(id) ON DELETE CASCADE
     );
 
 
 CREATE TABLE korisnik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(20) NOT NULL,
-    prezime VARCHAR(30) NOT NULL,
-    broj_mobitela INT NOT NULL,
+    ime VARCHAR(50) NOT NULL,
+    prezime VARCHAR(50) NOT NULL,
+    broj_mobitela VARCHAR(15) NOT NULL,
     adresa_id INT NOT NULL,
     email VARCHAR (100)NOT NULL,
     UNIQUE (broj_mobitela, email),
-    FOREIGN KEY (adresa_id) REFERENCES adresa(id)
+    FOREIGN KEY (adresa_id) REFERENCES adresa(id) ON DELETE CASCADE
     );
 
 CREATE TABLE recenzija(
@@ -288,50 +281,50 @@ CREATE TABLE recenzija(
     ocjena INT NOT NULL,
     komentar TEXT(500) ,
     datum date NOT NULL,
-    CHECK (ocjena > 0 AND ocjena < 6),
-    FOREIGN KEY (korisnik_id) REFERENCES korisnik(id)
+    CHECK (ocjena IN (1,2,3,4,5)),
+    FOREIGN KEY (korisnik_id) REFERENCES korisnik(id) ON DELETE CASCADE
     );
 
 CREATE TABLE recenzija_transporta(
 	id_transport INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_transport) REFERENCES transport(id),
-    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
+    FOREIGN KEY (id_transport) REFERENCES transport(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE
     );
 
 CREATE TABLE recenzija_hotela(
 	id_hotel INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_hotel) REFERENCES hotel(id),
-    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
+    FOREIGN KEY (id_hotel) REFERENCES hotel(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE
     );
 
-CREATE TABLE Recenzija_paketa(
+CREATE TABLE recenzija_paketa(
 	id_paket INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_paket) REFERENCES Paket(id),
-    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    FOREIGN KEY (id_paket) REFERENCES paket(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE
     );
 
 CREATE TABLE recenzija_zaposlenika(
 	id_zaposelnik INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_zaposelnik) REFERENCES zaposlenik(id),
-    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
-    );
+    FOREIGN KEY (id_zaposelnik) REFERENCES zaposlenik(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE
+    ); 
 
 CREATE TABLE recenzija_aktivnosti(
 	id_aktivnost INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_aktivnost) REFERENCES aktivnosti(id),
-    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
+    FOREIGN KEY (id_aktivnost) REFERENCES aktivnosti(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE
     );
 
 CREATE TABLE recenzija_vodica(
 	id_vodic INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_vodic) REFERENCES vodic(id),
-    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
+    FOREIGN KEY (id_vodic) REFERENCES vodic(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE
     );
 
 
