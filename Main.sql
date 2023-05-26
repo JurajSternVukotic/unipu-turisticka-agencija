@@ -4,7 +4,7 @@ CREATE DATABASE turisticka_agencija;
 
 USE turisticka_agencija;
 
--- Alanov dio
+-- Autor: Alan Burić
 CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     naziv VARCHAR(100) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE uplata (
     CHECK (iznos > 0) # Uplata ničega ili negativnog iznosa nije važeća.
 );
 
--- Jurjev dio
+-- Autor: Juraj Štern-Vukotić
 CREATE TABLE grad(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL, # Najduzi naziv grada na svijetu ima 58 znakova, 64 bi trebalo biti dovoljno
@@ -155,7 +155,7 @@ CREATE TABLE dodatni_jezici(
     dodatni_jezik VARCHAR (50) NOT NULL
 );
     
--- lucijin dio
+-- Autor: Lucia Labinjan
 
 CREATE TABLE vodic (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -237,7 +237,7 @@ CREATE TABLE hotel (
   CHECK (slobodne_sobe >= 0)
 );
 
--- Mateo i Karlo
+-- Autori: Mateo Udovčić i Karlo Bazina
 
 CREATE TABLE zaposlenik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
