@@ -7,7 +7,7 @@ USE turisticka_agencija;
 -- Alanov dio
 CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    naziv VARCHAR(255) NOT NULL,
+    naziv VARCHAR(100) NOT NULL,
     davatelj VARCHAR(100) NOT NULL, # najdulja je 82 + 20% 	
     opis TINYTEXT,
     cijena NUMERIC(10, 2) NOT NULL
