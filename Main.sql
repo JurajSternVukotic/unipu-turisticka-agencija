@@ -1,40 +1,46 @@
 DROP DATABASE IF EXISTS turisticka_agencija;
 
 CREATE DATABASE turisticka_agencija;
-USE turisticka_agencija;
 
+USE turisticka_agencija;
 
 -- Alanov dio
 CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     naziv VARCHAR(100) NOT NULL,
-    davatelj VARCHAR(100) NOT NULL, # najdulja je 82 + 20% 	
+    davatelj VARCHAR(100) NOT NULL, # Davatelj osiguranja (eng. insurance provider) obično je osiguravateljska kuća, tj. tvrtka.
     opis TINYTEXT,
-    cijena NUMERIC(10, 2) NOT NULL
+    cijena NUMERIC(10, 2) NOT NULL,
+    CHECK (cijena >= 0) # Cijena ne može biti negativna, ali može biti besplatno osiguranje.
+);
+
+# Omogućava definiciju popisa stavki koje su pokrivene određenim osiguranjem.
+CREATE TABLE pokrice_osiguranja (
+	id_osiguranje INT NOT NULL REFERENCES osiguranje (id),
+    pokrice VARCHAR (100) NOT NULL,
+    PRIMARY KEY (id_osiguranje, pokrice)
 );
 
 CREATE TABLE kupon (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    kod VARCHAR(20) NOT NULL,
-    pocetak DATETIME NOT NULL,
-    kraj DATETIME NOT NULL,
-    kolicina NUMERIC (10, 2) NOT NULL,
-    # Radi li se o postotnom popustu ili o oduzimanju kolicinom?
-    postotni BOOL NOT NULL,
-    CHECK (pocetak < kraj),
-    # Postotak ne bi trebao prekoraciti 100%
-    CHECK (NOT postotni OR kolicina <= 100),
-    CHECK (kolicina > 0)
+	kod VARCHAR(20) NOT NULL,
+    datum_pocetka DATETIME NOT NULL,
+    datum_kraja DATETIME NOT NULL,
+    iznos NUMERIC (10, 2) NOT NULL,
+    postotni BOOL NOT NULL, # Ukazuje na to radi li se o postotnom popustu ili o oduzimanju iznosom.
+	CHECK (datum_pocetka < datum_kraja), # Datum početka nikako ne može biti poslije datuma završetka.
+    CHECK (iznos > 0 AND (NOT postotni OR iznos <= 100)) # Kupon je postojan ako uopće ima neki iznos (=/= 0), a postotni popust ne bi trebao prekoraciti 100%
 );
 
 CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT NOT NULL REFERENCES korisnik (id) ON DELETE CASCADE,
-    paket_id INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE,
+    paket_id INT NOT NULL REFERENCES paket (id), # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
     naziv VARCHAR(100) NOT NULL,
     davatelj VARCHAR(100) NOT NULL,
-    datum DATETIME NOT NULL,
+    vrijeme DATETIME NOT NULL, # Točno vrijeme u kojem je uspostavljena rezervacija.
     cijena NUMERIC(10, 2) NOT NULL
+    CHECK (cijena >= 0) # Napomena: omogućuje besplatna putovanja iako je neuobičajeno.
 );
 
 CREATE TABLE posebni_zahtjev (
@@ -52,8 +58,9 @@ CREATE TABLE uplata (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     rezervacija_id INT NOT NULL REFERENCES rezervacija (id)  ON DELETE CASCADE,
     metoda ENUM('gotovina', 'kredit', 'debit', 'cek', 'redirect', 'transfer', 'voucher', 'wallet', 'ostalo') NOT NULL,
-    kolicina NUMERIC(10, 2) NOT NULL,
-    datum DATETIME NOT NULL
+    iznos NUMERIC(10, 2) NOT NULL,
+    vrijeme DATETIME NOT NULL, # Točno vrijeme uplate.
+    CHECK (iznos > 0) # Uplata ničega ili negativnog iznosa nije važeća.
 );
 
 -- Jurjev dio
