@@ -140,8 +140,7 @@ CREATE TABLE vodic (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(50) NOT NULL,
   prezime VARCHAR(50) NOT NULL,
-  datum_rodenja DATE NOT NULL CHECK (datum_rodenja <= CURRENT_DATE),
-  CHECK ((CURRENT_DATE - datum_rodenja) / 365 >= 18),
+  datum_rodenja DATE NOT NULL,
   kontaktni_broj VARCHAR(15) NOT NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
   jezik_pricanja VARCHAR(50) NOT NULL,
@@ -170,7 +169,7 @@ CREATE TABLE aktivnosti (
   vrijeme_trajanja INT NOT NULL CHECK (duracija > 0),
   vrijeme_odlaska TIME NOT NULL,
   id_recenzija INT,
-  FOREIGN KEY (id_recenzije) REFERENCES recenzije(id),
+  FOREIGN KEY (id_recenzija) REFERENCES recenzija(id),
   FOREIGN KEY (id_adresa) REFERENCES adresa(id) ON DELETE CASCADE
 
 );
