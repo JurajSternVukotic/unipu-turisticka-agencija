@@ -1,18 +1,18 @@
-DROP DATABASE IF EXISTS Turisticka_agencija;
+DROP DATABASE IF EXISTS turisticka_agencija;
 
-CREATE DATABASE Turisticka_agencija;
-USE Turisticka_agencija;
+CREATE DATABASE turisticka_agencija;
+USE turisticka_agencija;
 
 
 -- Alanov dio
-CREATE TABLE Osiguranje (
+CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(128) NOT NULL,
     opis TINYTEXT,
     cijena NUMERIC(10, 2) NOT NULL
 );
 
-CREATE TABLE Popust (
+CREATE TABLE popust (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     kod VARCHAR(20) NOT NULL,
     pocetak DATETIME NOT NULL,
@@ -25,44 +25,44 @@ CREATE TABLE Popust (
     CHECK (NOT postotni OR kolicina <= 100)
 );
 
-CREATE TABLE Rezervacija (
+CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    korisnik_id INT NOT NULL REFERENCES Korisnik (id) ON DELETE CASCADE,
-    paket_id INT NOT NULL REFERENCES Paket (id) ON DELETE CASCADE,
+    korisnik_id INT NOT NULL REFERENCES korisnik (id) ON DELETE CASCADE,
+    paket_id INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE,
     naziv VARCHAR(64),
     davatelj VARCHAR(64),
     datum DATETIME,
     cijena NUMERIC(10, 2)
 );
 
-CREATE TABLE Posebni_zahtjev (
+CREATE TABLE posebni_zahtjev (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    rezervacija_id INT NOT NULL REFERENCES Rezervacija (id) ON DELETE CASCADE,
+    rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
     opis TEXT(500)
 );
 
-CREATE TABLE Osiguranje_Rezervacije (
-    rezervacija_id INT NOT NULL REFERENCES Rezervacija (id) ON DELETE CASCADE,
-    osiguranje_id INT NOT NULL REFERENCES Osiguranje (id) ON DELETE CASCADE
+CREATE TABLE osiguranje_rezervacije (
+    rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
+    osiguranje_id INT NOT NULL REFERENCES osiguranje (id) ON DELETE CASCADE
 );
 
-CREATE TABLE Uplata (
+CREATE TABLE uplata (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    rezervacija_id INT NOT NULL REFERENCES Rezervacija (id)  ON DELETE CASCADE,
+    rezervacija_id INT NOT NULL REFERENCES rezervacija (id)  ON DELETE CASCADE,
     metoda ENUM('gotovina', 'kredit', 'debit', 'cek', 'redirect', 'transfer', 'voucher', 'wallet', 'ostalo') NOT NULL,
     kolicina NUMERIC(10, 2) NOT NULL,
     datum DATETIME NOT NULL
 );
 
 -- Jurjev dio
-CREATE TABLE Grad(
+CREATE TABLE grad(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL, # Najduzi naziv grada na svijetu ima 58 znakova, 64 bi trebalo biti dovoljno
     opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
-    Postanski_Broj VARCHAR(32) NOT NULL UNIQUE # Postanski brojevi mogu imati i slova, u nasem modelu jedan grad ima jedan postanski broj za razliku od inace gdje svaka ulica moze imati u nekim drzavama
+    postanski_broj VARCHAR(32) NOT NULL UNIQUE # Postanski brojevi mogu imati i slova, u nasem modelu jedan grad ima jedan postanski broj za razliku od inace gdje svaka ulica moze imati u nekim drzavama
 );
 
-CREATE TABLE Adresa(
+CREATE TABLE adresa(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
 	naziv_ulice VARCHAR(128) NOT NULL, # 128 bi trebalo biti dovoljno za bilo koju ulicu
     broj_ulice INT NOT NULL, # Ulica mora imati broj
@@ -70,12 +70,12 @@ CREATE TABLE Adresa(
     dodatan_opis TEXT(256) # Dodatne informacije o kako doci do ulice, koji kat, itd.
 );
 
-CREATE TABLE Grad_Adrese( # povezuje gradove sa adresama, ako nestane grad ili adresa se ovo brise
-	id_grad INT NOT NULL REFERENCES Grad (id) ON DELETE CASCADE, 
-    id_adresa INT NOT NULL REFERENCES Adresa (id) ON DELETE CASCADE
+CREATE TABLE grad_adrese( # povezuje gradove sa adresama, ako nestane grad ili adresa se ovo brise
+	id_grad INT NOT NULL REFERENCES grad (id) ON DELETE CASCADE, 
+    id_adresa INT NOT NULL REFERENCES adresa (id) ON DELETE CASCADE
 );
 
-CREATE TABLE Drzava(
+CREATE TABLE drzava(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL UNIQUE, # Najduzi naziv drzave je 56, tako da bi ovo trebalo biti dovoljno, ime mora biti jedinstveno
     opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
@@ -87,12 +87,12 @@ CREATE TABLE Drzava(
 	CHECK (pozivni_broj > 0) # pozivni broj ne moze biti negativan niti nula
 );	
 
-CREATE TABLE Drzava_Grada( # povezuje gradove sa drzavama, ako nestane grad ili drzava se ovo brise (nuklarna eksplozija)
-	id_Drzava INT NOT NULL REFERENCES Drzava (id) ON DELETE CASCADE,
-    id_Grad INT NOT NULL REFERENCES Grad (id) ON DELETE CASCADE
+CREATE TABLE drzava_grada( # povezuje gradove sa drzavama, ako nestane grad ili drzava se ovo brise (nuklarna eksplozija)
+	id_drzava INT NOT NULL REFERENCES Drzava (id) ON DELETE CASCADE,
+    id_grad INT NOT NULL REFERENCES Grad (id) ON DELETE CASCADE
 );
 
-CREATE TABLE Stavka_Korisnicke_Podrske( #support ticket
+CREATE TABLE stavka_korisnicke_podrske( #support ticket
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     # Mozda treba napraviti specijalnu tablicu sa id stavke, id korisnika i id zaposnelika???
 	id_korisnik INT NOT NULL REFERENCES Korisnik (id), # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
@@ -103,7 +103,7 @@ CREATE TABLE Stavka_Korisnicke_Podrske( #support ticket
 	status_problema ENUM('Zaprimljeno', 'U obradi', 'Na cekanju', 'Rjeseno') NOT NULL # svaki ticket ima svoje stanje, ovisno u kojoj fazi proceisranja je
 );
 
-CREATE TABLE Paket(
+CREATE TABLE paket(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR (64) NOT NULL UNIQUE, # unique kako ne bi imali duplikatne nazive paketa, 64 znakova bi trebalo biti dovoljno za naslov 
     opis TEXT (1000), # 1000 znakova za opis paketa, ako se zele detaljne informacije moze se poslati upit za putni plan
@@ -119,7 +119,7 @@ CREATE TABLE Paket(
     cijena_po_turistu NUMERIC(10, 2) NOT NULL # koliko kosta za jednu osobu paket
 );
 
-CREATE TABLE Putni_Plan_Stavka(
+CREATE TABLE putni_plan_stavka(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     id_paket INT NOT NULL REFERENCES Paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
     id_transport INT NOT NULL REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
@@ -136,7 +136,7 @@ CREATE TABLE Putni_Plan_Stavka(
     
 -- lucijin dio
 
-CREATE TABLE Vodic (
+CREATE TABLE vodic (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(50) NOT NULL,
   prezime VARCHAR(50) NOT NULL,
@@ -148,7 +148,7 @@ CREATE TABLE Vodic (
   godine_iskustva INT NOT NULL CHECK (godine_iskustva >= 0)
 );
 
-CREATE TABLE Transport (
+CREATE TABLE transport (
   id INT AUTO_INCREMENT PRIMARY KEY,
   tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak'),
   kapacitet INT NOT NULL CHECK (kapacitet >= 0),
@@ -161,7 +161,7 @@ CREATE TABLE Transport (
   CHECK (vrijeme_dolaska > vrijeme_odlaska)
 );
 
-CREATE TABLE Aktivnosti (
+CREATE TABLE aktivnosti (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100) NOT NULL UNIQUE,
   opis TEXT(500),
@@ -175,7 +175,7 @@ CREATE TABLE Aktivnosti (
 
 );
 
-CREATE TABLE Kontinent (
+CREATE TABLE kontinent (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100) NOT NULL UNIQUE,
   opis TEXT(500),
@@ -184,30 +184,30 @@ CREATE TABLE Kontinent (
 
 );
 
-  CREATE TABLE Cijepiva (
+  CREATE TABLE cijepiva (
  id INT AUTO_INCREMENT PRIMARY KEY,
  cijepivo ENUM('Žuta groznica', 'Hepatitis A i B', 'Tifus', 'Bjesnoća','Tifus', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis')
  
 );
 
-CREATE TABLE Cijepiva_kontinent (
+CREATE TABLE cijepiva_kontinent (
 id_kontinent INT NOT NULL,
-FOREIGN KEY (id_kontinent) REFERENCES kontinent(id),
 id_cijepivo INT NOT NULL,
+FOREIGN KEY (id_kontinent) REFERENCES kontinent(id),
 FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id)
 
 );
 
 
-CREATE TABLE Cijepljeni_korisnici (
+CREATE TABLE cijepljeni_korisnici (
 id_cijepiva INT NOT NULL,
-FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id),
 id_korisnik INT,
+FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id),
 FOREIGN KEY (id_korisnik) REFERENCES korisnik(id)
 
 );
 
-CREATE TABLE Odrediste (
+CREATE TABLE odrediste (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100) NOT NULL UNIQUE,
   id_grad INT NOT NULL UNIQUE,
@@ -216,7 +216,7 @@ CREATE TABLE Odrediste (
   FOREIGN KEY (id_grad) REFERENCES grad(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Hotel (
+CREATE TABLE hotel (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100) NOT NULL ,
   id_recenzija INT,
@@ -235,7 +235,7 @@ CREATE TABLE Hotel (
 -- Mateo i Karlo
 
 
-CREATE TABLE Zaposlenik (
+CREATE TABLE zaposlenik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(20) NOT NULL,
     prezime VARCHAR(30) NOT NULL,
@@ -243,7 +243,7 @@ CREATE TABLE Zaposlenik (
     adresa_id INT NOT NULL,
     placa INT NOT NULL,
     UNIQUE (broj_mobitela),
-    FOREIGN KEY (adresa_id) REFERENCES Adresa(id)
+    FOREIGN KEY (adresa_id) REFERENCES adresa(id)
     );
 
 
@@ -255,27 +255,27 @@ CREATE TABLE Zaposlenik (
 #    postanski_broj INT NOT NULL
 #);
 
-CREATE TABLE Pozicija (
+CREATE TABLE pozicija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime_pozicije CHAR (30) NOT NULL,
     opis_pozicije TEXT(500));
 
-CREATE TABLE Radna_smjena (
+CREATE TABLE radna_smjena (
 	zaposlenik_id INT NOT NULL,
     smjena INT NOT NULL,
     datum DATE NOT NULL,
-    FOREIGN KEY (zaposlenik_id) REFERENCES Zaposlenik(id)
+    FOREIGN KEY (zaposlenik_id) REFERENCES zaposlenik(id)
     );
 
-CREATE TABLE Pozicija_zaposlenika (
+CREATE TABLE pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL,
     id_pozicija INT NOT NULL,
-    FOREIGN KEY (id_zaposlenik) REFERENCES Zaposlenik(id),
-    FOREIGN KEY (id_pozicija) REFERENCES Pozicija(id)
+    FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik(id),
+    FOREIGN KEY (id_pozicija) REFERENCES pozicija(id)
     );
 
 
-CREATE TABLE Korisnik (
+CREATE TABLE korisnik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(20) NOT NULL,
     prezime VARCHAR(30) NOT NULL,
@@ -283,31 +283,31 @@ CREATE TABLE Korisnik (
     adresa_id INT NOT NULL,
     email VARCHAR (100)NOT NULL,
     UNIQUE (broj_mobitela, email),
-    FOREIGN KEY (adresa_id) REFERENCES Adresa(id)
+    FOREIGN KEY (adresa_id) REFERENCES adresa(id)
     );
 
-CREATE TABLE Recenzija(
+CREATE TABLE recenzija(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT NOT NULL,
     ocjena INT NOT NULL,
     komentar TEXT(500) ,
     datum date NOT NULL,
     CHECK (ocjena > 0 AND ocjena < 6),
-    FOREIGN KEY (korisnik_id) REFERENCES Korisnik(id)
+    FOREIGN KEY (korisnik_id) REFERENCES korisnik(id)
     );
 
-CREATE TABLE Recenzija_transporta(
+CREATE TABLE recenzija_transporta(
 	id_transport INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_transport) REFERENCES Transport(id),
-    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    FOREIGN KEY (id_transport) REFERENCES transport(id),
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
     );
 
-CREATE TABLE Recenzija_hotela(
+CREATE TABLE recenzija_hotela(
 	id_hotel INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_hotel) REFERENCES Hotel(id),
-    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    FOREIGN KEY (id_hotel) REFERENCES hotel(id),
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
     );
 
 CREATE TABLE Recenzija_paketa(
@@ -317,25 +317,25 @@ CREATE TABLE Recenzija_paketa(
     FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
     );
 
-CREATE TABLE Recenzija_zaposlenika(
+CREATE TABLE recenzija_zaposlenika(
 	id_zaposelnik INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_zaposelnik) REFERENCES Zaposlenik(id),
-    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    FOREIGN KEY (id_zaposelnik) REFERENCES zaposlenik(id),
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
     );
 
-CREATE TABLE Recenzija_aktivnosti(
+CREATE TABLE recenzija_aktivnosti(
 	id_aktivnost INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_aktivnost) REFERENCES Aktivnosti(id),
-    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    FOREIGN KEY (id_aktivnost) REFERENCES aktivnosti(id),
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
     );
 
-CREATE TABLE Recenzija_vodica(
+CREATE TABLE recenzija_vodica(
 	id_vodic INT NOT NULL,
     id_recenzija INT NOT NULL,
-    FOREIGN KEY (id_vodic) REFERENCES Vodic(id),
-    FOREIGN KEY (id_recenzija) REFERENCES Recenzija(id)
+    FOREIGN KEY (id_vodic) REFERENCES vodic(id),
+    FOREIGN KEY (id_recenzija) REFERENCES recenzija(id)
     );
 
 
