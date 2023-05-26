@@ -135,58 +135,101 @@ CREATE TABLE Putni_Plan_Stavka(
 
     
 -- lucijin dio
+
 CREATE TABLE Vodic (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  ime VARCHAR(50),
-  prezime VARCHAR(50),
-  datum_rodenja DATE,
-  kontaktni_broj VARCHAR(15),
-  email VARCHAR(100),
-  jezik_pricanja VARCHAR(50),
-  godine_iskustva INT
+  ime VARCHAR(50) NOT NULL,
+  prezime VARCHAR(50) NOT NULL,
+  datum_rodenja DATE NOT NULL CHECK (datum_rodenja <= CURRENT_DATE),
+  CHECK ((CURRENT_DATE - datum_rodenja) / 365 >= 18),
+  kontaktni_broj VARCHAR(15) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  jezik_pricanja VARCHAR(50) NOT NULL,
+  godine_iskustva INT NOT NULL CHECK (godine_iskustva >= 0)
 );
 
 CREATE TABLE Transport (
   id INT AUTO_INCREMENT PRIMARY KEY,
   tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak'),
-  kapacitet INT,
-  cijena DECIMAL(10,2),
-  ime_dobavljaca VARCHAR(100),
-  kontakt_dobavljaca VARCHAR(15),
-  vrijeme_odlaska DATETIME,
-  vrijeme_dolaska  DATETIME
+  kapacitet INT NOT NULL CHECK (kapacitet >= 0),
+  cijena NUMERIC(10, 2) NOT NULL CHECK (cijena >= 0),
+  ime_tvrtke VARCHAR(100) NOT NULL,
+  telefonski_broj VARCHAR(15) NOT NULL UNIQUE, 
+  email VARCHAR(50) NOT NULL UNIQUE,
+  vrijeme_odlaska DATETIME NOT NULL,
+  vrijeme_dolaska  DATETIME NOT NULL,
+  CHECK (vrijeme_dolaska > vrijeme_odlaska)
 );
 
 CREATE TABLE Aktivnosti (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  ime VARCHAR(100),
-  opis TEXT,
-  cijena DECIMAL(10,2),
-  lokacija VARCHAR(100),
-  duracije INT,
-  pocetak_aktivnosti TIME,
-  kvaliteta VARCHAR(100)
+  ime VARCHAR(100) NOT NULL UNIQUE,
+  opis TEXT(500),
+  cijena NUMERIC(10,2) NOT NULL CHECK (cijena >= 0),
+  id_adresa INT,
+  vrijeme_trajanja INT NOT NULL CHECK (duracija > 0),
+  vrijeme_odlaska TIME NOT NULL,
+  id_recenzija INT,
+  FOREIGN KEY (id_recenzije) REFERENCES recenzije(id),
+  FOREIGN KEY (id_adresa) REFERENCES adresa(id) ON DELETE CASCADE
+
 );
 
-CREATE TABLE Turisticko_odrediste (
+CREATE TABLE Kontinent (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  ime VARCHAR(100),
-  id_kontinent VARCHAR(100),
-  id_drzava VARCHAR(50),
-  grad VARCHAR(50),
-  popularne_atrakcije VARCHAR(100)
+  ime VARCHAR(100) NOT NULL UNIQUE,
+  opis TEXT(500),
+  id_cijepiva INT NOT NULL ,
+  FOREIGN KEY (id_cijepiva) REFERENCES cijepiva (id)
+
+);
+
+  CREATE TABLE Cijepiva (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ cijepivo ENUM('Žuta groznica', 'Hepatitis A i B', 'Tifus', 'Bjesnoća','Tifus', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis')
+ 
+);
+
+CREATE TABLE Cijepiva_kontinent (
+id_kontinent INT NOT NULL,
+FOREIGN KEY (id_kontinent) REFERENCES kontinent(id),
+id_cijepivo INT NOT NULL,
+FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id)
+
+);
+
+
+CREATE TABLE Cijepljeni_korisnici (
+id_cijepiva INT NOT NULL,
+FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id),
+id_korisnik INT,
+FOREIGN KEY (id_korisnik) REFERENCES korisnik(id)
+
+);
+
+CREATE TABLE Odrediste (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ime VARCHAR(100) NOT NULL UNIQUE,
+  id_grad INT NOT NULL UNIQUE,
+  popularne_atrakcije VARCHAR(100) NOT NULL,
+  opis TEXT(500),
+  FOREIGN KEY (id_grad) REFERENCES grad(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Hotel (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  ime VARCHAR(100),
-  star_Rating INT,
-  adresa VARCHAR(200),
-  kontaktni_broj VARCHAR(15),
-  email VARCHAR(100),
-  slobodne_sobe INT,
-  pogodnosti TEXT,
-  turisticko_odrediste_Id INT NOT NULL REFERENCES Turisticko_odrediste (id) ON DELETE CASCADE
+  ime VARCHAR(100) NOT NULL ,
+  id_recenzija INT,
+  id_adresa INT,
+  kontaktni_broj VARCHAR(15), 
+  email VARCHAR(100) NOT NULL UNIQUE,
+  slobodne_sobe INT NOT NULL CHECK (slobodne_sobe >= 0),
+  pogodnosti TEXT(500),
+  opis TEXT(500),
+  odrediste_id INT NOT NULL,
+  FOREIGN KEY (odrediste_Id) REFERENCES odrediste(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_adresa) REFERENCES adresa(id) ON DELETE CASCADE
 );
 
 -- Mateo i Karlo
