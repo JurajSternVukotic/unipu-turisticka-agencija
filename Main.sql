@@ -166,12 +166,15 @@ CREATE TABLE aktivnosti (
   opis TEXT(500),
   cijena NUMERIC(10,2) NOT NULL CHECK (cijena >= 0),
   id_adresa INT,
-  vrijeme_trajanja INT NOT NULL CHECK (duracija > 0),
+  trajanje INT NOT NULL CHECK (trajanje> 0),
   vrijeme_odlaska TIME NOT NULL,
   id_recenzija INT,
-  FOREIGN KEY (id_recenzija) REFERENCES recenzija(id),
+  #FOREIGN KEY (id_recenzija) REFERENCES recenzija(id),
   FOREIGN KEY (id_adresa) REFERENCES adresa(id) ON DELETE CASCADE
-
+);
+CREATE TABLE cijepiva (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ cijepivo ENUM('Žuta groznica', 'Hepatitis A i B', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis') 
 );
 
 CREATE TABLE kontinent (
@@ -183,17 +186,11 @@ CREATE TABLE kontinent (
 
 );
 
-  CREATE TABLE cijepiva (
- id INT AUTO_INCREMENT PRIMARY KEY,
- cijepivo ENUM('Žuta groznica', 'Hepatitis A i B', 'Tifus', 'Bjesnoća','Tifus', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis')
- 
-);
-
 CREATE TABLE cijepiva_kontinent (
 id_kontinent INT NOT NULL,
-id_cijepivo INT NOT NULL,
+id_cijepiva INT NOT NULL,
 FOREIGN KEY (id_kontinent) REFERENCES kontinent(id),
-FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id)
+FOREIGN KEY (id_cijepiva) REFERENCES cijepiva(id)
 
 );
 
@@ -201,8 +198,8 @@ FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id)
 CREATE TABLE cijepljeni_korisnici (
 id_cijepiva INT NOT NULL,
 id_korisnik INT,
-FOREIGN KEY (id_cijepivo) REFERENCES cijepivo(id),
-FOREIGN KEY (id_korisnik) REFERENCES korisnik(id)
+FOREIGN KEY (id_cijepiva) REFERENCES cijepiva(id)
+#FOREIGN KEY (id_korisnik) REFERENCES korisnik(id)
 
 );
 
@@ -227,7 +224,7 @@ CREATE TABLE hotel (
   opis TEXT(500),
   odrediste_id INT NOT NULL,
   FOREIGN KEY (odrediste_Id) REFERENCES odrediste(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE,
+  #FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE,
   FOREIGN KEY (id_adresa) REFERENCES adresa(id) ON DELETE CASCADE
 );
 
