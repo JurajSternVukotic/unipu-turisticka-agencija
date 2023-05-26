@@ -144,19 +144,22 @@ CREATE TABLE vodic (
   kontaktni_broj VARCHAR(15) NOT NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
   jezik_pricanja VARCHAR(50) NOT NULL,
-  godine_iskustva INT NOT NULL CHECK (godine_iskustva >= 0)
+  godine_iskustva INT NOT NULL,
+  CHECK (godine_iskustva >= 0)
 );
 
 CREATE TABLE transport (
   id INT AUTO_INCREMENT PRIMARY KEY,
   tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak'),
-  kapacitet INT NOT NULL CHECK (kapacitet >= 0),
-  cijena NUMERIC(10, 2) NOT NULL CHECK (cijena >= 0),
+  kapacitet INT NOT NULL, 
+  cijena NUMERIC(10, 2) NOT NULL,
   ime_tvrtke VARCHAR(100) NOT NULL,
   telefonski_broj VARCHAR(15) NOT NULL UNIQUE, 
   email VARCHAR(50) NOT NULL UNIQUE,
   vrijeme_odlaska DATETIME NOT NULL,
   vrijeme_dolaska  DATETIME NOT NULL,
+  CHECK (kapacitet >= 0),
+   CHECK (cijena >= 0),
   CHECK (vrijeme_dolaska > vrijeme_odlaska)
 );
 
@@ -164,11 +167,13 @@ CREATE TABLE aktivnosti (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ime VARCHAR(100) NOT NULL UNIQUE,
   opis TEXT(500),
-  cijena NUMERIC(10,2) NOT NULL CHECK (cijena >= 0),
+  cijena NUMERIC(10,2) NOT NULL, 
   id_adresa INT,
-  trajanje INT NOT NULL CHECK (trajanje> 0),
+  trajanje INT NOT NULL,
   vrijeme_odlaska TIME NOT NULL,
   id_recenzija INT,
+  CHECK (cijena >= 0),
+  CHECK (trajanje> 0),
   #FOREIGN KEY (id_recenzija) REFERENCES recenzija(id),
   FOREIGN KEY (id_adresa) REFERENCES adresa(id) ON DELETE CASCADE
 );
@@ -219,10 +224,11 @@ CREATE TABLE hotel (
   id_adresa INT,
   kontaktni_broj VARCHAR(15), 
   email VARCHAR(100) NOT NULL UNIQUE,
-  slobodne_sobe INT NOT NULL CHECK (slobodne_sobe >= 0),
+  slobodne_sobe INT NOT NULL,
   pogodnosti TEXT(500),
   opis TEXT(500),
   odrediste_id INT NOT NULL,
+  CHECK (slobodne_sobe >= 0),
   FOREIGN KEY (odrediste_Id) REFERENCES odrediste(id) ON DELETE CASCADE,
   #FOREIGN KEY (id_recenzija) REFERENCES recenzija(id) ON DELETE CASCADE,
   FOREIGN KEY (id_adresa) REFERENCES adresa(id) ON DELETE CASCADE
