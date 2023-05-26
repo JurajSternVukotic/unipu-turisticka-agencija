@@ -7,12 +7,13 @@ USE turisticka_agencija;
 -- Alanov dio
 CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(128) NOT NULL,
+    naziv VARCHAR(255) NOT NULL,
+    davatelj VARCHAR(100) NOT NULL, # najdulja je 82 + 20% 	
     opis TINYTEXT,
     cijena NUMERIC(10, 2) NOT NULL
 );
 
-CREATE TABLE popust (
+CREATE TABLE kupon (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     kod VARCHAR(20) NOT NULL,
     pocetak DATETIME NOT NULL,
@@ -22,23 +23,24 @@ CREATE TABLE popust (
     postotni BOOL NOT NULL,
     CHECK (pocetak < kraj),
     # Postotak ne bi trebao prekoraciti 100%
-    CHECK (NOT postotni OR kolicina <= 100)
+    CHECK (NOT postotni OR kolicina <= 100),
+    CHECK (kolicina > 0)
 );
 
 CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT NOT NULL REFERENCES korisnik (id) ON DELETE CASCADE,
     paket_id INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE,
-    naziv VARCHAR(64),
-    davatelj VARCHAR(64),
-    datum DATETIME,
-    cijena NUMERIC(10, 2)
+    naziv VARCHAR(100) NOT NULL,
+    davatelj VARCHAR(100) NOT NULL,
+    datum DATETIME NOT NULL,
+    cijena NUMERIC(10, 2) NOT NULL
 );
 
 CREATE TABLE posebni_zahtjev (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
-    opis TEXT(500)
+    opis TEXT(750)
 );
 
 CREATE TABLE osiguranje_rezervacije (
@@ -88,15 +90,15 @@ CREATE TABLE drzava(
 );	
 
 CREATE TABLE drzava_grada( # povezuje gradove sa drzavama, ako nestane grad ili drzava se ovo brise (nuklarna eksplozija)
-	id_drzava INT NOT NULL REFERENCES Drzava (id) ON DELETE CASCADE,
-    id_grad INT NOT NULL REFERENCES Grad (id) ON DELETE CASCADE
+	id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE,
+    id_grad INT NOT NULL REFERENCES grad (id) ON DELETE CASCADE
 );
 
 CREATE TABLE stavka_korisnicke_podrske( #support ticket
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     # Mozda treba napraviti specijalnu tablicu sa id stavke, id korisnika i id zaposnelika???
-	id_korisnik INT NOT NULL REFERENCES Korisnik (id), # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
-    id_zaposlenik INT NOT NULL REFERENCES Zaposlenik (id), # zelimo uvijek imati tocno jednu osobu koja radi na ovoj podrsci, i da ostane cak i ako taj zaposlenik ode 
+	id_korisnik INT NOT NULL REFERENCES korisnik (id), # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
+    id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id), # zelimo uvijek imati tocno jednu osobu koja radi na ovoj podrsci, i da ostane cak i ako taj zaposlenik ode 
     vrsta_problema ENUM ('Placanje', 'Rezervacija', 'Problemi sa zaposlenicima', 'Tehnicki problemi', 'Povrat novca', 'Drugo') NOT NULL, # ticket podrske moze biti samo jedna od ovih stvari
     opis_problema TEXT (2500), # opis problema mora biti teksutalan i imati manje od 2500 znakova
     CHECK (LENGTH(opis_problema) >= 50), # opis mora imati vise od 49 znakova kako bi smanjili zlouporabu sa praznim ili nedostatnim opisima 
@@ -105,23 +107,21 @@ CREATE TABLE stavka_korisnicke_podrske( #support ticket
 
 CREATE TABLE paket(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
-    naziv VARCHAR (64) NOT NULL UNIQUE, # unique kako ne bi imali duplikatne nazive paketa, 64 znakova bi trebalo biti dovoljno za naslov 
+    naziv VARCHAR (100) NOT NULL UNIQUE, # unique kako ne bi imali duplikatne nazive paketa, 64 znakova bi trebalo biti dovoljno za naslov 
     opis TEXT (1000), # 1000 znakova za opis paketa, ako se zele detaljne informacije moze se poslati upit za putni plan
     min_ljudi INT NOT NULL DEFAULT 1, # minimalno ljudi koliko je potrebno da se odrzi putovanje 
     max_ljudi INT NOT NULL DEFAULT 1, # maksimalno ljudi koji mogu sudjelovati na putovanju
     CHECK (min_ljudi >= 1), # ne mozemo imati paket za manje od jednu osobu
     CHECK (max_ljudi >= min_ljudi), # maksimalan broj ljudi mora biti jednak ili veci od minimalnog
     popunjenih_mjesta INT NOT NULL DEFAULT 0,
-    CHECK (popunjenih_mjesta < max_ljudi), # ne moze biti vise popunjenih mjesta od max
+    CHECK (popunjenih_mjesta <= max_ljudi), # ne moze biti vise popunjenih mjesta od max
     CHECK (popunjenih_mjesta >= 0), # ne moze biti negativno ljudi
-    pocetak_puta DATETIME NOT NULL, # datum i vrijeme kada put pocinje 
-    kraj_puta DATETIME NOT NULL, # datum i vrijeme kada put zavrsava
     cijena_po_turistu NUMERIC(10, 2) NOT NULL # koliko kosta za jednu osobu paket
 );
 
 CREATE TABLE putni_plan_stavka(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
-    id_paket INT NOT NULL REFERENCES Paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
+    id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
     id_transport INT NOT NULL REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
     id_odrediste INT NOT NULL REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
     id_aktivnost INT NOT NULL REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
