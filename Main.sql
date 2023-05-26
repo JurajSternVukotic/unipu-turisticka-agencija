@@ -299,6 +299,3 @@ CREATE TABLE recenzija_vodica(
 	id_vodic INT NOT NULL REFERENCES vodic(id) ON DELETE CASCADE,
     id_recenzija INT NOT NULL REFERENCES recenzija(id) ON DELETE CASCADE
     );
-
-
-    
