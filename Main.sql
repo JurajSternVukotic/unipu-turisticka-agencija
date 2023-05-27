@@ -34,7 +34,7 @@ CREATE TABLE kupon (
 
 CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    korisnik_id INT NOT NULL REFERENCES korisnik (id) ON DELETE CASCADE,
+    osoba_id INT NOT NULL REFERENCES osoba (id) ON DELETE CASCADE,
     paket_id INT NOT NULL REFERENCES paket (id), # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
     zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
     naziv VARCHAR(100) NOT NULL,
@@ -151,7 +151,7 @@ CREATE TABLE drzava (
 CREATE TABLE stavka_korisnicke_podrske ( #support ticket
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     # Mozda treba napraviti specijalnu tablicu sa id stavke, id korisnika i id zaposnelika???
-	id_korisnik INT NOT NULL REFERENCES korisnik (id), # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
+	id_osoba INT NOT NULL REFERENCES osoba (id), # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
     id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id), # zelimo uvijek imati tocno jednu osobu koja radi na ovoj podrsci, i da ostane cak i ako taj zaposlenik ode 
     vrsta_problema ENUM ('Placanje', 'Rezervacija', 'Problemi sa zaposlenicima', 'Tehnicki problemi', 'Povrat novca', 'Drugo') NOT NULL, # ticket podrske moze biti samo jedna od ovih stvari
     opis_problema TEXT (2500), # opis problema mora biti teksutalan i imati manje od 2500 znakova
@@ -194,6 +194,8 @@ CREATE TABLE osoba (
 	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
 	email VARCHAR(100) NOT NULL UNIQUE,
 	jezick_pricanja VARCHAR(50) NOT NULL,
+    korisnicki_bodovi INT NOT NULL DEFAULT 0,
+    CHECK (korisnicki_bodovi >= 0),
     id_adresa INT NOT NULL REFERENCES adresa (id)
 );
 
@@ -316,16 +318,9 @@ CREATE TABLE pozicija_zaposlenika (
     id_pozicija INT NOT NULL REFERENCES pozicija (id) ON DELETE CASCADE
 );
 
-CREATE TABLE korisnik (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    korisnicki_bodovi INT NOT NULL DEFAULT 0,
-    CHECK (korisnicki_bodovi >= 0),
-    id_osoba INT NOT NULL REFERENCES osoba (id) ON DELETE CASCADE
-);
-
 CREATE TABLE recenzija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    korisnik_id INT NOT NULL REFERENCES korisnik (id),
+    osoba_id INT NOT NULL REFERENCES osoba (id),
     ocjena ENUM ('1', '2', '3', '4', '5'),
     komentar TEXT(500),
     datum DATE NOT NULL
