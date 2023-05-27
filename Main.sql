@@ -190,9 +190,9 @@ CREATE TABLE aktivnosti (
     CHECK (trajanje> 0)
 );
 
-CREATE TABLE cijepiva (
+CREATE TABLE cjepivo (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    cijepivo ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis') 
+    cijepivo ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis', 'COVID-19', 'Ebola', 'Malarija', 'Gripa', 'Tetanus', 'Kolera') 
 );
 
 CREATE TABLE kontinent (
@@ -201,19 +201,19 @@ CREATE TABLE kontinent (
     opis TEXT(500)
 );
 
-CREATE TABLE drzava_kontinent( 
+CREATE TABLE drzava_kontinent ( 
 	id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE,
     id_kontinent INT NOT NULL REFERENCES kontinent (id) ON DELETE CASCADE
 );
 
-CREATE TABLE cijepiva_drzava (
+CREATE TABLE cjepivo_drzava (
 	id_drzava INT NOT NULL REFERENCES drzava (id),
-    id_cijepiva INT NOT NULL REFERENCES cijepiva (id)
+    id_cijepiva INT NOT NULL REFERENCES cjepivo (id)
 );
 
 
-CREATE TABLE cijepljene_osobe (
-	id_cijepiva INT NOT NULL REFERENCES cjepiva (id),
+CREATE TABLE cijepljena_osoba (
+	id_cijepiva INT NOT NULL REFERENCES cjepivo (id),
     id_osoba INT NOT NULL REFERENCES osoba (id)
 );
 
