@@ -194,7 +194,7 @@ CREATE TABLE osoba (
 	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
 	email VARCHAR(100) NOT NULL UNIQUE,
 	jezick_pricanja VARCHAR(50) NOT NULL,
-    adresa_id INT NOT NULL REFERENCES adresa (id)
+    id_adresa INT NOT NULL REFERENCES adresa (id)
 );
 
 CREATE TABLE dodatni_jezici (
