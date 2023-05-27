@@ -34,7 +34,7 @@ CREATE TABLE kupon (
 
 CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    osoba_id INT NOT NULL REFERENCES osoba (id) ON DELETE CASCADE,
+    osoba_id INT NOT NULL REFERENCES osoba (id), # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
     paket_id INT NOT NULL REFERENCES paket (id), # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
     zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
     naziv VARCHAR(100) NOT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE osoba (
 	datum_rodenja DATE NOT NULL,
 	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
 	email VARCHAR(100) NOT NULL UNIQUE,
-	jezick_pricanja VARCHAR(50) NOT NULL,
+	govorni_jezik VARCHAR(50) NOT NULL,
     korisnicki_bodovi INT NOT NULL DEFAULT 0,
     CHECK (korisnicki_bodovi >= 0),
     id_adresa INT NOT NULL REFERENCES adresa (id)
@@ -208,7 +208,7 @@ CREATE TABLE dodatni_jezici (
 
 CREATE TABLE vodic (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    osoba_id INT NOT NULL REFERENCES osoba (id) ON DELETE CASCADE,
+    osoba_id INT NOT NULL UNIQUE REFERENCES osoba (id) ON DELETE CASCADE,
 	godine_iskustva INT NOT NULL,
 	CHECK (godine_iskustva >= 0)
 );
@@ -261,7 +261,7 @@ CREATE TABLE cjepivo_drzava (
 );
 
 CREATE TABLE cijepljena_osoba (
-	id_cijepiva INT NOT NULL REFERENCES cjepivo (id),
+	id_cjepiva INT NOT NULL REFERENCES cjepivo (id),
     id_osoba INT NOT NULL REFERENCES osoba (id)
 );
 
@@ -297,7 +297,7 @@ CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezervira
 
 CREATE TABLE zaposlenik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    id_osoba INT NOT NULL REFERENCES osoba (id),
+    id_osoba INT NOT NULL UNIQUE REFERENCES osoba (id),
     placa NUMERIC (10, 2) NOT NULL
 );
 
