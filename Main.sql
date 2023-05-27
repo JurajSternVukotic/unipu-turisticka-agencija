@@ -63,6 +63,61 @@ CREATE TABLE uplata (
     CHECK (iznos > 0) # Uplata ničega ili negativnog iznosa nije važeća.
 );
 
+-- Pogledi
+
+-- Prikazuje sve IDjeve zaposlenika koji su putni agenti.
+-- CREATE VIEW svi_putni_agenti AS SELECT id_zaposlenik AS id FROM pozicija_zaposlenika WHERE id_pozicija = (SELECT id FROM pozicija WHERE ime_pozicije = 'putni agent');
+
+-- 1. Pronađi ID pozicije 'putni agent'
+-- 2. Pronađi sve zaposlenike s tom pozicijom (preko IDja)
+-- 3. Pobroji njihova pojavljivanja
+-- 4. Sortiraj ih od najmanjeg prema najvećem
+
+-- Upozorenje! Nije još testirano!
+/*CREATE VIEW zaposlenost_rezervacije AS 
+	SELECT *, COUNT(*) AS kolicina_posla 
+		FROM svi_putni_agenti 
+			LEFT JOIN 
+	(SELECT zaposlenik_id AS id FROM rezervacija) AS rezervacija 
+			USING (id);*/
+
+-- Okidači
+
+/*DELIMITER // -- Nužno je za razlikovanja završetka naredbe.
+
+CREATE TRIGGER ogranicenje_putnog_agenta BEFORE INSERT ON rezervacija
+	FOR EACH ROW
+		BEGIN
+			IF NEW.zaposlenik_id IS NOT IN svi_putni_agenti THEN
+				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = CONCAT('Zadani zaposlenik s IDjem ', NEW.zaposlenik_id, ' nije putni agent za rezervacije!');
+			END IF;
+		END//
+
+-- Ukoliko se zaposlenika otpusti, prema ON DELETE SET NULL ograničenju atributa zaposlenik_id u
+-- relaciji rezervacije će atribut s IDjem otpuštenog zaposlenika postati NULL. Potrebno je postaviti novog
+-- zaposlenika na tu poziciju kako bi korisnici imali zaposlenika turističke agencije kojeg mogu kontaktirati
+-- u vezi s njihovom rezervacijom.
+CREATE TRIGGER postavi_novog_zaposlenika BEFORE UPDATE ON rezervacija
+	FOR EACH ROW
+		BEGIN
+			IF NEW.zaposlenik_id IS NULL THEN
+				SET NEW.zaposlenik_id = (SELECT * FROM zaposlenost_rezervacije GROUP BY id ORDER BY kolicina_posla ASC LIMIT 1);
+			END IF;
+		END//
+
+CREATE TRIGGER istovremeni_kod BEFORE INSERT ON kupon
+	FOR EACH ROW
+		BEGIN
+			DECLARE poruka VARCHAR(128);
+        
+			IF EXISTS(SELECT * FROM kupon WHERE NEW.kod = kod AND NEW.datum_pocetka <= datum_kraja AND NEW.datum_kraja > datum_pocetka) THEN
+				SET poruka = CONCAT('Već postoji isti kod u preklapajućem vremenu za kod ', NEW.kod);
+				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
+			END IF;
+		END//
+
+DELIMITER ;*/
+
 -- Autor: Juraj Štern-Vukotić
 CREATE TABLE grad (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
@@ -249,7 +304,8 @@ CREATE TABLE zaposlenik (
 CREATE TABLE pozicija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime_pozicije ENUM ('turistički agent', 'putni agent', 'računovođa', 'promotor', 'IT podrška') NOT NULL,
-    opis_pozicije TEXT(500));
+    opis_pozicije TEXT(500)
+);
 
 CREATE TABLE radna_smjena (
 	zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
@@ -261,7 +317,6 @@ CREATE TABLE pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
     id_pozicija INT NOT NULL REFERENCES pozicija (id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE korisnik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
