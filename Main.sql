@@ -124,7 +124,7 @@ CREATE TABLE grad (
     naziv VARCHAR(64) NOT NULL, # Najduzi naziv grada na svijetu ima 58 znakova, 64 bi trebalo biti dovoljno
     opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
     postanski_broj VARCHAR(32) NOT NULL UNIQUE, # Postanski brojevi mogu imati i slova, u nasem modelu jedan grad ima jedan postanski broj za razliku od inace gdje svaka ulica moze imati u nekim drzavama
-	 id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE # svaki grad je u tocno jednoj drzavi (radi simplifikacije) 
+	id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE # svaki grad je u tocno jednoj drzavi (radi simplifikacije) 
 );
 
 CREATE TABLE adresa (
@@ -282,6 +282,13 @@ CREATE TABLE hotel (
     pogodnosti TEXT(500),
     opis TEXT(500),
     CHECK (slobodne_sobe >= 0)
+);
+
+CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezerviranim hotelima
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    id_hotel INT NOT NULL REFERENCES hotel (id) ON DELETE CASCADE,
+    id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE,
+    datum DATE # datum kada taj paket ima predvidjeno boravljenje u tom hotelu
 );
 
 -- Autori: Mateo Udovčić i Karlo Bazina
