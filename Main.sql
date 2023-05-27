@@ -123,7 +123,8 @@ CREATE TABLE grad (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL, # Najduzi naziv grada na svijetu ima 58 znakova, 64 bi trebalo biti dovoljno
     opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
-    postanski_broj VARCHAR(32) NOT NULL UNIQUE # Postanski brojevi mogu imati i slova, u nasem modelu jedan grad ima jedan postanski broj za razliku od inace gdje svaka ulica moze imati u nekim drzavama
+    postanski_broj VARCHAR(32) NOT NULL UNIQUE, # Postanski brojevi mogu imati i slova, u nasem modelu jedan grad ima jedan postanski broj za razliku od inace gdje svaka ulica moze imati u nekim drzavama
+	 id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE # svaki grad je u tocno jednoj drzavi (radi simplifikacije) 
 );
 
 CREATE TABLE adresa (
@@ -131,12 +132,8 @@ CREATE TABLE adresa (
 	naziv_ulice VARCHAR(128) NOT NULL, # 128 bi trebalo biti dovoljno za bilo koju ulicu
     broj_ulice INT NOT NULL, # Ulica mora imati broj
 	CHECK (broj_ulice > 0), # broj ulice mora biti strogo veci od 0
-    dodatan_opis TEXT(256) # Dodatne informacije o kako doci do ulice, koji kat, itd.
-);
-
-CREATE TABLE grad_adrese ( # povezuje gradove sa adresama, ako nestane grad ili adresa se ovo brise
-	id_grad INT NOT NULL REFERENCES grad (id) ON DELETE CASCADE, 
-    id_adresa INT NOT NULL REFERENCES adresa (id) ON DELETE CASCADE
+    dodatan_opis TEXT(256), # Dodatne informacije o kako doci do ulice, koji kat, itd.
+    id_grad INT NOT NULL REFERENCES grad (id) ON DELETE CASCADE # posto svaka adresa ima tocno jedan grad, ne treba specijalna tablica za ovo, ako grad nestane nestane i adresa
 );
 
 CREATE TABLE drzava (
@@ -150,11 +147,6 @@ CREATE TABLE drzava (
     pozivni_broj INT NOT NULL UNIQUE, # pretpostavlja se da se ne pise niti 00 niti + izmedju posto je to preferenca formatiranja, takodjer da nema crtice nego samo se nastavi pisati posto je nepotrebno tako da moze biti INT, dvije drzave ne mogu imati isti pozivni broj
 	CHECK (pozivni_broj > 0) # pozivni broj ne moze biti negativan niti nula
 );	
-
-CREATE TABLE drzava_grada ( # povezuje gradove sa drzavama, ako nestane grad ili drzava se ovo brise (nuklarna eksplozija)
-	id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE,
-    id_grad INT NOT NULL REFERENCES grad (id) ON DELETE CASCADE
-);
 
 CREATE TABLE stavka_korisnicke_podrske ( #support ticket
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
@@ -265,7 +257,6 @@ CREATE TABLE cjepivo_drzava (
 	id_drzava INT NOT NULL REFERENCES drzava (id),
     id_cijepiva INT NOT NULL REFERENCES cjepivo (id)
 );
-
 
 CREATE TABLE cijepljena_osoba (
 	id_cijepiva INT NOT NULL REFERENCES cjepivo (id),
