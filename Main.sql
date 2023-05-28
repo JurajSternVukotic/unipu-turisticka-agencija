@@ -79,8 +79,6 @@ CREATE TABLE grad (
 CREATE TABLE adresa (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
 	naziv_ulice VARCHAR(128) NOT NULL, # 128 bi trebalo biti dovoljno za bilo koju ulicu
-    broj_ulice INT NOT NULL, # Ulica mora imati broj
-	CHECK (broj_ulice > 0), # broj ulice mora biti strogo veci od 0
     dodatan_opis TEXT(256), # Dodatne informacije o kako doci do ulice, koji kat, itd.
     id_grad INT NOT NULL REFERENCES grad (id) ON DELETE CASCADE # posto svaka adresa ima tocno jedan grad, ne treba specijalna tablica za ovo, ako grad nestane nestane i adresa
 );
@@ -417,7 +415,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
     (kod, datum_pocetka, datum_kraja, iznos, postotni);
 
 -- Odjeljak TESTIRANJE
-
+    
 SELECT * FROM kontinent;
 SELECT * FROM drzava;
 SELECT * FROM kupon;
