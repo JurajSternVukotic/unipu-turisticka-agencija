@@ -243,7 +243,7 @@ CREATE TABLE aktivnosti (
 
 CREATE TABLE cjepivo (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    cijepivo ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis', 'COVID-19', 'Ebola', 'Malarija', 'Gripa', 'Tetanus', 'Kolera') 
+    cijepivo ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis', 'COVID-19', 'Ebola', 'Malarija', 'Gripa', 'Tetanus', 'Kolera', 'Ospice', 'Zaušnjaci', 'Rubela', 'Difterija', 'Hripavost', 'Vodene kozice') 
 );
 
 CREATE TABLE kontinent (
@@ -370,7 +370,7 @@ CREATE TABLE recenzija_vodica (
  */
 SHOW VARIABLES LIKE "secure_file_priv";
 
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kontinent.csv' 
+LOAD DATA LOCAL INFILE 'C:\\Faks\\BP PROJEKT\\try3\\unipu-turisticka-agencija\\data\\kontinent.csv' 
 INTO TABLE kontinent 
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"' 
