@@ -360,11 +360,22 @@ CREATE TABLE recenzija_vodica (
     id_recenzija INT NOT NULL REFERENCES recenzija (id) ON DELETE CASCADE
 );
 
-LOAD DATA LOCAL INFILE 'C:\\Faks\\BP PROJEKT\\try2\\unipu-turisticka-agencija\\data\\kontinent.csv' 
+/*
+ * Ukoliko je MySQL server (lokalno na računalu ili negdje drugdje) inicijaliziran sa opcijom
+ * --secure_file_priv, koristit će samo postavljenu mapu čija je putanja navedena u rezultatu
+ * sljedećeg upita. Potom se ta mapa može upotrebljavati za pohranu datoteka za učitavanje i
+ * zapis.
+ * Očekivani rezultat: C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/
+ * Ukoliko se rezultat razlikuje, lokalno promijenite u skripti datoteku te tamo postavite datoteke.
+ */
+SHOW VARIABLES LIKE "secure_file_priv";
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kontinent.csv' 
 INTO TABLE kontinent 
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"' 
 LINES TERMINATED BY '\r\n' 
 IGNORE 1 ROWS;
 
+-- Provjera
 SELECT * FROM kontinent;
