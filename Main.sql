@@ -300,6 +300,7 @@ CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezervira
 CREATE TABLE zaposlenik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_osoba INT NOT NULL UNIQUE REFERENCES osoba (id),
+    ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
     placa NUMERIC (10, 2) NOT NULL
 );
 
@@ -319,7 +320,8 @@ CREATE TABLE pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
     id_pozicija INT NOT NULL REFERENCES pozicija (id) ON DELETE CASCADE
 );
-
+    
+    
 CREATE TABLE recenzija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     osoba_id INT NOT NULL REFERENCES osoba (id),
