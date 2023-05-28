@@ -4,6 +4,8 @@ CREATE DATABASE turisticka_agencija;
 
 USE turisticka_agencija;
 
+SET GLOBAL local_infile=1;
+
 -- Autor: Alan Burić
 CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -355,3 +357,12 @@ CREATE TABLE recenzija_vodica (
 	id_vodic INT NOT NULL REFERENCES vodic (id) ON DELETE CASCADE,
     id_recenzija INT NOT NULL REFERENCES recenzija (id) ON DELETE CASCADE
 );
+
+LOAD DATA LOCAL INFILE 'C:\\Faks\\BP PROJEKT\\try2\\unipu-turisticka-agencija\\data\\kontinent.csv' 
+INTO TABLE kontinent 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\r\n' 
+IGNORE 1 ROWS;
+
+SELECT * FROM kontinent;
