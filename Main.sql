@@ -374,6 +374,17 @@ DELIMITER ;
 
 -- Autor: Juraj Štern-Vukotić
 
+CREATE VIEW gradovi_sa_drzavama AS
+SELECT grad.id as grad_id, grad.naziv as grad_naziv, drzava.naziv as drzava_naziv, drzava.id as drzava_id FROM grad
+JOIN drzava ON grad.id_drzava = drzava.id;
+
+CREATE VIEW drzava_grad_adresa AS
+SELECT drzava_naziv, grad_naziv, adresa.naziv_ulice AS ulica, adresa.id AS adresa_id 
+FROM gradovi_sa_drzavama 
+JOIN adresa
+ON grad_id = adresa.id_grad; 
+
+
 -- Autor: Lucija Labinjan
 
 -- Autor: Mateo Udovčić
@@ -415,7 +426,23 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
     (kod, datum_pocetka, datum_kraja, iznos, postotni);
 
 -- Odjeljak TESTIRANJE
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/adresa.csv' 
+INTO TABLE adresa
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\r\n';
     
-SELECT * FROM kontinent;
-SELECT * FROM drzava;
-SELECT * FROM kupon;
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/grad.csv' 
+INTO TABLE grad
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\r\n';
+
+
+
+SELECT * FROM drzava_grad_adresa WHERE drzava_naziv = 'Austria';
+ 
+#SELECT * FROM kontinent;
+#SELECT * FROM drzava;
+#SELECT * FROM kupon;
