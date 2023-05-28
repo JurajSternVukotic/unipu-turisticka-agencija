@@ -1,0 +1,422 @@
+1,Buenos Aires,"The bustling capital city of Argentina known for its vibrant culture, tango music, and delicious steak.",42330,7
+2,Córdoba,"A city in central Argentina famous for its colonial architecture, lively student population, and vibrant arts scene.",8633,7
+3,Mendoza,"A city in western Argentina renowned for its vineyards, stunning mountain landscapes, and world-class wine production.",92686,7
+4,Rosario,"The largest city in the province of Santa Fe, Argentina known for its lively atmosphere, beautiful waterfront, and cultural events.",66935,7
+5,Sydney,"The largest city in Australia known for its iconic landmarks like the Sydney Opera House, beautiful beaches, and vibrant culture.",21388,9
+6,Melbourne,"A vibrant city in Australia famous for its thriving arts scene, multicultural cuisine, and dynamic coffee culture.",11347,9
+7,Brisbane,"The capital city of Queensland, Australia known for its sunny climate, beautiful riverside parklands, and vibrant entertainment scene.",74520,9
+8,Perth,"A city on the west coast of Australia known for its stunning beaches, vibrant culinary scene, and outdoor lifestyle.",18184,9
+9,Adelaide,"The capital city of South Australia known for its beautiful parklands, vibrant festivals, and thriving food and wine scene.",32200,9
+10,Vienna,"The capital and largest city of Austria known for its rich history, stunning architecture, and vibrant music culture.",52804,10
+11,Salzburg,"A city in Austria famous for its baroque architecture, Mozart's birthplace, and the picturesque Old Town.",80666,10
+12,Graz,"The second-largest city in Austria known for its beautiful historic center, vibrant arts scene, and excellent culinary offerings.",39552,10
+13,Innsbruck,"A city in the Austrian Alps famous for its stunning mountain views, world-class ski resorts, and imperial architecture.",23892,10
+14,Linz,"A city in northern Austria known for its contemporary arts scene, historic architecture, and beautiful Danube River.",81064,10
+15,Brussels,"The capital city of Belgium known for its stunning architecture, delicious chocolate, and world-renowned beer culture.",13003,17
+16,Antwerp,"A city in Belgium famous for its diamond trade, beautiful medieval architecture, and vibrant fashion scene.",16115,17
+17,Bruges,"A historic city in Belgium known for its picturesque canals, well-preserved medieval buildings, and delicious Belgian chocolates.",72990,17
+18,Ghent,"A vibrant city in Belgium famous for its medieval architecture, lively cultural scene, and beautiful canals.",21318,17
+19,Liege,"A city in eastern Belgium known for its rich history, impressive architecture, and vibrant student atmosphere.",98071,17
+20,Rio de Janeiro,"A vibrant city in Brazil known for its stunning beaches, iconic landmarks like Christ the Redeemer, and lively Carnival celebrations.",62642,24
+21,São Paulo,"The largest city in Brazil known for its bustling metropolis, vibrant cultural scene, and diverse culinary offerings.",58909,24
+22,Salvador,"A city on the northeastern coast of Brazil famous for its colorful colonial architecture, vibrant Afro-Brazilian culture, and lively music and dance traditions.",42042,24
+23,Brasília,"The capital city of Brazil known for its modernist architecture, impressive government buildings, and unique urban design.",44927,24
+24,Manaus,"A city in the heart of the Amazon rainforest in Brazil known for its rich biodiversity, iconic Opera House, and access to the Amazon River.",30662,24
+25,Toronto,"The largest city in Canada known for its diverse cultural scene, iconic CN Tower, and vibrant entertainment district.",12671,31
+26,Vancouver,"A coastal city in western Canada known for its stunning natural beauty, thriving film industry, and outdoor recreational opportunities.",61310,31
+27,Montreal,"The second-largest city in Canada known for its vibrant arts scene, historic architecture, and rich French-Canadian heritage.",30893,31
+28,Calgary,"A city in Alberta, Canada famous for its annual Calgary Stampede, stunning Rocky Mountain views, and vibrant downtown core.",48955,31
+29,Ottawa,"The capital city of Canada known for its historic landmarks, including Parliament Hill, beautiful green spaces, and national museums.",14774,31
+30,Santiago,"The capital and largest city of Chile known for its breathtaking mountain views, vibrant arts scene, and rich cultural heritage.",20348,35
+31,Valparaíso,"A coastal city in Chile famous for its colorful hillside houses, bohemian atmosphere, and historic funiculars.",2204,35
+32,Viña del Mar,"A resort city in Chile known for its stunning beaches, beautiful gardens, and annual International Song Festival.",50326,35
+33,Concepción,"A city in central Chile famous for its universities, lively music scene, and delicious traditional cuisine.",7034,35
+34,Puerto Varas,"A city in southern Chile known for its picturesque location on the shores of Lake Llanquihue, stunning volcano views, and German heritage.",45527,35
+35,Beijing,"The capital city of China known for its iconic landmarks like the Great Wall, Forbidden City, and modern architecture.",33575,36
+36,Shanghai,"China's largest city known for its futuristic skyline, bustling streets, and vibrant shopping scene.",95987,36
+37,Xi'an,"An ancient city in central China known for the Terracotta Army, ancient city walls, and historic pagodas.",23698,36
+38,Guilin,"A city in southern China known for its picturesque landscapes, limestone karst mountains, and beautiful Li River.",86355,36
+39,Prague,"The capital city of the Czech Republic known for its stunning architecture, historic old town, and vibrant nightlife.",43244,45
+40,Brno,"The second-largest city in the Czech Republic known for its rich history, beautiful architecture, and vibrant cultural scene.",49147,45
+41,Ostrava,"A city in the northeastern Czech Republic known for its industrial heritage, vibrant music scene, and historic landmarks.",6325,45
+42,Plzeň,"A city in western Czech Republic famous for its Pilsner beer, historic brewery, and beautiful Gothic cathedral.",71767,45
+43,Český Krumlov,A picturesque town in the Czech Republic known for its well-preserved medieval architecture and stunning castle.,20621,45
+44,Karlovy Vary,"A spa town in the Czech Republic famous for its hot springs, beautiful colonnades, and annual international film festival.",81362,45
+45,Olomouc,"A city in the eastern Czech Republic known for its historic city center, beautiful churches, and vibrant student life.",16530,45
+46,Hradec Králové,"A city in the Czech Republic known for its historic architecture, beautiful gardens, and lively cultural events.",73832,45
+47,Ústí nad Labem,"A city in the Czech Republic situated on the banks of the Elbe River known for its stunning views, historic architecture, and vibrant arts scene.",45449,45
+48,Pardubice,"A city in the eastern Czech Republic famous for its horse racing events, historic castle, and gingerbread production.",3633,45
+49,Copenhagen,"The capital city of Denmark known for its beautiful waterfront, historic landmarks like the Little Mermaid statue, and vibrant cycling culture.",51126,46
+50,Aarhus,"The second-largest city in Denmark known for its vibrant arts scene, historic architecture, and beautiful waterfront.",49297,46
+51,Odense,"A city in Denmark famous for being the birthplace of Hans Christian Andersen, with a rich cultural heritage and beautiful gardens.",90451,46
+52,Aalborg,"A city in northern Denmark known for its Viking history, charming waterfront, and vibrant cultural scene.",81084,46
+53,Cairo,"The capital city of Egypt known for its iconic ancient sites like the Pyramids of Giza, the Sphinx, and vibrant bazaars.",47534,52
+54,Alexandria,"A city on the Mediterranean coast of Egypt known for its rich history, stunning beaches, and ancient landmarks like the Citadel of Qaitbay.",4798,52
+55,Luxor,"A city on the banks of the Nile River in Egypt famous for its ancient Egyptian temples, tombs, and the Valley of the Kings.",25192,52
+56,Aswan,"A city on the Nile River in southern Egypt known for its beautiful river views, ancient temples, and vibrant Nubian culture.",71092,52
+57,Hurghada,"A resort town on the Red Sea coast of Egypt famous for its stunning coral reefs, turquoise waters, and vibrant marine life.",61587,52
+58,Sharm El Sheikh,"A popular beach resort town in Egypt known for its crystal-clear waters, world-class diving spots, and luxury resorts.",83902,52
+59,Dahab,"A laid-back beach town on the Sinai Peninsula in Egypt famous for its diving opportunities, colorful coral reefs, and relaxed atmosphere.",31235,52
+60,Siwa Oasis,"An oasis town in the Western Desert of Egypt known for its stunning natural beauty, ancient ruins, and unique cultural traditions.",45929,52
+61,Asyut,"A city on the Nile River in central Egypt known for its historic mosques, vibrant markets, and important archaeological sites.",56200,52
+62,Port Said,A city on the Mediterranean coast of Egypt famous for its strategic location at the northern entrance of the Suez Canal and its vibrant waterfront.,90376,52
+63,Helsinki,"The capital city of Finland known for its beautiful architecture, vibrant cultural scene, and picturesque seaside setting.",39846,60
+64,Espoo,"A city in Finland neighboring Helsinki known for its innovative technology companies, beautiful parks, and cultural events.",78002,60
+65,Tampere,"The third-largest city in Finland known for its vibrant cultural scene, beautiful lakeside setting, and historic industrial heritage.",39467,60
+66,Turku,"A city on the southwest coast of Finland famous for its medieval castle, beautiful riverfront, and vibrant student life.",14337,60
+67,Oulu,"A city in northern Finland known for its technology-driven economy, vibrant festivals, and beautiful waterfront.",5730,60
+68,Lahti,"A city in southern Finland known for its winter sports, beautiful lakes, and stunning Salpausselkä ridge.",90293,60
+69,Kuopio,"A city in eastern Finland famous for its beautiful lakes, lively marketplace, and unique Finnish lakeland scenery.",9869,60
+70,Vaasa,"A city on the west coast of Finland known for its beautiful archipelago, unique cultural heritage, and vibrant events.",26192,60
+71,Rovaniemi,"The capital of Finnish Lapland known for its magical winter atmosphere, Santa Claus Village, and stunning Northern Lights.",48324,60
+72,Joensuu,"A city in eastern Finland famous for its beautiful lakes, lively cultural scene, and stunning natural surroundings.",16638,60
+73,Paris,"The capital city of France known for its iconic landmarks like the Eiffel Tower, Louvre Museum, and vibrant café culture.",34227,61
+74,Marseille,"A vibrant port city in southern France known for its picturesque Vieux Port, vibrant street life, and delicious Mediterranean cuisine.",27415,61
+75,Lyon,"The third-largest city in France known for its historic architecture, vibrant cultural scene, and gastronomic delights.",11983,61
+76,Toulouse,"A city in southwestern France famous for its pink-hued buildings, vibrant aerospace industry, and rich cultural heritage.",18391,61
+77,Nice,"A city on the French Riviera known for its stunning beaches, beautiful promenade, and vibrant arts scene.",34563,61
+78,Bordeaux,"A city in southwestern France famous for its world-class wines, beautiful architecture, and vibrant café culture.",85009,61
+79,Strasbourg,"The capital city of the Grand Est region in France known for its beautiful timber-framed houses, charming canals, and European institutions.",71044,61
+80,Lille,"A city in northern France known for its Flemish architecture, vibrant cultural scene, and delicious local cuisine.",10058,61
+81,Cannes,"A glamorous city on the French Riviera known for its prestigious film festival, luxurious hotels, and beautiful sandy beaches.",6450,61
+82,Nantes,"A city on the Loire River in western France famous for its rich history, vibrant arts scene, and innovative urban projects.",17933,61
+83,Berlin,"The capital city of Germany known for its rich history, vibrant arts scene, and iconic landmarks like the Berlin Wall and Brandenburg Gate.",2202,65
+84,Munich,"The third-largest city in Germany known for its traditional Bavarian culture, vibrant beer gardens, and beautiful architecture.",42205,65
+85,Hamburg,"A major port city in northern Germany known for its vibrant maritime atmosphere, bustling harbor, and lively entertainment district.",62613,65
+86,Cologne,"A city on the Rhine River in western Germany famous for its stunning Cologne Cathedral, vibrant carnival celebrations, and vibrant arts scene.",56026,65
+87,Frankfurt,"A city in central Germany known for its modern skyline, historic old town, and status as a major financial hub.",38653,65
+88,Stuttgart,"A city in southern Germany famous for its automotive industry, beautiful parks, and rich cultural heritage.",56870,65
+89,Düsseldorf,"A city in western Germany known for its vibrant fashion and advertising industry, beautiful riverfront, and lively carnival celebrations.",53162,65
+90,Leipzig,"A city in eastern Germany known for its rich musical heritage, vibrant arts scene, and beautiful historic architecture.",66988,65
+91,Dresden,"A city in eastern Germany famous for its stunning Baroque architecture, beautiful Elbe River, and world-renowned art collections.",22387,65
+92,Nuremberg,"A city in southern Germany known for its rich history, beautiful medieval architecture, and famous Christmas market.",90139,65
+93,Athens,"The capital city of Greece known for its ancient history, iconic landmarks like the Parthenon, and vibrant nightlife.",99433,67
+94,Thessaloniki,"The second-largest city in Greece known for its vibrant cultural scene, beautiful waterfront, and historic Byzantine sites.",71326,67
+95,Patras,"A city in western Greece famous for its vibrant carnival celebrations, beautiful waterfront, and historic Roman Amphitheatre.",33700,67
+96,Heraklion,"A city on the island of Crete in Greece known for its rich archaeological heritage, beautiful beaches, and vibrant city life.",9112,67
+97,Rhodes,"A popular island city in Greece known for its ancient ruins, beautiful beaches, and medieval Old Town.",91300,67
+98,Corfu,"A picturesque island city in Greece famous for its Venetian architecture, stunning beaches, and vibrant summer festivals.",6966,67
+99,Chania,"A city on the island of Crete in Greece known for its charming Venetian harbor, beautiful old town, and delicious local cuisine.",17250,67
+100,Larissa,"A city in central Greece known for its rich history, ancient ruins, and vibrant cultural scene.",63223,67
+101,Volos,"A coastal city in Thessaly, Greece famous for its beautiful waterfront, scenic views of Mount Pelion, and vibrant local culture.",60555,67
+102,Kalamata,"A city in the southern Peloponnese region of Greece known for its picturesque beaches, olive groves, and delicious local cuisine.",57802,67
+103,Budapest,"The capital city of Hungary known for its stunning architecture, thermal baths, and vibrant Danube River views.",7970,75
+104,Debrecen,"The second-largest city in Hungary known for its historic landmarks, vibrant cultural scene, and beautiful Great Forest Park.",69055,75
+105,Szeged,"A city in southern Hungary famous for its beautiful Art Nouveau buildings, vibrant pedestrian streets, and delicious local cuisine.",15298,75
+106,Miskolc,"A city in northeastern Hungary known for its beautiful natural surroundings, historic castles, and vibrant cultural events.",73815,75
+107,Pécs,"A city in southern Hungary famous for its rich history, stunning architecture, and vibrant arts scene.",99448,75
+108,Győr,"A city in western Hungary known for its beautiful Baroque architecture, picturesque riverside, and vibrant festivals.",43837,75
+109,Nyíregyháza,"A city in northeastern Hungary known for its beautiful parks, vibrant cultural scene, and thermal baths.",81256,75
+110,Kecskemét,"A city in central Hungary famous for its beautiful Art Nouveau buildings, vibrant cultural festivals, and delicious local food.",69859,75
+111,Sopron,"A city in western Hungary known for its charming Old Town, historic landmarks, and beautiful vineyards.",93330,75
+112,Eger,"A city in northern Hungary famous for its stunning Baroque architecture, beautiful castle, and world-renowned wines.",94872,75
+113,Reykjavik,"The capital city of Iceland known for its stunning natural landscapes, geothermal pools, and vibrant cultural scene.",75719,76
+114,Akureyri,"A city in northern Iceland known for its beautiful fjords, vibrant arts scene, and stunning winter landscapes.",77490,76
+115,Hafnarfjörður,"A town in southwest Iceland famous for its folklore, vibrant music scene, and proximity to the capital city of Reykjavik.",75155,76
+116,Kópavogur,"A city in Iceland neighboring Reykjavik known for its modern architecture, beautiful waterfront, and vibrant cultural events.",10428,76
+117,Ísafjörður,"A town in the Westfjords region of Iceland known for its stunning fjord landscapes, outdoor activities, and rich maritime heritage.",72745,76
+118,Akranes,"A town on the west coast of Iceland famous for its beautiful lighthouse, scenic beaches, and historic fishing industry.",38603,76
+119,Egilsstaðir,"A town in eastern Iceland known for its beautiful landscapes, proximity to stunning national parks, and outdoor recreational opportunities.",82889,76
+120,Selfoss,"A town in southern Iceland famous for its proximity to the Golden Circle attractions, beautiful waterfalls, and natural hot springs.",42861,76
+121,Vík,"A village in southern Iceland known for its black sand beaches, stunning cliffs, and proximity to the famous Reynisfjara beach.",82721,76
+122,Grindavík,A fishing town on the Reykjanes Peninsula in Iceland famous for its Blue Lagoon geothermal spa and beautiful coastal landscapes.,79183,76
+123,New Delhi,"The capital city of India known for its rich history, iconic landmarks like the Red Fort and India Gate, and vibrant street markets.",31175,77
+124,Mumbai,"The largest city in India known for its bustling metropolis, Bollywood film industry, and vibrant street food culture.",53164,77
+125,Jaipur,"A city in Rajasthan, India famous for its stunning palaces, vibrant bazaars, and rich Rajput heritage.",38723,77
+126,Kolkata,"A city in West Bengal, India known for its colonial architecture, vibrant arts scene, and cultural festivals.",70997,77
+127,Chennai,"A city on the Bay of Bengal in Tamil Nadu, India famous for its Dravidian architecture, beautiful beaches, and thriving film industry.",44578,77
+128,Bangalore,"A city in Karnataka, India known for its thriving IT industry, beautiful parks, and vibrant nightlife.",66126,77
+129,Hyderabad,"A city in Telangana, India famous for its rich history, iconic Charminar monument, and flavorful Hyderabadi cuisine.",23245,77
+130,Ahmedabad,"A city in Gujarat, India known for its historic landmarks, vibrant textile industry, and delicious street food.",39294,77
+131,Pune,"A city in Maharashtra, India famous for its educational institutions, vibrant music scene, and pleasant weather.",93492,77
+132,Kochi,"A city in Kerala, India known for its picturesque backwaters, historic Fort Kochi, and delicious seafood.",80524,77
+133,Jakarta,"The capital city of Indonesia known for its vibrant street life, historic landmarks like the National Monument, and bustling markets.",35033,78
+134,Bali,"An island in Indonesia famous for its stunning beaches, vibrant arts scene, and rich cultural heritage.",19419,78
+135,Yogyakarta,"A city in Java, Indonesia known for its ancient temples like Borobudur and Prambanan, rich Javanese traditions, and vibrant batik art.",53741,78
+136,Bandung,"A city in West Java, Indonesia famous for its cool climate, beautiful colonial architecture, and vibrant shopping scene.",47932,78
+137,Surabaya,"The second-largest city in Indonesia known for its vibrant culinary scene, historic landmarks, and bustling street markets.",43523,78
+138,Medan,"A city in North Sumatra, Indonesia famous for its multicultural heritage, delicious street food, and vibrant markets.",74161,78
+139,Makassar,"A city in South Sulawesi, Indonesia known for its beautiful beaches, vibrant cultural scene, and delicious seafood.",65933,78
+140,Dublin,"The capital city of Ireland known for its lively pub culture, historic landmarks like Trinity College and Dublin Castle, and vibrant music scene.",32845,81
+141,Cork,"A city in Ireland famous for its picturesque waterfront, vibrant food scene, and rich cultural heritage.",27736,81
+142,Galway,"A coastal city in Ireland known for its vibrant arts scene, colorful buildings, and lively festivals.",37605,81
+143,Limerick,"A city in Ireland on the banks of the River Shannon known for its medieval architecture, vibrant music scene, and historic landmarks.",60368,81
+144,Kilkenny,"A city in Ireland famous for its well-preserved medieval buildings, stunning Kilkenny Castle, and vibrant arts and crafts scene.",68621,81
+145,Jerusalem,"The capital city of Israel known for its religious significance, historic landmarks like the Western Wall and Church of the Holy Sepulchre, and vibrant markets.",84544,82
+146,Tel Aviv,"A cosmopolitan city in Israel known for its beautiful beaches, vibrant nightlife, and modern architecture.",78701,82
+147,Haifa,"A city in Israel known for its stunning views of the Mediterranean Sea, beautiful gardens, and vibrant cultural scene.",86998,82
+148,Eilat,"A resort city in southern Israel famous for its stunning Red Sea coral reefs, beautiful beaches, and vibrant water sports.",29347,82
+149,Netanya,"A coastal city in Israel known for its beautiful beaches, vibrant promenade, and rich cultural heritage.",26598,82
+150,Rome,"The capital city of Italy known for its ancient ruins like the Colosseum and Roman Forum, historic landmarks like St. Peter's Basilica, and vibrant street life.",1643,83
+151,Venice,"A city in northeastern Italy known for its picturesque canals, stunning architecture, and romantic gondola rides.",22655,83
+152,Florence,"A city in central Italy famous for its rich Renaissance history, beautiful art and architecture, and iconic landmarks like the Duomo.",36623,83
+153,Milan,"A city in northern Italy known for its vibrant fashion and design industry, stunning cathedral (Duomo di Milano), and world-class art collections.",96183,83
+154,Naples,"A city in southern Italy famous for its rich history, vibrant street life, and delicious Neapolitan cuisine.",15869,83
+155,Siena,"A city in Tuscany, Italy known for its medieval architecture, beautiful piazza (Piazza del Campo), and famous Palio horse race.",87221,83
+156,Tokyo,"The capital city of Japan known for its futuristic technology, vibrant street fashion, and historic temples and gardens.",27806,85
+157,Kyoto,"A city in Japan famous for its well-preserved traditional architecture, beautiful temples, and serene Zen gardens.",93924,85
+158,Osaka,"A city in Japan known for its modern architecture, vibrant street food scene, and bustling shopping districts.",56861,85
+159,Hiroshima,"A city in Japan famous for its tragic history, Peace Memorial Park, and the iconic Itsukushima Shrine on Miyajima Island.",80468,85
+160,Nara,"A city in Japan known for its ancient temples, friendly roaming deer, and the iconic Great Buddha statue at Tōdai-ji temple.",21578,85
+161,Sapporo,"A city in northern Japan famous for its winter festivals, delicious food, and beautiful snow-covered landscapes.",94626,85
+162,Fukuoka,"A city in southern Japan known for its vibrant street food culture, beautiful parks, and historic temples.",54143,85
+163,Kanazawa,"A city in Ishikawa, Japan famous for its well-preserved Edo-period districts, beautiful Kenrokuen Garden, and traditional arts and crafts.",42054,85
+164,Nagasaki,"A city in Japan known for its history as a former trading port, Peace Park, and unique cultural heritage.",22759,85
+165,Amman,"The capital city of Jordan known for its ancient Roman ruins, vibrant markets, and stunning hilltop Citadel.",34250,86
+166,Petra,"An ancient city in Jordan famous for its rock-cut architecture, including the iconic Treasury building, and stunning desert landscapes.",29969,86
+167,Aqaba,"A coastal city in Jordan known for its beautiful beaches, vibrant coral reefs, and opportunities for diving and snorkeling.",86801,86
+168,Madaba,"A city in Jordan famous for its Byzantine and Umayyad mosaics, including the famous Madaba Map, and rich Christian heritage.",65213,86
+169,Jerash,"An archaeological site in Jordan known for its well-preserved Roman ruins, including a colonnaded street, theaters, and temples.",3579,86
+170,Wadi Rum,"A desert region in Jordan famous for its stunning sandstone landscapes, unique rock formations, and opportunities for desert adventures.",18777,86
+171,Irbid,"A city in northern Jordan known for its vibrant cultural scene, historic sites, and prestigious universities.",58247,86
+172,Karak,"A city in Jordan famous for its Crusader castle (Karak Castle), historic architecture, and panoramic views of the surrounding mountains.",56996,86
+173,Salt,"A city in Jordan known for its well-preserved Ottoman-era architecture, vibrant art scene, and traditional handicrafts.",59156,86
+174,Nairobi,"The capital city of Kenya known for its bustling markets, vibrant cultural scene, and proximity to Nairobi National Park.",12232,88
+175,Mombasa,"A coastal city in Kenya famous for its beautiful beaches, historic Fort Jesus, and vibrant Swahili culture.",15691,88
+176,Nakuru,"A city in Kenya known for its stunning lake (Lake Nakuru), abundant wildlife, and picturesque national park.",71331,88
+177,Eldoret,"A city in western Kenya famous for its high-altitude training camps for long-distance runners, beautiful landscapes, and vibrant markets.",66398,88
+178,Kisumu,"A city in western Kenya known for its location on Lake Victoria, vibrant fishing industry, and vibrant cultural festivals.",79809,88
+179,Kuala Lumpur,"The capital city of Malaysia known for its iconic Petronas Twin Towers, vibrant street food, and cultural diversity.",8178,103
+180,George Town,"A city in Penang, Malaysia famous for its well-preserved colonial architecture, vibrant street art, and delicious local cuisine.",28541,103
+181,Kota Kinabalu,"A city in Sabah, Malaysia known for its stunning beaches, vibrant night markets, and proximity to Mount Kinabalu.",51250,103
+182,Malacca City,"The capital city of Malacca, Malaysia famous for its rich history, UNESCO-listed historic center, and vibrant Baba-Nyonya culture.",9634,103
+183,Johor Bahru,"A city in Johor, Malaysia known for its modern skyline, vibrant shopping malls, and proximity to Singapore.",34455,103
+184,Ipoh,"A city in Perak, Malaysia famous for its delicious street food, colonial-era architecture, and limestone hills.",87029,103
+185,Langkawi,"An archipelago and resort destination in Malaysia famous for its beautiful beaches, lush rainforests, and duty-free shopping.",13186,103
+186,Kuching,"The capital city of Sarawak, Malaysia known for its vibrant waterfront, cultural diversity, and proximity to Borneo's rainforests.",74835,103
+187,Kuantan,"A city in Pahang, Malaysia famous for its beautiful beaches, vibrant night markets, and delicious local seafood.",45118,103
+188,Sandakan,"A city in Sabah, Malaysia known for its wildlife-rich rainforests, historic landmarks, and famous orangutan rehabilitation centers.",27994,103
+189,Taiping,"A town in Perak, Malaysia famous for its beautiful lake gardens, colonial-era architecture, and peaceful atmosphere.",97029,103
+190,Mexico City,"The capital city of Mexico known for its rich history, vibrant culture, and UNESCO-listed historic center, including the iconic Zocalo square.",20503,110
+191,Cancun,"A popular resort city in Mexico known for its stunning beaches, crystal-clear turquoise waters, and vibrant nightlife.",69150,110
+192,Guadalajara,"The second-largest city in Mexico known for its vibrant arts scene, rich culinary heritage, and historic landmarks like the Guadalajara Cathedral.",41206,110
+193,Monterrey,"A city in northeastern Mexico famous for its modern skyline, vibrant industrial sector, and stunning natural landscapes.",81959,110
+194,Puebla,"A city in central Mexico known for its well-preserved colonial architecture, colorful Talavera pottery, and delicious local cuisine.",5975,110
+195,Tijuana,"A city on the Mexico-United States border known for its vibrant cultural scene, bustling street markets, and delicious street food.",49589,110
+196,Mérida,"The capital city of Yucatán, Mexico known for its well-preserved colonial architecture, Mayan heritage, and vibrant cultural festivals.",79549,110
+197,Oaxaca,"A city in southern Mexico famous for its rich indigenous heritage, colorful markets, and traditional arts and crafts.",75021,110
+198,Playa del Carmen,"A coastal resort town in Mexico's Riviera Maya known for its beautiful beaches, vibrant nightlife, and world-class diving.",32462,110
+199,Puerto Vallarta,"A resort city on Mexico's Pacific coast known for its stunning beaches, vibrant Old Town, and breathtaking sunsets.",20367,110
+200,San Miguel de Allende,"A city in central Mexico famous for its well-preserved colonial architecture, vibrant art scene, and charming cobblestone streets.",26183,110
+201,Marrakech,"A city in Morocco known for its vibrant medina (old town), bustling souks, and iconic landmarks like the Koutoubia Mosque and Jardin Majorelle.",26536,116
+202,Fez,"A city in Morocco famous for its well-preserved medieval architecture, historic medina (Fes el-Bali), and vibrant tanneries.",23334,116
+203,Casablanca,"The largest city in Morocco known for its modern architecture, vibrant street life, and iconic Hassan II Mosque.",56858,116
+204,Chefchaouen,"A city in northwest Morocco famous for its stunning blue-washed streets, traditional handicrafts, and beautiful mountain views.",30709,116
+205,Essaouira,"A coastal city in Morocco known for its picturesque medina, beautiful beaches, and vibrant music festivals.",64797,116
+206,Agadir,"A city in southwest Morocco famous for its stunning beaches, vibrant souks, and proximity to the Atlas Mountains.",76276,116
+207,Rabat,"The capital city of Morocco known for its historic landmarks like the Royal Palace and Hassan Tower, as well as its vibrant arts scene.",11921,116
+208,Tangier,"A city in northern Morocco known for its strategic location on the Strait of Gibraltar, historic medina, and cosmopolitan atmosphere.",52184,116
+209,Meknes,"A city in Morocco famous for its well-preserved historic medina, beautiful gates, and impressive royal stables.",21411,116
+210,Ouarzazate,"A city in Morocco known for its stunning desert landscapes, kasbahs, and being a popular filming location for movies and TV shows.",20189,116
+211,Ifrane,"A city in the Middle Atlas region of Morocco famous for its Swiss-like architecture, clean streets, and beautiful surrounding forests.",90059,116
+212,Amsterdam,"The capital city of the Netherlands known for its picturesque canals, historic architecture, and vibrant cultural scene.",66612,122
+213,Rotterdam,"A city in the Netherlands famous for its modern architecture, bustling port, and vibrant arts scene.",5614,122
+214,The Hague,"The administrative capital of the Netherlands known for its government buildings, historic landmarks like the Binnenhof, and beautiful beaches.",91533,122
+215,Utrecht,"A city in the Netherlands famous for its well-preserved historic center, beautiful canals, and vibrant cultural events.",37218,122
+216,Eindhoven,"A city in the Netherlands known for its innovative technology industry, vibrant design scene, and cultural festivals.",50241,122
+217,Maastricht,"A city in the Netherlands famous for its historic architecture, vibrant culinary scene, and lively cultural events.",27594,122
+218,Auckland,"The largest city in New Zealand known for its stunning harbors, vibrant arts scene, and diverse culinary offerings.",35898,123
+219,Wellington,"The capital city of New Zealand known for its picturesque harbor, vibrant cultural scene, and thriving coffee culture.",21818,123
+220,Christchurch,"A city in New Zealand famous for its English heritage, beautiful gardens, and vibrant arts and music scene.",32879,123
+221,Queenstown,"A resort town in New Zealand's South Island known for its stunning alpine scenery, adventure activities, and vibrant nightlife.",83491,123
+222,Rotorua,"A city in New Zealand famous for its geothermal wonders, Maori culture, and adventure activities like zorbing and hiking.",2385,123
+223,Dunedin,"A city in New Zealand known for its Scottish heritage, beautiful architecture, and vibrant student culture.",15269,123
+224,Hamilton,"A city in New Zealand famous for its beautiful gardens, vibrant arts scene, and the iconic Hamilton Gardens.",12990,123
+225,Napier,"A city in New Zealand known for its Art Deco architecture, beautiful beaches, and thriving wine region.",59352,123
+226,Tauranga,"A city in New Zealand famous for its beautiful beaches, vibrant waterfront, and proximity to Mount Maunganui.",34902,123
+227,Nelson,"A city in New Zealand known for its sunny climate, stunning beaches, and vibrant arts and crafts scene.",17011,123
+228,Oslo,"The capital city of Norway known for its stunning fjords, vibrant cultural scene, and historic landmarks like the Viking Ship Museum.",38492,129
+229,Bergen,"A city in Norway famous for its picturesque waterfront, stunning surrounding mountains, and colorful wooden houses in the historic Bryggen district.",37532,129
+230,Trondheim,"A city in Norway known for its well-preserved medieval architecture, vibrant music scene, and historic Nidaros Cathedral.",91878,129
+231,Stavanger,"A city in Norway famous for its beautiful beaches, stunning fjords, and proximity to the famous Pulpit Rock.",73231,129
+232,Tromso,"A city in northern Norway known for its stunning natural landscapes, vibrant Northern Lights, and lively cultural scene.",43382,129
+233,Bodo,"A city in Norway famous for its beautiful coastal landscapes, white sandy beaches, and opportunities for outdoor activities like hiking and fishing.",35868,129
+234,Kristiansand,"A city in Norway known for its charming old town, beautiful beaches, and vibrant summer music festivals.",8789,129
+235,Alesund,"A city in Norway famous for its art nouveau architecture, stunning views of the surrounding islands, and vibrant maritime history.",60611,129
+236,Haugesund,"A city in Norway known for its rich Viking heritage, beautiful coastal landscapes, and the annual Norwegian International Film Festival.",96207,129
+237,Lima,"The capital city of Peru known for its rich history, vibrant culinary scene, and historic landmarks like the Plaza de Armas and Larco Museum.",24343,136
+238,Cusco,"A city in Peru famous for its well-preserved Inca ruins, including Machu Picchu, and vibrant Andean culture.",57173,136
+239,Arequipa,"A city in Peru known for its stunning colonial architecture, including the famous Santa Catalina Monastery, and proximity to the picturesque Colca Canyon.",54022,136
+240,Iquitos,"A city in the Peruvian Amazon known for its vibrant riverfront, bustling Belén Market, and opportunities for jungle adventures.",89225,136
+241,Trujillo,"A city in Peru famous for its well-preserved pre-Columbian archaeological sites, beautiful colonial architecture, and vibrant traditional festivals.",65739,136
+242,Puno,"A city in Peru known for its location on the shores of Lake Titicaca, the highest navigable lake in the world, and its vibrant folkloric traditions.",63914,136
+243,Puerto Maldonado,"A city in the Peruvian Amazon known for its rich biodiversity, lush rainforests, and opportunities for wildlife encounters.",62321,136
+244,Chiclayo,"A city in Peru famous for its ancient archaeological sites like the Royal Tombs of Sipán, vibrant markets, and delicious regional cuisine.",36704,136
+245,Manila,"The capital city of the Philippines known for its bustling street life, historic landmarks like Intramuros, and vibrant cultural scene.",81289,137
+246,Cebu City,"A city in the Philippines famous for its beautiful beaches, vibrant nightlife, and historic landmarks like the Magellan's Cross.",73497,137
+247,Davao City,"A city in the Philippines known for its vibrant cultural heritage, beautiful parks and gardens, and proximity to Mount Apo, the country's highest peak.",8575,137
+248,Boracay,"A popular island destination in the Philippines known for its stunning white sand beaches, crystal-clear turquoise waters, and vibrant water sports scene.",76955,137
+249,Palawan,"A province in the Philippines famous for its pristine beaches, stunning limestone cliffs, and the UNESCO-listed Puerto Princesa Subterranean River National Park.",36234,137
+250,Baguio,"A city in the Philippines known for its cool climate, scenic mountain views, and vibrant arts and crafts scene.",93292,137
+251,Cagayan de Oro,"A city in the Philippines famous for its white water rafting opportunities, beautiful natural landscapes, and vibrant festivals.",57228,137
+252,Angeles City,"A city in the Philippines known for its vibrant nightlife, entertainment district, and proximity to the historic Mount Pinatubo.",49647,137
+253,Iloilo City,"A city in the Philippines famous for its rich Spanish colonial heritage, beautiful churches, and vibrant culinary scene.",22869,137
+254,Batangas City,"A city in the Philippines known for its beautiful beaches, dive sites, and the stunning Taal Volcano, located in nearby Taal Lake.",15536,137
+255,Warsaw,"The capital city of Poland known for its rich history, beautiful Old Town, and cultural attractions like the Royal Castle and Lazienki Park.",66980,138
+256,Krakow,"A city in Poland famous for its well-preserved medieval architecture, including the iconic Wawel Castle and the historic Main Market Square.",48626,138
+257,Gdansk,"A city in Poland known for its rich maritime heritage, beautiful old town, and historic shipyards, including the iconic Gdansk Crane.",86977,138
+258,Wroclaw,"A city in Poland famous for its stunning Gothic architecture, beautiful Market Square, and vibrant cultural scene.",70050,138
+259,Poznan,"A city in Poland known for its vibrant Old Town, historic landmarks like the Imperial Castle, and lively cultural events.",16818,138
+260,Lodz,"A city in Poland famous for its industrial heritage, vibrant street art, and revitalized factory spaces hosting cultural events.",27161,138
+261,Katowice,"A city in Poland known for its modern architecture, vibrant cultural scene, and proximity to the picturesque Beskidy Mountains.",69876,138
+262,Szczecin,"A city in Poland famous for its maritime history, beautiful parks, and stunning Gothic and Renaissance architecture.",69382,138
+263,Gdynia,"A coastal city in Poland known for its beautiful beaches, modernist architecture, and the bustling port.",49401,138
+264,Bydgoszcz,"A city in Poland famous for its beautiful riverside location, historic buildings, and vibrant music and arts scene.",73189,138
+265,Torun,"A city in Poland known for its well-preserved medieval architecture, including the iconic Copernicus House, and its gingerbread tradition.",20345,138
+266,Lisbon,"The capital city of Portugal known for its colorful neighborhoods, historic landmarks like the Belém Tower and Jerónimos Monastery, and vibrant Fado music.",6447,139
+267,Porto,"A city in Portugal famous for its historic city center, beautiful Douro River, and its renowned Port wine production.",36605,139
+268,Faro,"A city in Portugal known for its picturesque old town, beautiful beaches, and being the gateway to the stunning Algarve region.",13710,139
+269,Coimbra,"A city in Portugal famous for its historic university, well-preserved medieval architecture, and vibrant student atmosphere.",47541,139
+270,Madeira,"A Portuguese archipelago known for its lush landscapes, stunning cliffs, and beautiful Levada walking trails.",96979,139
+271,Evora,"A city in Portugal famous for its well-preserved Roman ruins, including the Temple of Diana, and its historic center, a UNESCO World Heritage site.",70126,139
+272,Braga,"A city in Portugal known for its rich religious heritage, beautiful Baroque architecture, and vibrant cultural festivals.",11753,139
+273,Aveiro,"A city in Portugal famous for its picturesque canals, colorful Moliceiro boats, and the stunning Costa Nova beach.",39069,139
+274,Sintra,"A town in Portugal known for its fairytale-like castles and palaces, including the famous Pena Palace and the Quinta da Regaleira.",4153,139
+275,Funchal,"The capital city of Madeira, Portugal known for its beautiful harbor, stunning gardens, and vibrant New Year's Eve celebrations.",46248,139
+276,Viseu,"A city in Portugal famous for its charming historic center, beautiful gardens, and the stunning Grão Vasco Museum.",22909,139
+277,Cascais,"A coastal town in Portugal known for its beautiful beaches, elegant mansions, and vibrant marina.",94085,139
+278,Moscow,"The capital city of Russia known for its iconic landmarks like the Red Square and the Kremlin, vibrant cultural scene, and historic architecture.",68046,142
+279,Saint Petersburg,"A city in Russia famous for its stunning palaces, beautiful canals, and world-class museums, including the Hermitage Museum.",45111,142
+280,Novosibirsk,"A city in Russia known for its vibrant arts and theater scene, beautiful parks, and the famous Novosibirsk Opera and Ballet Theatre.",26485,142
+281,Yekaterinburg,"A city in Russia famous for its rich history, vibrant cultural scene, and proximity to the Ural Mountains and the Europe-Asia border.",6818,142
+282,Kazan,"A city in Russia known for its rich Tatar heritage, beautiful mosques, and the UNESCO-listed Kazan Kremlin.",76496,142
+283,Nizhny Novgorod,"A city in Russia famous for its historic architecture, vibrant cultural scene, and the annual Nizhny Novgorod Fair.",78022,142
+284,Sochi,"A city in Russia known for its stunning Black Sea coastline, beautiful beaches, and hosting the 2014 Winter Olympics.",27408,142
+285,Riyadh,"The capital city of Saudi Arabia known for its modern skyline, bustling souks, and historic landmarks like the Masmak Fortress.",43921,150
+286,Jeddah,"A city in Saudi Arabia famous for its beautiful waterfront, vibrant commercial center, and the iconic King Fahd Fountain.",43298,150
+287,Mecca,"A city in Saudi Arabia known as the holiest city in Islam, home to the Masjid al-Haram and the Kaaba.",89366,150
+288,Medina,"A city in Saudi Arabia famous for its significance in Islamic history, including the Prophet's Mosque and the burial place of Prophet Muhammad.",86377,150
+289,Dammam,"A city in Saudi Arabia known for its modern skyline, beautiful waterfront, and proximity to the stunning Half Moon Bay.",76565,150
+290,Abha,"A city in Saudi Arabia famous for its cool climate, scenic mountain views, and vibrant Asir National Park.",51079,150
+291,Taif,"A city in Saudi Arabia known for its cool climate, beautiful gardens, and the annual Taif Rose Festival.",43998,150
+292,Tabuk,"A city in Saudi Arabia famous for its stunning desert landscapes, ancient rock art, and proximity to the Red Sea.",55631,150
+293,Singapore,"The capital city of Singapore known for its modern skyline, vibrant street food scene, and iconic landmarks like Marina Bay Sands and Gardens by the Bay.",73223,155
+294,Sentosa,"An island resort in Singapore famous for its beautiful beaches, family-friendly attractions, and the iconic Universal Studios Singapore.",66627,155
+295,Chinatown,"A vibrant district in Singapore known for its rich heritage, colorful temples, and delicious local cuisine.",77136,155
+296,Little India,"A cultural enclave in Singapore known for its vibrant street life, traditional Indian shops, and the bustling Tekka Centre.",42568,155
+297,Marina Bay,"A waterfront district in Singapore famous for its stunning skyline views, luxurious hotels, and the iconic Merlion statue.",41170,155
+298,Clarke Quay,"A riverside quay in Singapore known for its vibrant nightlife, waterfront restaurants, and entertainment venues.",66648,155
+299,Gardens by the Bay,"A famous attraction in Singapore known for its futuristic Supertrees, beautiful flower domes, and stunning waterfront views.",23019,155
+300,Cape Town,"The legislative capital of South Africa known for its stunning natural beauty, including Table Mountain and beautiful beaches like Clifton and Camps Bay.",69124,160
+301,Johannesburg,"The largest city in South Africa known for its vibrant cultural scene, bustling markets, and historic sites like the Apartheid Museum.",10081,160
+302,Durban,"A city in South Africa famous for its beautiful beaches, vibrant waterfront, and the iconic Moses Mabhida Stadium.",32795,160
+303,Pretoria,"The administrative capital of South Africa known for its historic landmarks like the Union Buildings, beautiful gardens, and vibrant arts scene.",24964,160
+304,Port Elizabeth,"A city in South Africa known for its beautiful beaches, the stunning Addo Elephant National Park, and its vibrant cultural festivals.",20954,160
+305,Bloemfontein,"The judicial capital of South Africa known for its historic landmarks like the National Women's Monument, beautiful gardens, and its role as the birthplace of the ANC.",62231,160
+306,East London,"A city in South Africa famous for its beautiful beaches, the stunning Nahoon Reef for surfing, and the East London Museum.",96647,160
+307,Stellenbosch,"A town in South Africa known for its beautiful vineyards, historic Cape Dutch architecture, and being the heart of the Cape Winelands.",82770,160
+308,Kimberley,"A city in South Africa famous for its diamond mining history, the Big Hole, and the Kimberley Mine Museum.",48244,160
+309,Nelspruit,"A city in South Africa known as the gateway to Kruger National Park, famous for its wildlife, stunning landscapes, and diverse flora and fauna.",66519,160
+310,Polokwane,"A city in South Africa famous for its rich cultural heritage, beautiful wildlife reserves, and being the gateway to the northern part of the country.",70100,160
+311,George,"A city in South Africa known for its scenic beauty, including the stunning Outeniqua Mountains, beautiful beaches, and golf courses.",33653,160
+312,Seoul,"The capital city of South Korea known for its futuristic architecture, vibrant street markets, and historic palaces like Gyeongbokgung.",81681,161
+313,Busan,"A city in South Korea famous for its beautiful beaches, vibrant seafood markets, and the iconic Busan Tower.",5704,161
+314,Incheon,"A city in South Korea known for its modern architecture, vibrant Chinatown, and being the gateway to Incheon International Airport.",54278,161
+315,Daegu,"A city in South Korea famous for its historic sites like the Donghwasa Temple, beautiful mountains, and vibrant fashion scene.",42525,161
+316,Daejeon,"A city in South Korea known for its modern landmarks like the Daejeon Convention Center, beautiful parks, and vibrant scientific and educational institutions.",68453,161
+317,Gwangju,"A city in South Korea famous for its vibrant arts and culture scene, historic sites like the Gwangju Biennale Hall, and beautiful parks.",77049,161
+318,Ulsan,"A city in South Korea known for its industrial significance, beautiful coastal scenery, and the scenic Ganjeolgot Sunrise Park.",61078,161
+319,Suwon,"A city in South Korea famous for its UNESCO-listed Hwaseong Fortress, vibrant traditional markets, and the popular Suwon World Cup Stadium.",37077,161
+320,Changwon,"A city in South Korea known for its beautiful parks, vibrant cultural festivals, and the scenic Gyeongnam Masan Robot Land.",50772,161
+321,Seongnam,"A city in South Korea famous for its modern residential complexes, vibrant shopping districts, and the Seongnam Arts Center.",25223,161
+322,Madrid,"The capital city of Spain known for its vibrant nightlife, world-class museums like the Prado, and historic landmarks like the Royal Palace.",45988,163
+323,Barcelona,"A city in Spain famous for its stunning architecture, including the iconic Sagrada Familia and Park Güell, beautiful beaches, and vibrant street life.",62069,163
+324,Seville,"A city in Spain known for its rich history, stunning Moorish architecture, and lively flamenco scene.",95038,163
+325,Valencia,"A city in Spain famous for its modern City of Arts and Sciences, beautiful beaches, and the vibrant Fallas festival.",47171,163
+326,Malaga,"A city in Spain known for its beautiful beaches, vibrant cultural scene, and being the birthplace of Pablo Picasso.",54171,163
+327,Bilbao,"A city in Spain famous for its iconic Guggenheim Museum, delicious Basque cuisine, and vibrant artistic and industrial heritage.",60934,163
+328,Granada,"A city in Spain known for its breathtaking Alhambra palace, historic Moorish quarter, and vibrant tapas culture.",48112,163
+329,Palma de Mallorca,"The capital city of the Balearic Islands in Spain known for its stunning beaches, historic old town, and vibrant nightlife.",59950,163
+330,Ibiza,"An island in Spain famous for its vibrant nightlife, beautiful beaches, and UNESCO-listed old town, Dalt Vila.",26348,163
+331,Cordoba,"A city in Spain known for its stunning Mezquita cathedral, beautiful Moorish architecture, and vibrant Andalusian culture.",67463,163
+332,Toledo,"A city in Spain famous for its well-preserved medieval architecture, including the famous Toledo Cathedral and Alcázar, and its rich cultural heritage.",84348,163
+333,Alicante,"A city in Spain known for its beautiful beaches, vibrant waterfront promenade, and the historic Santa Bárbara Castle.",73846,163
+334,San Sebastian,"A city in Spain famous for its beautiful beaches, world-renowned gastronomy, and the annual San Sebastian International Film Festival.",41013,163
+335,Colombo,"The capital city of Sri Lanka known for its bustling markets, historic landmarks like the Gangaramaya Temple, and beautiful Galle Face Green.",65736,164
+336,Kandy,"A city in Sri Lanka famous for its beautiful lake, historic Temple of the Tooth, and vibrant Esala Perahera festival.",32580,164
+337,Galle,"A city in Sri Lanka known for its well-preserved Dutch colonial architecture, beautiful fort, and picturesque beaches.",39241,164
+338,Nuwara Eliya,"A city in Sri Lanka famous for its cool climate, lush tea plantations, and beautiful landscapes, often referred to as 'Little England'.",43227,164
+339,Anuradhapura,"A city in Sri Lanka known for its ancient ruins, including the sacred Bodhi tree, and its rich Buddhist heritage.",85680,164
+340,Polonnaruwa,"A city in Sri Lanka famous for its well-preserved ancient ruins, including the Royal Palace and the Gal Vihara.",30207,164
+341,Dambulla,"A city in Sri Lanka known for its magnificent cave temples, including the famous Dambulla Cave Temple, a UNESCO World Heritage site.",71772,164
+342,Sigiriya,"A city in Sri Lanka famous for its iconic Sigiriya Rock Fortress, ancient frescoes, and beautiful surrounding landscapes.",60919,164
+343,Trincomalee,"A city in Sri Lanka known for its stunning beaches, vibrant coral reefs, and the historic Koneswaram Temple.",91051,164
+344,Bentota,"A coastal city in Sri Lanka famous for its beautiful beaches, water sports activities, and the Bentota River.",28345,164
+345,Ella,"A city in Sri Lanka known for its stunning tea plantations, beautiful waterfalls, and the famous Nine Arch Bridge.",87194,164
+346,Mirissa,"A coastal city in Sri Lanka famous for its pristine beaches, whale watching opportunities, and vibrant beachside restaurants.",83037,164
+347,Jaffna,"A city in Sri Lanka known for its vibrant Tamil culture, historic landmarks like the Jaffna Fort, and beautiful islands.",77181,164
+348,Stockholm,"The capital city of Sweden known for its beautiful archipelago, historic Gamla Stan, and vibrant cultural scene.",11312,168
+349,Gothenburg,"A city in Sweden famous for its charming canals, beautiful parks, and vibrant culinary scene.",10607,168
+350,Malmö,"A city in Sweden known for its modern architecture, beautiful parks, and being the gateway to the picturesque Öresund Bridge.",74278,168
+351,Uppsala,"A city in Sweden famous for its historic university, stunning cathedral, and vibrant student atmosphere.",89195,168
+352,Visby,"A city in Sweden known for its well-preserved medieval city walls, beautiful cobblestone streets, and the annual Medieval Week.",22044,168
+353,Örebro,"A city in Sweden famous for its historic Örebro Castle, beautiful parks, and vibrant cultural events.",57969,168
+354,Linköping,"A city in Sweden known for its historic Linköping Cathedral, beautiful gardens, and being a center for technology and innovation.",69388,168
+355,Västerås,"A city in Sweden famous for its historic sites like the Västerås Cathedral, beautiful Lake Mälaren, and vibrant festivals.",2824,168
+356,Helsingborg,"A city in Sweden known for its beautiful waterfront, historic landmarks like the Kärnan tower, and the stunning Sofiero Palace and Gardens.",28838,168
+357,Norrköping,"A city in Sweden famous for its vibrant industrial heritage, beautiful riverside promenade, and vibrant cultural scene.",65904,168
+358,Jönköping,"A city in Sweden known for its beautiful lakeside location, historic landmarks like the Jönköping Castle, and the annual DreamHack festival.",36619,168
+359,Zurich,"The largest city in Switzerland known for its vibrant arts and culture scene, beautiful Lake Zurich, and the historic old town.",12738,169
+360,Geneva,"A city in Switzerland famous for its diplomatic significance, stunning Lake Geneva, and the iconic Jet d'Eau.",48827,169
+361,Bern,"The capital city of Switzerland known for its well-preserved medieval old town, beautiful Aare River, and the Federal Palace.",9932,169
+362,Basel,"A city in Switzerland famous for its rich history, beautiful Rhine River, and the annual Art Basel fair.",96918,169
+363,Lucerne,"A city in Switzerland known for its picturesque location on Lake Lucerne, stunning mountain views, and the famous Chapel Bridge.",33440,169
+364,Lausanne,"A city in Switzerland famous for its beautiful lakeside location, vibrant cultural scene, and being the headquarters of the International Olympic Committee.",54989,169
+365,Zermatt,"A city in Switzerland known for its iconic Matterhorn mountain, world-class skiing, and charming car-free village.",14657,169
+366,Interlaken,"A city in Switzerland famous for its stunning mountain scenery, adventure sports opportunities, and the beautiful Jungfrau region.",18451,169
+367,Istanbul,"The largest city in Turkey known for its rich history, stunning architecture like the Hagia Sophia, and vibrant cultural scene.",42264,180
+368,Ankara,"The capital city of Turkey known for its modern architecture, historic sites like the Ataturk Mausoleum, and being the political and administrative center of the country.",4378,180
+369,Izmir,"A city in Turkey famous for its beautiful waterfront, vibrant street life, and historic landmarks like the ancient city of Ephesus.",7487,180
+370,Antalya,"A city in Turkey known for its stunning Mediterranean coastline, beautiful beaches, and ancient ruins like the Roman-era Aspendos Theater.",14685,180
+371,London,"The capital city of the United Kingdom known for its iconic landmarks like the Big Ben, Buckingham Palace, and the Tower of London.",60146,186
+372,Edinburgh,"The capital city of Scotland known for its historic sites like Edinburgh Castle, beautiful Royal Mile, and vibrant arts and festival scene.",93666,186
+373,Manchester,"A city in England famous for its vibrant music and sports scene, beautiful Victorian architecture, and the iconic Manchester United football club.",71779,186
+374,Birmingham,"A city in England known for its rich industrial heritage, beautiful canals, and vibrant cultural scene.",15602,186
+375,Glasgow,"A city in Scotland famous for its vibrant music and arts scene, beautiful Victorian architecture, and being the birthplace of renowned architect Charles Rennie Mackintosh.",67142,186
+376,Liverpool,"A city in England known for its rich maritime history, vibrant music scene, and being the birthplace of The Beatles.",90136,186
+377,Bristol,"A city in England famous for its vibrant street art, beautiful harborside, and historic landmarks like the Clifton Suspension Bridge.",83055,186
+378,Oxford,"A city in England known for its prestigious university, beautiful architecture like the Radcliffe Camera, and being a hub of academic and literary heritage.",95000,186
+379,Cambridge,"A city in England famous for its prestigious university, beautiful colleges, and picturesque River Cam.",29098,186
+380,New York City,"The largest city in the United States known for its iconic landmarks like Times Square, Statue of Liberty, and Central Park.",96740,187
+381,Los Angeles,"A city in the United States famous for its vibrant entertainment industry, beautiful beaches like Venice Beach, and iconic sites like the Hollywood Sign.",77854,187
+382,Chicago,"A city in the United States known for its stunning architecture, vibrant arts scene, and being a hub of blues and jazz music.",96440,187
+383,San Francisco,"A city in the United States famous for its iconic Golden Gate Bridge, vibrant cultural scene, and historic sites like Alcatraz Island.",87751,187
+384,Las Vegas,"A city in the United States known for its vibrant nightlife, world-class casinos, and iconic entertainment shows.",3135,187
+385,Miami,"A city in the United States famous for its beautiful beaches, vibrant Art Deco architecture in the South Beach area, and lively Latin American cultural scene.",59980,187
+386,"Washington, D.C.","The capital city of the United States known for its historic landmarks like the White House, U.S. Capitol, and the National Mall.",54521,187
+387,Boston,"A city in the United States known for its prestigious universities, historic sites like the Freedom Trail, and being a hub of American history and culture.",75031,187
+388,Ho Chi Minh City,"The largest city in Vietnam known for its bustling street life, historic landmarks like the Reunification Palace, and vibrant food scene.",79293,193
+389,Hanoi,"The capital city of Vietnam known for its rich history, beautiful Old Quarter, and being a hub of Vietnamese culture and cuisine.",1134,193
+390,Da Nang,"A city in Vietnam famous for its stunning beaches, beautiful Marble Mountains, and vibrant Dragon Bridge.",37935,193
+391,Hoi An,"A city in Vietnam known for its well-preserved ancient town, beautiful lantern-lit streets, and being a UNESCO World Heritage site.",87584,193
+392,Nha Trang,"A city in Vietnam famous for its pristine beaches, vibrant coral reefs, and the iconic Po Nagar Cham Towers.",95791,193
+393,Phu Quoc,"An island city in Vietnam known for its stunning beaches, vibrant night markets, and being a popular tourist destination.",80883,193
+394,Hue,"A city in Vietnam famous for its historic Imperial City, beautiful Perfume River, and being a UNESCO World Heritage site.",45390,193
+395,Vung Tau,"A city in Vietnam known for its beautiful beaches, vibrant seafood markets, and the scenic Vung Tau Lighthouse.",8281,193
+396,Can Tho,"A city in Vietnam famous for its bustling floating markets, beautiful canal networks, and the iconic Ninh Kieu Wharf.",46492,193
+397,Haiphong,"A city in Vietnam known for its vibrant port, beautiful Do Son Beach, and being the gateway to the stunning Halong Bay.",71145,193
+398,Bogotá,"The capital city of Colombia known for its historic district, vibrant street art scene, and beautiful Monserrate Hill.",8347,37
+399,Medellín,"A city in Colombia famous for its transformation into a vibrant cultural and innovation hub, beautiful views from the Metrocable, and the annual Feria de las Flores festival.",16729,37
+400,Cali,"A city in Colombia known for its lively salsa music and dance scene, beautiful views from the Cristo Rey monument, and the iconic San Antonio neighborhood.",69645,37
+401,Cartagena,"A city in Colombia famous for its well-preserved colonial architecture, stunning beaches like Playa Blanca, and vibrant Caribbean culture.",34254,37
+402,Barranquilla,"A city in Colombia known for its vibrant Carnaval de Barranquilla, beautiful malecón along the Magdalena River, and being the birthplace of Shakira.",61685,37
+403,Santa Marta,"A city in Colombia famous for its stunning beaches, including the iconic Playa Cristal, and being the gateway to the majestic Sierra Nevada de Santa Marta.",51892,37
+404,Manizales,"A city in Colombia known for its beautiful mountain views, vibrant coffee culture, and being the capital of the Caldas department.",93745,37
+405,Pereira,"A city in Colombia famous for its coffee plantations, scenic hot springs, and being the capital of the Risaralda department.",83399,37
+406,Zagreb,"The capital city of Croatia known for its historic Upper Town, beautiful parks like Maksimir Park, and vibrant cultural scene.",94841,42
+407,Split,"A city in Croatia famous for its well-preserved Roman ruins, stunning Diocletian's Palace, and beautiful waterfront promenade, Riva.",2211,42
+408,Dubrovnik,"A city in Croatia known for its UNESCO-listed Old Town, historic city walls, and stunning views of the Adriatic Sea.",36480,42
+409,Zadar,"A city in Croatia famous for its Roman and Venetian ruins, unique Sea Organ, and beautiful sunsets at the Greeting to the Sun.",35842,42
+410,Pula,"A city in Croatia known for its well-preserved Roman amphitheater, beautiful beaches, and the vibrant Pula Film Festival.",24040,42
+411,Rijeka,"A city in Croatia famous for its vibrant carnival, beautiful Trsat Castle, and being the gateway to the stunning Kvarner Bay.",75219,42
+412,Osijek,"A city in Croatia known for its rich history, beautiful Baroque architecture, and vibrant cultural festivals.",30394,42
+413,Šibenik,"A city in Croatia famous for its stunning Cathedral of St. James, beautiful waterfront promenade, and being a filming location for Game of Thrones.",59088,42
+414,Varaždin,"A city in Croatia known for its well-preserved Baroque architecture, beautiful castle, and vibrant music scene.",95694,42
+415,Bangkok,"The capital city of Thailand known for its bustling street markets, stunning temples like Wat Arun, and vibrant nightlife.",10201,174
+416,Chiang Mai,"A city in Thailand famous for its beautiful temples, vibrant night bazaars, and being a hub of traditional Thai arts and crafts.",83520,174
+417,Phuket,"A city in Thailand known for its stunning beaches, vibrant nightlife in Patong, and being a popular tourist destination.",28574,174
+418,Krabi,"A city in Thailand famous for its beautiful limestone cliffs, pristine beaches like Railay Beach, and vibrant marine life.",35400,174
+419,Pattaya,"A city in Thailand known for its beautiful beaches, lively entertainment scene, and vibrant nightlife.",11975,174
+420,Ayutthaya,"A city in Thailand famous for its historic ruins, including the UNESCO-listed Ayutthaya Historical Park, and its rich cultural heritage.",37552,174
+421,Hua Hin,"A city in Thailand known for its beautiful beaches, stunning royal palace, and vibrant night markets.",74256,174
+422,Koh Samui,"An island city in Thailand famous for its pristine beaches, vibrant nightlife in Chaweng, and the iconic Big Buddha Temple.",48902,174
