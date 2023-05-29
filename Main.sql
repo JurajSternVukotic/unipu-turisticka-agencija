@@ -509,6 +509,12 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	LINES TERMINATED BY '\r\n' 
 	IGNORE 1 ROWS
     (kod, datum_pocetka, datum_kraja, iznos, postotni);
+    
+	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv' 
+	INTO TABLE osiguranje
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'; 
 
 -- Odjeljak TESTIRANJE
 
