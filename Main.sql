@@ -464,37 +464,37 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/drzav
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n' ;    
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/grad.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/grad.csv' 
 	INTO TABLE grad
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/adresa.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/adresa.csv' 
 	INTO TABLE adresa
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo.csv' 
 	INTO TABLE cjepivo
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo_drzava.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo_drzava.csv' 
 	INTO TABLE cjepivo_drzava
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hotel.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hotel.csv' 
 	INTO TABLE hotel
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';    
 
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pozicija.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pozicija.csv' 
 	INTO TABLE pozicija
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
@@ -508,30 +508,37 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	IGNORE 1 ROWS
     (kod, datum_pocetka, datum_kraja, iznos, postotni);
     
-	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv' 
 	INTO TABLE osiguranje
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
 
-	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pokrice_osiguranja.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pokrice_osiguranja.csv' 
 	INTO TABLE pokrice_osiguranja
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
-    
-	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv' 
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/transport.csv' 
+	INTO TABLE transport
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'
+    IGNORE 1 ROWS
+    (tip_transporta, kapacitet, cijena, ime_tvrtke, telefonski_broj, email, vrijeme_polaska, trajanje_u_minutama); 
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv' 
 	INTO TABLE odrediste
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
     
-	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osoba.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osoba.csv' 
 	INTO TABLE osoba
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
-
 
 -- Odjeljak TESTIRANJE
 
