@@ -140,7 +140,6 @@ CREATE TABLE osoba (
 	datum_rodenja DATE NOT NULL,
 	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
 	email VARCHAR(100) NOT NULL UNIQUE,
-	govorni_jezik VARCHAR(50) NOT NULL,
     korisnicki_bodovi INT NOT NULL DEFAULT 0,
     CHECK (korisnicki_bodovi >= 0),
     id_adresa INT NOT NULL REFERENCES adresa (id)
