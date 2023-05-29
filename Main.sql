@@ -461,6 +461,50 @@ WHERE zaposlenik.ugovor_o_radu = "studentski";
  * Očekivani rezultat: C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/
  * Ukoliko se rezultat razlikuje, lokalno promijenite u skripti datoteku te tamo postavite datoteke.
  */
+ 
+INSERT INTO paket (id, naziv, opis, min_ljudi, max_ljudi, popunjenih_mjesta, cijena_po_turistu) 
+VALUES 
+    (1, 'Zagreb Discovery', 'Explore the hidden gems of Zagreb, the vibrant capital of Croatia. Discover its rich history and enjoy the local cuisine.', 2, 6, 0, 300.00),
+    (2, 'Dubrovnik Adventure', 'Embark on an exciting adventure in the breathtaking city of Dubrovnik. Explore its medieval walls and indulge in the beauty of the Adriatic Sea.', 4, 10, 0, 500.00),
+    (3, 'Zadar Sunset Cruise', 'Experience the magic of Zadar with a mesmerizing sunset cruise. Enjoy the beautiful coastline and witness the famous Sea Organ.', 2, 8, 4, 200.00),
+    (4, 'Pula Roman Heritage', 'Immerse yourself in the rich Roman heritage of Pula. Explore the ancient amphitheater and stroll through the charming streets of the old town.', 2, 4, 1, 250.00),
+    (5, 'Rijeka Coastal Escape', 'Escape to the picturesque coastal city of Rijeka. Relax on the stunning beaches and indulge in delicious seafood cuisine.', 2, 6, 0, 350.00),
+    (6, 'Šibenik Island Hopping', 'Embark on an island-hopping adventure from Šibenik. Discover the hidden gems of the Adriatic islands and soak up the sun and crystal-clear waters.', 4, 8, 0, 400.00),
+    (7, 'Osijek Countryside Retreat', 'Experience the tranquility of the Osijek countryside. Enjoy the picturesque landscapes, visit local vineyards, and taste traditional delicacies.', 6, 12, 7, 280.00),
+    (8, 'Los Angeles Hollywood Glam', 'Indulge in the glitz and glamour of Hollywood in Los Angeles. Visit iconic landmarks, stroll along the Walk of Fame, and experience the vibrant nightlife.', 2, 4, 1, 800.00),
+    (9, 'New York City Explorer', 'Immerse yourself in the energy of New York City. Discover iconic attractions, enjoy world-class shopping, and savor diverse culinary delights.', 4, 10, 1, 1000.00),
+    (10, 'Miami Beach Getaway', 'Escape to the tropical paradise of Miami Beach. Relax on the pristine beaches, experience vibrant nightlife, and enjoy water sports and shopping.', 2, 6, 5, 600.00),
+    (11, 'Singapore Urban Adventure', 'Embark on an urban adventure in the dynamic city-state of Singapore. Explore futuristic architecture, savor diverse street food, and visit world-class attractions.', 2, 8, 3, 700.00),
+    (12, 'Sydney Harbor Cruise', 'Experience the beauty of Sydney on a harbor cruise. Sail past iconic landmarks, enjoy panoramic views, and soak up the vibrant atmosphere of the city.', 4, 12, 0, 450.00),
+    (13, 'Tel Aviv Beach Retreat', 'Relax and unwind on the stunning beaches of Tel Aviv. Enjoy vibrant nightlife, explore the ancient city of Jaffa, and indulge in delicious Mediterranean cuisine.', 2, 6, 0, 550.00),
+    (14, 'Jerusalem Holy Pilgrimage', 'Embark on a sacred pilgrimage to Jerusalem. Visit holy sites, experience the spiritual atmosphere, and explore the rich history of this ancient city.', 4, 10, 2, 400.00),
+    (15, 'Warsaw Cultural Immersion', 'Immerse yourself in the vibrant cultural scene of Warsaw. Explore historic landmarks, visit world-class museums, and indulge in traditional Polish cuisine.', 2, 4, 6, 300.00),
+    (16, 'Madrid Tapas Tour', 'Embark on a culinary adventure in the vibrant city of Madrid. Sample delicious tapas, explore the art scene, and experience the lively Spanish culture.', 4, 8, 0, 350.00),
+    (17, 'Barcelona Gaudi Experience', 'Discover the architectural wonders of Barcelona inspired by Gaudi. Visit iconic landmarks such as Sagrada Familia and Park Güell, and enjoy the vibrant atmosphere.', 2, 6, 1, 450.00),
+    (18, 'London Royal Retreat', 'Experience the elegance of London on a royal retreat. Visit historic palaces, explore world-class museums, and indulge in traditional afternoon tea.', 4, 12, 0, 600.00),
+    (19, 'Prague Bohemian Escape', 'Escape to the bohemian charm of Prague. Wander through cobbled streets, visit fairytale-like castles, and enjoy the lively nightlife and local beer.', 2, 4, 0, 250.00),
+    (20, 'Dublin Pub Crawl', 'Experience the lively pub culture of Dublin. Enjoy traditional Irish music, visit historic pubs, and savor the taste of famous Irish whiskey.', 4, 10, 0, 300.00),
+    (21, 'Hiroshima Peace Journey', 'Embark on a journey of peace in Hiroshima. Visit the Peace Memorial Park, learn about the citys history, and experience the resilience of its people.', 2, 8, 3, 400.00),
+    (22, 'Paris Romantic Escape', 'Indulge in a romantic escape in the City of Love, Paris. Stroll along the Seine, visit world-renowned museums, and experience the enchanting atmosphere.', 2, 4, 3, 600.00),
+    (23, 'Berlin Street Art Tour', 'Explore the vibrant street art scene of Berlin. Discover colorful murals, visit alternative neighborhoods, and immerse yourself in the citys creative spirit.', 4, 8, 4, 350.00),
+    (24, 'Tokyo Anime Adventure', 'Embark on an anime adventure in Tokyo. Visit anime-themed cafes, explore vibrant neighborhoods like Akihabara, and experience the unique pop culture.', 4, 12, 6, 800.00),
+    (25, 'Graz Wine Tasting', 'Savor the flavors of Graz on a wine tasting journey. Explore the vineyards of Styria, sample exquisite wines, and indulge in regional delicacies.', 2, 6, 0, 300.00),
+    (26, 'Buenos Aires Tango Experience', 'Immerse yourself in the passionate world of tango in Buenos Aires. Learn to dance tango, enjoy live performances, and discover the vibrant culture of Argentina.', 4, 10, 0, 400.00),
+    (27, 'Rio de Janeiro Carnival Spectacular', 'Experience the excitement of Carnival in Rio de Janeiro. Witness the colorful parades, dance to samba rhythms, and soak up the vibrant energy of the city.', 2, 8, 1, 600.00),
+    (28, 'Oslo Fjord Cruise', 'Cruise through the breathtaking fjords of Oslo. Marvel at the stunning landscapes, explore charming coastal villages, and experience the tranquility of nature.', 2, 4, 3, 500.00),
+    (29, 'Porto Wine and Port Tasting', 'Indulge in the rich flavors of Porto with a wine and port tasting experience. Visit famous cellars, sample a variety of wines, and explore the charming streets of Porto.', 4, 10, 5, 350.00),
+    (30, 'Lisbon Coastal Discovery', 'Discover the beauty of Lisbon and its stunning coastline. Explore historic landmarks, relax on picturesque beaches, and indulge in delicious Portuguese cuisine.', 2, 6, 0, 400.00),
+    (31, 'Leipzig Music and Culture', 'Immerse yourself in the music and culture of Leipzig. Visit historic music venues, attend classical concerts, and explore the vibrant arts scene of the city.', 2, 4, 0, 300.00),
+    (32, 'Rome Historical Journey', 'Embark on a historical journey through the ancient city of Rome. Visit iconic landmarks such as the Colosseum and the Vatican, and immerse yourself in the rich history.', 4, 8, 2, 500.00),
+    (33, 'Milan Fashion and Shopping', 'Experience the world of fashion and luxury in Milan. Shop at high-end boutiques, admire stunning architecture, and indulge in gourmet Italian cuisine.', 2, 6, 0, 700.00),
+    (34, 'Moscow Kremlin Tour', 'Explore the grandeur of the Moscow Kremlin. Visit historic palaces, admire iconic cathedrals, and delve into the rich history and culture of Russia.', 2, 4, 3, 400.00),
+    (35, 'Ibiza Beach Party', 'Party in style on the legendary island of Ibiza. Dance the night away at world-famous clubs, relax on stunning beaches, and experience the vibrant nightlife.', 4, 12, 0, 600.00),
+    (36, 'Toronto City Escape', 'Escape to the multicultural city of Toronto. Explore diverse neighborhoods, visit iconic landmarks such as the CN Tower, and indulge in global cuisine.', 2, 8, 1, 350.00),
+    (37, 'Ottawa Capital Discovery', 'Discover the charm of Canada\'s capital, Ottawa. Visit historic sites, explore national museums, and enjoy the picturesque Rideau Canal.', 2, 6, 1, 300.00),
+    (38, 'Beijing Great Wall Adventure', 'Embark on an adventure to the Great Wall of China from Beijing. Hike along the ancient wall, learn about its history, and admire the breathtaking views.', 4, 10, 9, 500.00),
+    (39, 'Istanbul Bosphorus Cruise', 'Cruise along the mesmerizing Bosphorus Strait in Istanbul. Marvel at the stunning waterfront palaces, experience Turkish hospitality, and indulge in delicious cuisine.', 2, 4, 2, 400.00);
+
+ 
 SHOW VARIABLES LIKE "secure_file_priv";
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kontinent.csv' 
