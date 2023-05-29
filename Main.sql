@@ -135,8 +135,7 @@ CREATE TABLE putni_plan_stavka(
 
 CREATE TABLE osoba (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(50) NOT NULL,
-	prezime VARCHAR(50) NOT NULL,
+    ime VARCHAR(100) NOT NULL,
 	datum_rodenja DATE NOT NULL,
 	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
 	email VARCHAR(100) NOT NULL UNIQUE,
