@@ -1,0 +1,82 @@
+tip_transporta,kapacitet,cijena,ime_tvrtke,telefonski_broj,email,vrijeme_polaska,trajanje_u_minutama
+vlak,36,112.51,RailWays Connect,482-793-7859,reservations@railwaysconnect.org,2024-07-21 08:30:00,32
+vlak,72,113.8,ExpressTracks,418-811-5513,reservations@expresstracks.com,2025-11-30 07:16:00,286
+vlak,148,76.97,TrainTrippers,849-613-7844,reservations@traintrippers.com,2023-09-22 13:36:00,89
+vlak,31,139.56,AllAboard Adventures,920-416-5680,reservations@allaboardadventures.com,2025-02-12 12:43:00,99
+vlak,51,129.72,TrackTrek Tours,479-664-4005,support@tracktrektours.com,2023-03-07 14:29:00,331
+vlak,86,63.76,RailPass Explorers,966-636-3863,bookings@railpassexplorers.com,2023-02-13 23:07:00,178
+vlak,44,97.51,JourneyJunction,136-082-2159,journeyjunction@gmail.com,2023-03-07 19:46:00,30
+vlak,107,29.75,TrainLink Travel,106-670-0908,inquiries@trainlinktravel.com,2023-01-09 12:11:00,360
+vlak,137,50.26,IronHorse Expeditions,226-128-8758,contact@ironhorseexpeditions.com,2023-02-25 09:01:00,20
+vlak,86,96.72,RailRover Vacations,564-250-9483,bookings@railrovervacations.com,2024-09-10 10:35:00,155
+vlak,45,114.85,SwiftRail Journeys,419-207-7718,info@swiftrailjourneys.org,2023-12-05 20:20:00,137
+vlak,93,72.46,WanderLuxe Rails,608-196-5269,info@wanderluxerails.com,2024-01-01 12:49:00,97
+vlak,38,112.44,RailBliss Tours,590-299-8614,info@railblisstours.org,2023-10-16 13:02:00,100
+vlak,147,47.59,TrackVenture Travel,282-181-9456,trackventuretravel@gmail.com,2023-12-05 19:18:00,59
+vlak,125,18.54,TrainTrail Expeditions,325-009-5463,traintrailexpeditions@gmail.com,2024-08-26 16:17:00,28
+vlak,141,110.69,VoyageRail Vacations,614-193-4526,support@voyagerailvacations.org,2023-01-12 13:04:00,66
+vlak,58,43.62,RailScape Explorers,790-107-0486,bookings@railscapeexplorers.com,2023-02-13 12:37:00,218
+vlak,47,135.23,Wanderlust Express,355-698-2909,wanderlustexpress@gmail.com,2024-06-14 14:57:00,167
+vlak,65,130.81,TrackMasters,291-832-9620,trackmasters@gmail.com,2023-06-09 09:48:00,83
+vlak,86,54.29,WhistleStop Adventures,690-607-1580,whistlestopadventures@gmail.com,2023-10-08 14:45:00,305
+autobus,51,141.37,CityHopper Travels,358-019-7658,info@cityhoppertravels.com,2025-08-28 15:13:00,72
+autobus,52,76.46,Wayfarer Wheels,357-299-0318,contact@wayfarerwheels.org,2023-11-04 15:05:00,245
+autobus,72,113.53,BusQuest Adventures,832-068-1384,inquiries@busquestadventures.org,2023-04-27 16:07:00,242
+autobus,79,17.46,RouteRover Vacations,715-146-1007,reservations@routerovervacations.org,2024-11-05 08:31:00,243
+autobus,37,134.84,WanderLiner Travel,925-262-2077,reservations@wanderlinertravel.com,2024-02-06 10:55:00,345
+autobus,50,63.12,RoadTripper Getaways,820-856-5052,contact@roadtrippergetaways.com,2023-12-12 10:48:00,175
+autobus,58,76.28,RoadRoamer Tours,919-073-4079,info@roadroamertours.com,2023-10-05 16:51:00,219
+autobus,32,39.44,NomadBus Journeys,656-818-6793,nomadbusjourneys@gmail.com,2023-02-07 06:19:00,217
+autobus,36,106.44,RoadWanderers,844-651-0761,bookings@roadwanderers.com,2024-06-24 07:41:00,27
+autobus,41,36.5,RoamRider Adventures,859-111-0307,info@roamrideradventures.org,2023-11-24 23:20:00,154
+autobus,74,51.44,BusLink Travels,269-305-8322,buslinktravels@gmail.com,2023-04-24 22:17:00,236
+autobus,37,29.31,FlixBus,711-173-3695,inquiries@flixbus.org,2024-05-16 20:30:00,102
+autobus,89,20.78,TravelCoach Adventures,335-111-1278,travelcoachadventures@gmail.com,2024-05-23 06:04:00,276
+autobus,32,117.27,BusTrek Expeditions,194-134-7976,reservations@bustrekexpeditions.com,2023-10-21 13:02:00,317
+autobus,70,128.91,WanderBus Excursions,439-341-2119,wanderbusexcursions@gmail.com,2023-04-11 20:12:00,336
+autobus,28,148.52,RouteMuse Escapes,202-798-6312,reservations@routemuseescapes.com,2023-08-18 09:17:00,169
+autobus,35,105.79,RoadWise Wanderlust,614-550-0948,roadwisewanderlust@gmail.com,2024-12-13 18:45:00,280
+autobus,88,29.54,JoyRide Explorations,757-649-3488,joyrideexplorations@gmail.com,2024-10-11 11:56:00,88
+autobus,86,87.75,GoGlobe Expeditions,191-601-3404,info@goglobeexpeditions.com,2023-08-01 12:51:00,200
+autobus,91,52.11,JourneyHopper Tours,349-198-5479,bookings@journeyhoppertours.org,2023-04-18 19:46:00,212
+autobus,27,34.54,BusBound Tours,606-179-6877,busboundtours@gmail.com,2023-12-11 15:49:00,200
+zrakoplov,484,171.44,Winged Wanderlust,794-583-2305,bookings@wingedwanderlust.org,2024-09-17 06:37:00,339
+zrakoplov,408,454.2,SkyHaven Escapes,812-076-2729,bookings@skyhavenescapes.org,2023-08-17 16:12:00,299
+zrakoplov,185,364.25,AeroQuest Tours,412-622-7746,contact@aeroquesttours.com,2024-05-28 19:04:00,210
+zrakoplov,43,463.76,Airborne Expeditions,193-758-1125,inquiries@airborneexpeditions.org,2023-01-24 18:31:00,123
+zrakoplov,349,155.68,JetSet Adventures,462-265-0801,bookings@jetsetadventures.org,2024-09-21 22:50:00,282
+zrakoplov,209,169.78,CloudWing Travels,984-157-1592,reservations@cloudwingtravels.com,2025-08-12 20:51:00,166
+zrakoplov,174,217.17,AirLink Excursions,615-149-7232,airlinkexcursions@gmail.com,2023-02-15 10:49:00,203
+zrakoplov,295,82.35,AeroQuest Adventures,755-587-6250,contact@aeroquestadventures.com,2024-12-30 13:29:00,175
+zrakoplov,431,179.07,SkyWings Travel,158-790-5848,bookings@skywingstravel.com,2023-04-10 08:04:00,188
+zrakoplov,58,298.97,JetRoute Explorations,711-082-7483,jetrouteexplorations@gmail.com,2023-06-16 11:09:00,132
+zrakoplov,308,396.57,SkyBound Expeditions,347-575-5658,info@skyboundexpeditions.com,2023-02-28 22:19:00,179
+zrakoplov,90,136.26,AeroVista Getaways,893-165-6225,inquiries@aerovistagetaways.com,2025-03-05 10:44:00,132
+zrakoplov,500,161.91,WingSpan Wanderlust,375-174-4159,contact@wingspanwanderlust.com,2024-04-25 19:03:00,359
+zrakoplov,205,51.58,CloudSail Holidays,535-702-8792,contact@cloudsailholidays.org,2023-03-03 23:41:00,187
+zrakoplov,496,411.87,AirJourney Explorers,596-323-8800,airjourneyexplorers@gmail.com,2023-10-25 10:12:00,275
+zrakoplov,441,383.85,Flyscape Voyages,603-284-6398,flyscapevoyages@gmail.com,2024-08-19 11:45:00,68
+zrakoplov,191,316.41,FlyHigh Vacations,562-338-7729,bookings@flyhighvacations.com,2024-03-03 13:14:00,159
+zrakoplov,53,44.77,AeroScape Travels,697-091-7687,bookings@aeroscapetravels.com,2024-02-14 17:44:00,45
+zrakoplov,59,490.53,SkyGlobe Tours,928-459-3482,reservations@skyglobetours.org,2023-06-03 08:34:00,150
+zrakoplov,193,468.46,FlySail Holidays,341-134-6896,reservations@flysailholidays.com,2023-05-27 06:19:00,91
+brod,879,260.72,OceanVoyage Tours,321-883-4941,oceanvoyagetours@gmail.com,2025-03-28 10:04:00,130
+brod,2358,256.81,SailAway Adventures,936-099-7538,bookings@sailawayadventures.com,2023-04-30 17:47:00,24
+brod,2211,210.95,AquaMarine Cruises,408-694-7273,reservations@aquamarinecruises.org,2025-11-03 11:17:00,235
+brod,1590,214.93,SeaQuest Expeditions,479-885-5923,support@seaquestexpeditions.org,2023-11-24 17:24:00,59
+brod,1937,44.53,ShipShape Travel,795-391-6271,inquiries@shipshapetravel.org,2025-01-05 13:53:00,357
+brod,1430,217.95,NauticalWaves Vacations,515-732-9167,bookings@nauticalwavesvacations.org,2025-10-24 19:24:00,230
+brod,515,180.69,CruiseLine Explorers,557-041-1829,bookings@cruiselineexplorers.com,2023-03-09 08:10:00,79
+brod,1384,174.27,Maritime Journeys,180-016-7857,maritimejourneys@gmail.com,2024-05-08 08:25:00,254
+brod,1405,188.84,HarborHorizons,247-817-0362,bookings@harborhorizons.com,2023-11-25 18:23:00,116
+brod,1572,59.68,SeaBreeze Getaways,741-438-6293,seabreezegetaways@gmail.com,2025-01-29 15:28:00,253
+brod,649,383.21,NautiVoyage Travel,205-620-8590,contact@nautivoyagetravel.com,2023-02-28 21:29:00,253
+brod,2448,373.88,SeaSpray Escapes,464-635-2180,info@seasprayescapes.org,2024-05-26 11:30:00,172
+brod,1918,81.56,CruiseWave Journeys,354-156-7085,info@cruisewavejourneys.com,2024-11-14 12:32:00,253
+brod,2547,82.7,Aquatic Adventures,435-855-1790,inquiries@aquaticadventures.com,2025-03-04 22:48:00,294
+brod,1098,331.52,SailScapes,807-352-2603,info@sailscapes.com,2023-06-04 13:57:00,253
+brod,1510,360.41,BlueHorizon Cruises,527-489-3199,bookings@bluehorizoncruises.com,2023-09-04 14:54:00,331
+brod,2415,282.81,Mariner's Compass,101-403-3178,inquiries@mariner'scompass.org,2023-03-15 14:50:00,329
+brod,1555,286.74,ShipWise Travel,414-018-9183,info@shipwisetravel.com,2024-12-27 09:47:00,312
+brod,2489,340.68,OceanicOdyssey,977-307-3828,reservations@oceanicodyssey.com,2025-03-06 06:03:00,265
+brod,576,279.56,CruiseQuest Explorations,501-026-6942,support@cruisequestexplorations.org,2025-11-01 07:35:00,215
