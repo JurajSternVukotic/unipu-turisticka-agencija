@@ -241,7 +241,7 @@ CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezervira
 -- Autori: Mateo Udovčić i Karlo Bazina
 
 CREATE TABLE zaposlenik (
-    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id),
+    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
     ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
     plaća NUMERIC (10, 2) NOT NULL,
     CHECK (plaća >= 0)
@@ -615,6 +615,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic
 -- SELECT * FROM osoba;
 -- SELECT * FROM cijepljena_osoba
 -- SELECT * FROM dodatni_jezik;
--- SELECT * FROM zaposlenik;
+--  SELECT * FROM zaposlenik;
 -- SELECT * FROM pozicija_zaposlenika;
 -- SELECT * FROM vodic;
