@@ -525,10 +525,17 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
+    
+	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osoba.csv' 
+	INTO TABLE osoba
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'; 
+
 
 -- Odjeljak TESTIRANJE
 
- -- SELECT * FROM adresa;
+-- SELECT * FROM adresa;
 -- SELECT * FROM cjepivo;
 -- SELECT * FROM cjepivo_drzava;
 -- SELECT * FROM drzava;
@@ -541,3 +548,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 -- SELECT * FROM osiguranje;
 -- SELECT * FROM pokrice_osiguranja;	
 -- SELECT * FROM odrediste;
+-- SELECT * FROM osoba;
