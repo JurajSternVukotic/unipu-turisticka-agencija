@@ -396,6 +396,13 @@ FROM drzava_grad_adresa
 JOIN hotel
 ON adresa_id = hotel.id_adresa;
 
+CREATE VIEW studentski_ugovori AS
+SELECT * FROM osoba
+JOIN zaposlenik
+ON osoba.id = zaposlenik.id
+WHERE zaposlenik.ugovor_o_radu = "studentski";
+
+
 -- Autor: Lucia Labinjan
 -- SELECT a.*
 -- FROM adresa a
@@ -613,3 +620,5 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic
 --  SELECT * FROM zaposlenik;
 -- SELECT * FROM pozicija_zaposlenika;
 -- SELECT * FROM vodic;
+
+
