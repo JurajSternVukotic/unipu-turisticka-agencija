@@ -41,7 +41,6 @@ CREATE TABLE rezervacija (
     osoba_id INT NOT NULL REFERENCES osoba (id), # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
     paket_id INT NOT NULL REFERENCES paket (id), # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
     zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
-    naziv VARCHAR(100) NOT NULL,
     vrijeme DATETIME NOT NULL, # Točno vrijeme u kojem je uspostavljena rezervacija.
     cijena NUMERIC(10, 2) NOT NULL
     CHECK (cijena >= 0) # Napomena: omogućuje besplatna putovanja iako je neuobičajeno.
