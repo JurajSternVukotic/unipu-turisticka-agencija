@@ -252,7 +252,7 @@ CREATE TABLE zaposlenik (
 
 CREATE TABLE pozicija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime_pozicije ENUM ('turistički agent', 'putni agent', 'računovođa', 'promotor', 'IT podrška') NOT NULL,
+    ime_pozicije ENUM ('turistički agent', 'putni agent', 'računovođa', 'promotor', 'IT podrška') NOT NULL UNIQUE,
     opis_pozicije TEXT(500)
 );
 
