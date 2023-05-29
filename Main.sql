@@ -385,7 +385,7 @@ JOIN adresa
 ON grad_id = adresa.id_grad; 
 
 
--- Autor: Lucija Labinjan
+-- Autor: Lucia Labinjan
 
 -- Autor: Mateo Udovčić
 
