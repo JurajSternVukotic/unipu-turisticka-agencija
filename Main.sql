@@ -153,8 +153,7 @@ CREATE TABLE dodatni_jezik (
 -- Autor: Lucia Labinjan
 
 CREATE TABLE vodic (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    osoba_id INT NOT NULL UNIQUE REFERENCES osoba (id) ON DELETE CASCADE,
+    osoba_id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
 	godine_iskustva INT NOT NULL,
 	CHECK (godine_iskustva >= 0)
 );
@@ -574,6 +573,24 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/dodat
 	LINES TERMINATED BY '\r\n'
     IGNORE 1 ROWS
     (id_osoba, dodatni_jezik);
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/zaposlenik.csv' 
+	INTO TABLE zaposlenik
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pozicija_zaposlenika.csv' 
+	INTO TABLE pozicija_zaposlenika
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic.csv' 
+	INTO TABLE vodic
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
 
 -- Odjeljak TESTIRANJE
 
