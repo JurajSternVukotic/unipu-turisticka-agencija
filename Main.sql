@@ -188,7 +188,7 @@ CREATE TABLE aktivnosti (
 
 CREATE TABLE cjepivo (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    cijepivo ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis', 'COVID-19', 'Ebola', 'Malarija', 'Gripa', 'Tetanus', 'Kolera', 'Ospice', 'Zaušnjaci', 'Rubela', 'Difterija', 'Hripavost', 'Vodene kozice') UNIQUE
+    naziv ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis', 'COVID-19', 'Ebola', 'Malarija', 'Gripa', 'Tetanus', 'Kolera', 'Ospice', 'Zaušnjaci', 'Rubela', 'Difterija', 'Hripavost', 'Vodene kozice') UNIQUE
 );
 
 CREATE TABLE kontinent (
@@ -385,6 +385,21 @@ FROM gradovi_sa_drzavama
 JOIN adresa
 ON grad_id = adresa.id_grad; 
 
+CREATE VIEW drzave_sa_cjepivima AS
+SELECT drzava.id AS id_drzava, 
+       drzava.naziv AS naziv_drzava, 
+       cjepivo.id AS id_cjepivo, 
+       cjepivo.naziv AS naziv_cjepivo
+FROM drzava
+INNER JOIN cjepivo_drzava ON drzava.id = cjepivo_drzava.id_drzava
+INNER JOIN cjepivo ON cjepivo_drzava.id_cijepiva = cjepivo.id;
+
+CREATE VIEW drzava_grad_adresa_hotel AS
+SELECT drzava_naziv, grad_naziv, ulica, adresa_id, hotel.ime AS hotel_naziv, hotel.id AS hotel_id
+FROM drzava_grad_adresa
+JOIN hotel
+ON adresa_id = hotel.id_adresa;
+
 
 -- Autor: Lucia Labinjan
 -- 1.List all packages a person has booked
@@ -497,13 +512,14 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 
 -- Odjeljak TESTIRANJE
 
-SELECT * FROM adresa;
-SELECT * FROM cjepivo;
-SELECT * FROM cjepivo_drzava;
-SELECT * FROM drzava;
-SELECT * FROM drzava_kontinent;
-SELECT * FROM grad;
-SELECT * FROM hotel;
-SELECT * FROM kontinent;
-SELECT * FROM kupon;
-SELECT * FROM pozicija;
+-- SELECT * FROM adresa;
+-- SELECT * FROM cjepivo;
+-- SELECT * FROM cjepivo_drzava;
+-- SELECT * FROM drzava;
+-- SELECT * FROM drzava_kontinent;
+-- SELECT * FROM grad;
+-- SELECT * FROM hotel;
+-- SELECT * FROM kontinent;
+-- SELECT * FROM kupon;
+-- SELECT * FROM pozicija;
+SELECT * from drzave_sa_cjepivima;
