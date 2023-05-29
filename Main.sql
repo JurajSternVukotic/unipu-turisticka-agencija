@@ -87,10 +87,10 @@ CREATE TABLE drzava (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL UNIQUE, # Najduzi naziv drzave je 56, tako da bi ovo trebalo biti dovoljno, ime mora biti jedinstveno
     opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
-    valuta VARCHAR(32) NOT NULL, # Ime valute koja se koristi
-    tecaj_u_eurima NUMERIC(10, 2) NOT NULL, # Koliko je jedan euro vrijedan ove valute 
+    valuta VARCHAR(50) NOT NULL, # Ime valute koja se koristi
+    tecaj_u_eurima NUMERIC(10, 6) NOT NULL, # Koliko je jedan euro vrijedan ove valute 
     dokumenti_za_ulaz TEXT(500), # Kratki opis kakva je trenutna procedura za ulazak u drzavu, kasnije se moze dodati tablica koja gleda relaciju izmedju svake dvije drzave
-    jezik VARCHAR(32) NOT NULL, # Naziv jezika koji se prica
+    jezik VARCHAR(50) NOT NULL, # Naziv jezika koji se prica
     pozivni_broj INT NOT NULL UNIQUE, # pretpostavlja se da se ne pise niti 00 niti + izmedju posto je to preferenca formatiranja, takodjer da nema crtice nego samo se nastavi pisati posto je nepotrebno tako da moze biti INT, dvije drzave ne mogu imati isti pozivni broj
 	CHECK (pozivni_broj > 0) # pozivni broj ne moze biti negativan niti nula
 );	
@@ -135,7 +135,7 @@ CREATE TABLE putni_plan_stavka(
 
 CREATE TABLE osoba (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(100) NOT NULL,
+    puno_ime VARCHAR(100) NOT NULL,
 	datum_rodenja DATE NOT NULL,
 	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
 	email VARCHAR(100) NOT NULL UNIQUE,
@@ -191,7 +191,7 @@ CREATE TABLE cjepivo (
 
 CREATE TABLE kontinent (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(20) NOT NULL UNIQUE,
+    ime VARCHAR(25) NOT NULL UNIQUE,
     opis TEXT(500)
 );
 
@@ -214,7 +214,7 @@ CREATE TABLE odrediste (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(100) NOT NULL UNIQUE,
     id_grad INT NOT NULL REFERENCES grad (id),
-    popularne_atrakcije VARCHAR(100),
+    popularne_atrakcije VARCHAR(200),
     opis TEXT(500)
 );
 
@@ -528,7 +528,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 
 -- Odjeljak TESTIRANJE
 
--- SELECT * FROM adresa;
+ -- SELECT * FROM adresa;
 -- SELECT * FROM cjepivo;
 -- SELECT * FROM cjepivo_drzava;
 -- SELECT * FROM drzava;
