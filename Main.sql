@@ -206,7 +206,7 @@ CREATE TABLE cjepivo_drzava (
 );
 
 CREATE TABLE cijepljena_osoba (
-	id_cjepiva INT NOT NULL REFERENCES cjepivo (id),
+	id_cjepivo INT NOT NULL REFERENCES cjepivo (id),
     id_osoba INT NOT NULL REFERENCES osoba (id)
 );
 
@@ -539,6 +539,14 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osoba
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cijepljena_osoba.csv' 
+	INTO TABLE cijepljena_osoba
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'
+    IGNORE 1 ROWS
+    (id_cjepivo, id_osoba);
 
 -- Odjeljak TESTIRANJE
 
