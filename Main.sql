@@ -396,11 +396,11 @@ FROM drzava_grad_adresa
 JOIN hotel
 ON adresa_id = hotel.id_adresa;
 
-CREATE VIEW studentski_ugovori AS
-SELECT * FROM osoba
-JOIN zaposlenik
-ON osoba.id = zaposlenik.id
-WHERE zaposlenik.ugovor_o_radu = "studentski";
+-- CREATE VIEW studentski_ugovori AS
+-- SELECT * FROM osoba
+-- JOIN zaposlenik
+-- ON osoba.id = zaposlenik.id
+-- WHERE zaposlenik.ugovor_o_radu = "studentski";
 
 
 -- Autor: Lucia Labinjan
@@ -641,6 +641,12 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/radna_smjena.csv' 
+	INTO TABLE radna_smjena
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+    
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
@@ -661,8 +667,9 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic
 -- SELECT * FROM osoba;
 -- SELECT * FROM cijepljena_osoba
 -- SELECT * FROM dodatni_jezik;
---  SELECT * FROM zaposlenik;
+-- SELECT * FROM zaposlenik;
 -- SELECT * FROM pozicija_zaposlenika;
 -- SELECT * FROM vodic;
+-- SELECT * FROM radna_smjena;
 
 
