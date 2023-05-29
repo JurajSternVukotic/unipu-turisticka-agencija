@@ -616,7 +616,42 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recen
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_aktivnosti.csv' 
+	INTO TABLE recenzija_aktivnosti
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+    
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_paketa.csv' 
+	INTO TABLE recenzija_paketa
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_hotela.csv' 
+	INTO TABLE recenzija_hotela
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+    
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_transporta.csv' 
+	INTO TABLE recenzija_transporta
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_vodica.csv' 
+	INTO TABLE recenzija_vodica
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+    
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_zaposlenika.csv' 
+	INTO TABLE recenzija_zaposlenika
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+    
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
@@ -643,3 +678,9 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recen
 -- SELECT * FROM radna_smjena;
 -- SELECT * FROM paket;
 -- SELECT * FROM recenzija;
+-- SELECT * FROM recenzija_aktivnosti;
+-- SELECT * FROM recenzija_paketa;
+-- SELECT * FROM recenzija_hotela;
+-- SELECT * FROM recenzija_transporta;
+-- SELECT * FROM recenzija_vodica;
+-- SELECT * FROM recenzija_zaposlenika;
