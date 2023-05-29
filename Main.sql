@@ -166,7 +166,6 @@ CREATE TABLE transport (
 	ime_tvrtke VARCHAR(100) NOT NULL,
 	telefonski_broj VARCHAR(15) NOT NULL, 
 	email VARCHAR(50) NOT NULL,
-	vrijeme_polaska DATETIME NOT NULL,
 	trajanje_u_minutama INT NOT NULL,
 	CHECK (kapacitet >= 0),
 	CHECK (cijena >= 0)
@@ -537,7 +536,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/trans
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'
     IGNORE 1 ROWS
-    (tip_transporta, kapacitet, cijena, ime_tvrtke, telefonski_broj, email, vrijeme_polaska, trajanje_u_minutama); 
+    (tip_transporta, kapacitet, cijena, ime_tvrtke, telefonski_broj, email, trajanje_u_minutama); 
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv' 
 	INTO TABLE odrediste
@@ -592,10 +591,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic
 	LINES TERMINATED BY '\r\n';
 
 -- Odjeljak TESTIRANJE
-
-
-
-
 
 -- SELECT * FROM adresa;
 -- SELECT * FROM cjepivo;
