@@ -160,13 +160,13 @@ CREATE TABLE vodic (
 
 CREATE TABLE transport (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak') NOT NULL,
+	tip_transporta ENUM ('autobus', 'zrakoplov', 'brod', 'vlak') NOT NULL,
 	kapacitet INT DEFAULT 0 NOT NULL, 
 	cijena NUMERIC(10, 2) NOT NULL,
 	ime_tvrtke VARCHAR(100) NOT NULL,
 	telefonski_broj VARCHAR(15) NOT NULL, 
 	email VARCHAR(50) NOT NULL,
-	vrijeme_odlaska DATETIME NOT NULL,
+	vrijeme_polaska DATETIME NOT NULL,
 	trajanje_u_minutama INT NOT NULL,
 	CHECK (kapacitet >= 0),
 	CHECK (cijena >= 0)
