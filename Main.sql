@@ -21,7 +21,7 @@ CREATE TABLE osiguranje (
 # Omogućava definiciju popisa stavki koje su pokrivene određenim osiguranjem.
 CREATE TABLE pokrice_osiguranja (
 	id_osiguranje INT NOT NULL REFERENCES osiguranje (id),
-    pokrice VARCHAR (100) NOT NULL,
+    pokrice VARCHAR (200) NOT NULL,
     PRIMARY KEY (id_osiguranje, pokrice)
 );
 
@@ -516,6 +516,13 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
 
+	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pokrice_osiguranja.csv' 
+	INTO TABLE pokrice_osiguranja
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'; 
+    
+
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
@@ -528,4 +535,5 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 -- SELECT * FROM kontinent;
 -- SELECT * FROM kupon;
 -- SELECT * FROM pozicija;
-SELECT * from drzave_sa_cjepivima;
+-- SELECT * FROM osiguranje;
+-- SELECT * FROM pokrice_osiguranja;	
