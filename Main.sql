@@ -596,6 +596,8 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic
 
 
 
+
+
 -- SELECT * FROM adresa;
 -- SELECT * FROM cjepivo;
 -- SELECT * FROM cjepivo_drzava;
@@ -608,8 +610,12 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic
 -- SELECT * FROM pozicija;
 -- SELECT * FROM osiguranje;
 -- SELECT * FROM pokrice_osiguranja;	
+-- SELECT * FROM transport;
 -- SELECT * FROM odrediste;
 -- SELECT * FROM aktivnost;
 -- SELECT * FROM osoba;
 -- SELECT * FROM cijepljena_osoba
 -- SELECT * FROM dodatni_jezik;
+-- SELECT * FROM zaposlenik;
+-- SELECT * FROM pozicija_zaposlenika;
+-- SELECT * FROM vodic;
