@@ -246,7 +246,8 @@ CREATE TABLE zaposlenik (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_osoba INT NOT NULL UNIQUE REFERENCES osoba (id),
     ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
-    placa NUMERIC (10, 2) NOT NULL
+    plaća NUMERIC (10, 2) NOT NULL,
+    CHECK (plaća >= 0)
 );
 
 CREATE TABLE pozicija (
@@ -398,9 +399,9 @@ ON grad_id = adresa.id_grad;
 -- pronadi sve zaposelnika koji rade 'na odredeno' ili 'na neodredeno' te svima koji imaju vise od 5 ocijena, a prosijek ocjena je veci od 4,5 povecaj placu za 10%
 
 -- predstavljanje kompanije je
--- prikazi mi samo zaposelnika sa najvecom placom iz gradova (Zagreb, Split, Rijeka, Osijek) 
+-- prikaži mi samo zaposelnika sa najvecom placom iz gradova (Zagreb, Split, Rijeka, Osijek) 
 
-
+-- prikaži mi 3 zaposelnika koja pričaju najviše stranih jezika, a jedan od tih jezikam ora biti njemački
 
 
 -- Odjeljak VRIJEDNOSTI
