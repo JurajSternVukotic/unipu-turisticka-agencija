@@ -87,10 +87,10 @@ CREATE TABLE drzava (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL UNIQUE, # Najduzi naziv drzave je 56, tako da bi ovo trebalo biti dovoljno, ime mora biti jedinstveno
     opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
-    valuta VARCHAR(32) NOT NULL, # Ime valute koja se koristi
-    tecaj_u_eurima NUMERIC(10, 2) NOT NULL, # Koliko je jedan euro vrijedan ove valute 
+    valuta VARCHAR(50) NOT NULL, # Ime valute koja se koristi
+    tecaj_u_eurima NUMERIC(10, 6) NOT NULL, # Koliko je jedan euro vrijedan ove valute 
     dokumenti_za_ulaz TEXT(500), # Kratki opis kakva je trenutna procedura za ulazak u drzavu, kasnije se moze dodati tablica koja gleda relaciju izmedju svake dvije drzave
-    jezik VARCHAR(32) NOT NULL, # Naziv jezika koji se prica
+    jezik VARCHAR(50) NOT NULL, # Naziv jezika koji se prica
     pozivni_broj INT NOT NULL UNIQUE, # pretpostavlja se da se ne pise niti 00 niti + izmedju posto je to preferenca formatiranja, takodjer da nema crtice nego samo se nastavi pisati posto je nepotrebno tako da moze biti INT, dvije drzave ne mogu imati isti pozivni broj
 	CHECK (pozivni_broj > 0) # pozivni broj ne moze biti negativan niti nula
 );	
@@ -135,8 +135,7 @@ CREATE TABLE putni_plan_stavka(
 
 CREATE TABLE osoba (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(50) NOT NULL,
-	prezime VARCHAR(50) NOT NULL,
+    puno_ime VARCHAR(100) NOT NULL,
 	datum_rodenja DATE NOT NULL,
 	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
 	email VARCHAR(100) NOT NULL UNIQUE,
@@ -161,13 +160,13 @@ CREATE TABLE vodic (
 
 CREATE TABLE transport (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	tip_transporta ENUM ('bus', 'avion', 'brod', 'vlak') NOT NULL,
+	tip_transporta ENUM ('autobus', 'zrakoplov', 'brod', 'vlak') NOT NULL,
 	kapacitet INT DEFAULT 0 NOT NULL, 
 	cijena NUMERIC(10, 2) NOT NULL,
 	ime_tvrtke VARCHAR(100) NOT NULL,
 	telefonski_broj VARCHAR(15) NOT NULL, 
 	email VARCHAR(50) NOT NULL,
-	vrijeme_odlaska DATETIME NOT NULL,
+	vrijeme_polaska DATETIME NOT NULL,
 	trajanje_u_minutama INT NOT NULL,
 	CHECK (kapacitet >= 0),
 	CHECK (cijena >= 0)
@@ -192,7 +191,7 @@ CREATE TABLE cjepivo (
 
 CREATE TABLE kontinent (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(20) NOT NULL UNIQUE,
+    ime VARCHAR(25) NOT NULL UNIQUE,
     opis TEXT(500)
 );
 
@@ -207,7 +206,7 @@ CREATE TABLE cjepivo_drzava (
 );
 
 CREATE TABLE cijepljena_osoba (
-	id_cjepiva INT NOT NULL REFERENCES cjepivo (id),
+	id_cjepivo INT NOT NULL REFERENCES cjepivo (id),
     id_osoba INT NOT NULL REFERENCES osoba (id)
 );
 
@@ -215,7 +214,7 @@ CREATE TABLE odrediste (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(100) NOT NULL UNIQUE,
     id_grad INT NOT NULL REFERENCES grad (id),
-    popularne_atrakcije VARCHAR(100),
+    popularne_atrakcije VARCHAR(200),
     opis TEXT(500)
 );
 
@@ -478,37 +477,37 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/drzav
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n' ;    
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/grad.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/grad.csv' 
 	INTO TABLE grad
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/adresa.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/adresa.csv' 
 	INTO TABLE adresa
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo.csv' 
 	INTO TABLE cjepivo
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo_drzava.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo_drzava.csv' 
 	INTO TABLE cjepivo_drzava
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hotel.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hotel.csv' 
 	INTO TABLE hotel
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';    
 
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pozicija.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pozicija.csv' 
 	INTO TABLE pozicija
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
@@ -522,19 +521,27 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	IGNORE 1 ROWS
     (kod, datum_pocetka, datum_kraja, iznos, postotni);
     
-	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv' 
 	INTO TABLE osiguranje
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
 
-	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pokrice_osiguranja.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pokrice_osiguranja.csv' 
 	INTO TABLE pokrice_osiguranja
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
-    
-	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv' 
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/transport.csv' 
+	INTO TABLE transport
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'
+    IGNORE 1 ROWS
+    (tip_transporta, kapacitet, cijena, ime_tvrtke, telefonski_broj, email, vrijeme_polaska, trajanje_u_minutama); 
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv' 
 	INTO TABLE odrediste
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
@@ -546,6 +553,19 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
 	
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osoba.csv' 
+	INTO TABLE osoba
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'; 
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cijepljena_osoba.csv' 
+	INTO TABLE cijepljena_osoba
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'
+    IGNORE 1 ROWS
+    (id_cjepivo, id_osoba);
 
     
 -- Odjeljak TESTIRANJE
@@ -566,3 +586,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 -- SELECT * FROM pokrice_osiguranja;	
 -- SELECT * FROM odrediste;
 -- SELECT * FROM aktivnost;
+-- SELECT * FROM osoba;
