@@ -387,6 +387,23 @@ ON grad_id = adresa.id_grad;
 
 
 -- Autor: Lucia Labinjan
+-- 1.List all packages a person has booked
+-- 2.List all the countries and the total number of persons from that country
+-- 3. apply a 10% discount to the price of reservations that have an associated coupon with a discount greater than 20%
+-- 4. the count of reservations for each insurance
+-- 5.the most expensive reservation for each package
+-- 6.list of customers who have spent more than $5000, sorted by total expenditure
+-- 7. Get the information about the packages that a certain user has booked
+-- 8. Get the list of all tourist packages with the number of available places (maximum places - filled places)
+-- 9.Get a report of all the payments made within a certain time period, including the reservation details
+-- 10.Find all the packages which are insured by a specific insurance provider
+-- 11.Select the top 5 most popular packages (in terms of reservations)
+-- 12. Create a VIEW that shows a summary of the total sales by product
+-- 13.create a view that aggregates all bookings by destination, and then shows the destinations sorted by popularity
+-- 14. Client Travel History- view shows all trips a particular client has made, sorted by the booking date
+-- 15. all packages that have not been booked yet
+
+
 
 -- Autor: Mateo Udovčić
 
