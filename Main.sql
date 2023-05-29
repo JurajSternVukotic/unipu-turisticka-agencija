@@ -522,6 +522,11 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
     
+	LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv' 
+	INTO TABLE odrediste
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'; 
 
 -- Odjeljak TESTIRANJE
 
@@ -537,3 +542,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 -- SELECT * FROM pozicija;
 -- SELECT * FROM osiguranje;
 -- SELECT * FROM pokrice_osiguranja;	
+-- SELECT * FROM odrediste;
