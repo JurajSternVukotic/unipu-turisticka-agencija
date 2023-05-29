@@ -144,9 +144,10 @@ CREATE TABLE osoba (
     id_adresa INT NOT NULL REFERENCES adresa (id)
 );
 
-CREATE TABLE dodatni_jezici (
+CREATE TABLE dodatni_jezik (
     id_osoba INT NOT NULL REFERENCES osoba (id) ON DELETE CASCADE,
-    dodatni_jezik VARCHAR (50) NOT NULL
+    dodatni_jezik VARCHAR (50) NOT NULL,
+    PRIMARY KEY (id_osoba, dodatni_jezik)
 );
     
 -- Autor: Lucia Labinjan
@@ -398,7 +399,6 @@ FROM drzava_grad_adresa
 JOIN hotel
 ON adresa_id = hotel.id_adresa;
 
-
 -- Autor: Lucia Labinjan
 -- SELECT a.*
 -- FROM adresa a
@@ -547,7 +547,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odred
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
     
-    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/aktivnost.csv' 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/aktivnost.csv' 
 	INTO TABLE aktivnost
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
@@ -567,7 +567,14 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cijep
     IGNORE 1 ROWS
     (id_cjepivo, id_osoba);
 
-    
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/dodatni_jezik.csv' 
+	INTO TABLE dodatni_jezik
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'
+    IGNORE 1 ROWS
+    (id_osoba, dodatni_jezik);
+
 -- Odjeljak TESTIRANJE
 
 
@@ -587,3 +594,5 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cijep
 -- SELECT * FROM odrediste;
 -- SELECT * FROM aktivnost;
 -- SELECT * FROM osoba;
+-- SELECT * FROM cijepljena_osoba
+-- SELECT * FROM dodatni_jezik;
