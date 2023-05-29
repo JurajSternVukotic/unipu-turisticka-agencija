@@ -609,7 +609,13 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/paket
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
-    
+ 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija.csv' 
+	INTO TABLE recenzija
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+
 
 -- Odjeljak TESTIRANJE
 
@@ -636,4 +642,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/paket
 -- SELECT * FROM vodic;
 -- SELECT * FROM radna_smjena;
 -- SELECT * FROM paket;
-
+-- SELECT * FROM recenzija;
