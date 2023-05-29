@@ -153,7 +153,7 @@ CREATE TABLE dodatni_jezik (
 -- Autor: Lucia Labinjan
 
 CREATE TABLE vodic (
-    osoba_id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
+    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
 	godine_iskustva INT NOT NULL,
 	CHECK (godine_iskustva >= 0)
 );
@@ -241,8 +241,7 @@ CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezervira
 -- Autori: Mateo Udovčić i Karlo Bazina
 
 CREATE TABLE zaposlenik (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    id_osoba INT NOT NULL UNIQUE REFERENCES osoba (id),
+    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id),
     ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
     plaća NUMERIC (10, 2) NOT NULL,
     CHECK (plaća >= 0)
