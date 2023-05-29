@@ -3,16 +3,16 @@
 3,Algeria,"The largest country in Africa, known for its Sahara desert and diverse culture.",Algerian Dinar,0.0078,ID,Arabic,+213
 4,Andorra,"A tiny country nestled in the Pyrenees mountains, known for its ski resorts.",Euro,1.0,Passport,Catalan,+376
 5,Angola,A country in Southern Africa renowned for its wildlife and natural beauty.,Angolan Kwanza,0.0015,ID,Portuguese,+244
-6,Antigua and Barbuda,A Caribbean nation consisting of two main islands and numerous smaller ones.,East Caribbean Dollar,0.36,Passport,English,+1-268
+6,Antigua and Barbuda,A Caribbean nation consisting of two main islands and numerous smaller ones.,East Caribbean Dollar,0.36,Passport,English,+1268
 7,Argentina,"A large South American country known for its tango, beef, and diverse landscapes.",Argentine Peso,0.0093,Visa,Spanish,+54
 8,Armenia,"A nation located at the crossroads of Europe and Asia, rich in history and culture.",Armenian Dram,0.0019,ID,Armenian,+374
 9,Australia,"A country known for its stunning landscapes, unique wildlife, and vibrant cities.",Australian Dollar,0.64,ID,English,+61
 10,Austria,"A European country famous for its Alpine scenery, classical music, and imperial history.",Euro,1.0,Visa,German,+43
 11,Azerbaijan,A nation located at the crossroads of Eastern Europe and Western Asia.,Azerbaijani Manat,0.056,Passport,Azerbaijani,+994
-12,Bahamas,A nation comprising hundreds of islands and known for its beautiful beaches and vibrant culture.,Bahamian Dollar,0.91,Passport,English,+1-242
+12,Bahamas,A nation comprising hundreds of islands and known for its beautiful beaches and vibrant culture.,Bahamian Dollar,0.91,Passport,English,+1242
 13,Bahrain,An island country in the Persian Gulf known for its modern architecture and vibrant culture.,Bahraini Dinar,2.41,Visa,Arabic,+973
 14,Bangladesh,A densely populated country in South Asia known for its fertile plains and rich history.,Bangladeshi Taka,0.0099,Passport,Bengali,+880
-15,Barbados,A Caribbean island country famous for its beautiful beaches and vibrant music scene.,Barbadian Dollar,0.45,Visa,English,+1-246
+15,Barbados,A Caribbean island country famous for its beautiful beaches and vibrant music scene.,Barbadian Dollar,0.45,Visa,English,+1246
 16,Belarus,"A landlocked country in Eastern Europe, known for its rich history and beautiful architecture.",Belarusian Ruble,0.39,Visa,"Belarusian, Russian",+375
 17,Belgium,"A Western European country famous for its chocolate, waffles, and historical landmarks.",Euro,1.0,ID,"Dutch, French, German",+32
 18,Belize,"A small country located on the northeastern coast of Central America, known for its biodiversity.",Belize Dollar,0.45,Passport,English,+501
@@ -28,7 +28,7 @@
 28,Burundi,A small landlocked country in East Africa known for its scenic landscapes and wildlife.,Burundian Franc,0.00052,Visa,"Kirundi, French",+257
 29,Cambodia,"A Southeast Asian country known for its ancient temples, lush landscapes, and rich cultural heritage.",Cambodian Riel,0.0002,Visa,Khmer,+855
 30,Cameroon,A country located in Central Africa known for its diverse culture and natural beauty.,Central African CFA Franc,0.0017,Passport,"French, English",+237
-31,Canada,The second-largest country in the world known for its stunning natural landscapes and hockey passion.,Canadian Dollar,0.73,Passport,"English, French",+1
+31,Canada,The second-largest country in the world known for its stunning natural landscapes and hockey passion.,Canadian Dollar,0.73,Passport,"English, French",+1111
 32,Cape Verde,An island country off the coast of West Africa known for its beautiful beaches and vibrant music.,Cape Verdean Escudo,0.0099,Passport,Portuguese,+238
 33,Central African Republic,A landlocked country in Central Africa known for its diverse wildlife and natural beauty.,Central African CFA Franc,0.0017,Passport,"French, Sango",+236
 34,Chad,A landlocked country in Central Africa known for its Sahara desert and diverse ethnic groups.,Central African CFA Franc,0.0017,Visa,"French, Arabic",+235
@@ -45,8 +45,8 @@
 45,Czech Republic,"A country in Central Europe known for its stunning architecture, beer, and historical landmarks.",Czech Koruna,0.039,ID,Czech,+420
 46,Denmark,"A Nordic country known for its rich history, beautiful landscapes, and high quality of life.",Danish Krone,0.13,Visa,Danish,+45
 47,Djibouti,A small country located in the Horn of Africa known for its strategic location and stunning landscapes.,Djiboutian Franc,0.0051,Visa,"Arabic, French",+253
-48,Dominica,An island country in the Caribbean known for its lush rainforests and natural beauty.,East Caribbean Dollar,0.36,Visa,English,+1-767
-49,Dominican Republic,"A country located on the island of Hispaniola in the Caribbean, known for its beaches and resorts.",Dominican Peso,0.016,Visa,Spanish,"+1-809, +1-829, +1-849"
+48,Dominica,An island country in the Caribbean known for its lush rainforests and natural beauty.,East Caribbean Dollar,0.36,Visa,English,+1767
+49,Dominican Republic,"A country located on the island of Hispaniola in the Caribbean, known for its beaches and resorts.",Dominican Peso,0.016,Visa,Spanish,+18029
 50,East Timor,"A Southeast Asian country occupying half of the island of Timor, known for its rugged landscapes.",United States Dollar,0.91,ID,"Tetum, Portuguese",+670
 51,Ecuador,A country straddling the equator in South America known for its biodiversity and Galapagos Islands.,United States Dollar,0.91,ID,Spanish,+593
 52,Egypt,A transcontinental country spanning the northeast corner of Africa and southwest corner of Asia.,Egyptian Pound,0.057,ID,Arabic,+20
@@ -54,7 +54,7 @@
 54,Equatorial Guinea,A country located in Central Africa known for its oil reserves and unique biodiversity.,Central African CFA Franc,0.0017,Visa,"Spanish, French, Portuguese",+240
 55,Eritrea,"A country in the Horn of Africa known for its unique culture, ancient ruins, and Red Sea coastline.",Eritrean Nakfa,0.062,Visa,"Tigrinya, Arabic, English",+291
 56,Estonia,"A Baltic country in Northern Europe known for its digital innovation, medieval architecture, and forests.",Euro,1.0,ID,Estonian,+372
-57,Eswatini,A landlocked country in Southern Africa known for its stunning landscapes and rich cultural heritage.,Swazi Lilangeni,0.064,Passport,"Swazi, English",+268
+57,Eswatini,A landlocked country in Southern Africa known for its stunning landscapes and rich cultural heritage.,Swazi Lilangeni,0.064,Passport,"Swazi, English",+2699
 58,Ethiopia,"A country in the Horn of Africa known for its ancient civilization, diverse landscapes, and wildlife.",Ethiopian Birr,0.022,Visa,Amharic,+251
 59,Fiji,"A country in the South Pacific known for its stunning beaches, vibrant coral reefs, and warm hospitality.",Fijian Dollar,0.46,Visa,"English, Fijian, Hindi",+679
 60,Finland,"A Nordic country known for its stunning natural landscapes, saunas, and Northern Lights.",Euro,1.0,Passport,"Finnish, Swedish",+358
@@ -65,9 +65,9 @@
 65,Germany,"A European country known for its engineering prowess, historical landmarks, and vibrant culture.",Euro,1.0,Visa,German,+49
 66,Ghana,"A country located in West Africa known for its rich history, diverse culture, and vibrant markets.",Ghanaian Cedi,0.16,Passport,English,+233
 67,Greece,"A country in Southern Europe known for its ancient ruins, picturesque islands, and Mediterranean cuisine.",Euro,1.0,Passport,Greek,+30
-68,Grenada,"A Caribbean country known for its stunning beaches, lush rainforests, and friendly locals.",East Caribbean Dollar,0.36,Visa,English,+1-473
+68,Grenada,"A Caribbean country known for its stunning beaches, lush rainforests, and friendly locals.",East Caribbean Dollar,0.36,Visa,English,+1473
 69,Guatemala,"A Central American country known for its Mayan ruins, volcanoes, and vibrant indigenous culture.",Guatemalan Quetzal,0.12,Passport,Spanish,+502
-70,Guinea,"A country in West Africa known for its diverse landscapes, rich cultural heritage, and unique wildlife.",Guinean Franc,8.5e-05,Visa,French,+224
+70,Guinea,"A country in West Africa known for its diverse landscapes, rich cultural heritage, and unique wildlife.",Guinean Franc,0.00085,Visa,French,+224
 71,Guinea-Bissau,"A country in West Africa known for its stunning beaches, wildlife, and vibrant music.",West African CFA Franc,0.0017,Passport,Portuguese,+245
 72,Guyana,A country on the northern coast of South America known for its dense rainforests and diverse wildlife.,Guyanese Dollar,0.0046,Visa,English,+592
 73,Haiti,A Caribbean country located on the island of Hispaniola known for its vibrant culture and resilient spirit.,Haitian Gourde,0.0095,ID,"French, Haitian Creole",+509
@@ -81,10 +81,10 @@
 81,Ireland,"A European country known for its lush landscapes, rich folklore, and friendly people.",Euro,1.0,ID,"Irish, English",+353
 82,Israel,"A country in the Middle East known for its historical and religious significance, innovation, and diverse culture.",Israeli Shekel,0.25,Passport,Hebrew,+972
 83,Italy,"A European country known for its rich history, art, architecture, delicious cuisine, and vibrant culture.",Euro,1.0,ID,Italian,+39
-84,Jamaica,"An island country in the Caribbean known for its reggae music, stunning beaches, and vibrant culture.",Jamaican Dollar,0.0063,ID,English,+1-876
+84,Jamaica,"An island country in the Caribbean known for its reggae music, stunning beaches, and vibrant culture.",Jamaican Dollar,0.0063,ID,English,+1876
 85,Japan,"A country in East Asia known for its advanced technology, rich cultural heritage, and unique traditions.",Japanese Yen,0.0086,Passport,Japanese,+81
 86,Jordan,"A country in the Middle East known for its ancient ruins, diverse landscapes, and warm hospitality.",Jordanian Dinar,1.41,ID,Arabic,+962
-87,Kazakhstan,"The world's largest landlocked country, located in Central Asia, known for its vast steppes and nomadic culture.",Kazakhstani Tenge,0.0021,ID,"Kazakh, Russian",+7
+87,Kazakhstan,"The world's largest landlocked country, located in Central Asia, known for its vast steppes and nomadic culture.",Kazakhstani Tenge,0.0021,ID,"Kazakh, Russian",+7777
 88,Kenya,"A country in East Africa known for its diverse wildlife, stunning landscapes, and vibrant culture.",Kenyan Shilling,0.0089,ID,"Swahili, English",+254
 89,Kiribati,"A Pacific island nation composed of 33 coral atolls, known for its stunning beaches and rich marine life.",Australian Dollar,0.64,Passport,"English, Gilbertese",+686
 90,Kuwait,A small country in the Arabian Peninsula known for its rich oil reserves and modern architecture.,Kuwaiti Dinar,2.99,ID,Arabic,+965
@@ -141,9 +141,9 @@
 141,Romania,"A country in Eastern Europe known for its stunning castles, Carpathian Mountains, and vibrant culture.",Romanian Leu,0.21,ID,Romanian,+40
 142,Russia,"The largest country in the world known for its vast landscapes, rich history, and diverse cultural heritage.",Russian Ruble,0.013,Passport,Russian,+7
 143,Rwanda,"A landlocked country in East Africa known for its breathtaking scenery, wildlife, and remarkable recovery from genocide.",Rwandan Franc,0.00095,ID,"Kinyarwanda, French, English",+250
-144,Saint Kitts and Nevis,A Caribbean country consisting of two main islands known for their beautiful beaches and laid-back lifestyle.,East Caribbean Dollar,0.36,Visa,English,+1-869
-145,Saint Lucia,"A Caribbean island country known for its stunning beaches, lush rainforests, and vibrant Creole culture.",East Caribbean Dollar,0.36,Passport,English,+1-758
-146,Saint Vincent and the Grenadines,A Caribbean nation consisting of multiple islands known for their natural beauty and vibrant culture.,East Caribbean Dollar,0.36,Visa,English,+1-784
+144,Saint Kitts and Nevis,A Caribbean country consisting of two main islands known for their beautiful beaches and laid-back lifestyle.,East Caribbean Dollar,0.36,Visa,English,+1869
+145,Saint Lucia,"A Caribbean island country known for its stunning beaches, lush rainforests, and vibrant Creole culture.",East Caribbean Dollar,0.36,Passport,English,+1758
+146,Saint Vincent and the Grenadines,A Caribbean nation consisting of multiple islands known for their natural beauty and vibrant culture.,East Caribbean Dollar,0.36,Visa,English,+1784
 147,Samoa,"A country in the South Pacific known for its stunning beaches, lush rainforests, and Polynesian culture.",Samoan Tālā,0.36,Passport,"Samoan, English",+685
 148,San Marino,"A microstate surrounded by Italy known for its medieval architecture, beautiful landscapes, and rich history.",Euro,1.0,ID,Italian,+378
 149,Sao Tome and Principe,A country located on the equatorial coast of Central Africa known for its biodiversity and pristine beaches.,São Tomé and Príncipe Dobra,0.0046,ID,Portuguese,+239
@@ -172,10 +172,10 @@
 172,Tajikistan,"A landlocked country in Central Asia known for its stunning mountains, ancient Silk Road history, and warm hospitality.",Tajikistani Somoni,0.091,Passport,"Tajik, Russian",+992
 173,Tanzania,"A country in East Africa known for its diverse wildlife, stunning landscapes, and rich cultural heritage.",Tanzanian Shilling,0.00039,Visa,"Swahili, English",+255
 174,Thailand,"A country in Southeast Asia known for its stunning beaches, vibrant cities, and rich Buddhist heritage.",Thai Baht,0.032,Visa,Thai,+66
-175,Timor-Leste,"A Southeast Asian country occupying half of the island of Timor, known for its rugged landscapes.",United States Dollar,0.91,Passport,"Tetum, Portuguese",+670
+175,Timor-Leste,"A Southeast Asian country occupying half of the island of Timor, known for its rugged landscapes.",United States Dollar,0.91,Passport,"Tetum, Portuguese",+672
 176,Togo,"A country in West Africa known for its diverse ethnic groups, beautiful coastline, and vibrant culture.",West African CFA Franc,0.0017,Passport,French,+228
 177,Tonga,"A Polynesian kingdom in the South Pacific known for its pristine beaches, warm hospitality, and unique culture.",Tongan Paʻanga,0.41,ID,"Tongan, English",+676
-178,Trinidad and Tobago,A twin-island country in the Caribbean known for its vibrant Carnival celebrations and beautiful beaches.,Trinidad and Tobago Dollar,0.15,Visa,English,+1-868
+178,Trinidad and Tobago,A twin-island country in the Caribbean known for its vibrant Carnival celebrations and beautiful beaches.,Trinidad and Tobago Dollar,0.15,Visa,English,+1868
 179,Tunisia,"A country located in North Africa known for its beautiful Mediterranean coastline, ancient ruins, and vibrant souks.",Tunisian Dinar,0.34,ID,Arabic,+216
 180,Turkey,"A transcontinental country bridging Europe and Asia known for its rich history, cultural heritage, and delicious cuisine.",Turkish Lira,0.11,Visa,Turkish,+90
 181,Turkmenistan,"A country in Central Asia known for its ancient Silk Road cities, vast deserts, and unique landscapes.",Turkmenistan Manat,0.26,Visa,"Turkmen, Russian",+993
