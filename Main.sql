@@ -173,14 +173,14 @@ CREATE TABLE transport (
 	CHECK (cijena >= 0)
 );
 
-CREATE TABLE aktivnosti (
+CREATE TABLE aktivnost (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(100) NOT NULL UNIQUE,
     opis TEXT(500),
     cijena NUMERIC(10,2) NOT NULL, 
     id_adresa INT NOT NULL REFERENCES adresa (id) ON DELETE CASCADE,
     trajanje INT NOT NULL,
-    vrijeme_odlaska DATETIME NOT NULL,
+    vrijeme_odlaska TIME NOT NULL,
     CHECK (cijena >= 0),
     CHECK (trajanje> 0)
 );
@@ -401,6 +401,19 @@ ON adresa_id = hotel.id_adresa;
 
 
 -- Autor: Lucia Labinjan
+-- SELECT a.*
+-- FROM adresa a
+-- LEFT JOIN hotel h
+-- ON a.id = h.id_adresa
+-- WHERE h.id_adresa IS NULL;
+
+-- SELECT g.naziv AS naziv_grad, o.ime AS naziv_odrediste, a.naziv_ulice, a.id AS id_adresa, o.id
+-- FROM odrediste AS o
+-- JOIN grad AS g ON o.id_grad = g.id
+-- JOIN adresa AS a ON a.id_grad = g.id
+-- LEFT JOIN hotel AS h ON a.id = h.id_adresa
+-- WHERE h.id_adresa IS NULL;
+
 -- 1.List all packages a person has booked
 -- 2.List all the countries and the total number of persons from that country
 -- 3. apply a 10% discount to the price of reservations that have an associated coupon with a discount greater than 20%
@@ -526,8 +539,18 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
+    
+    LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/aktivnost.csv' 
+	INTO TABLE aktivnost
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+	
 
+    
 -- Odjeljak TESTIRANJE
+
+
 
 -- SELECT * FROM adresa;
 -- SELECT * FROM cjepivo;
@@ -542,3 +565,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 -- SELECT * FROM osiguranje;
 -- SELECT * FROM pokrice_osiguranja;	
 -- SELECT * FROM odrediste;
+-- SELECT * FROM aktivnost;
