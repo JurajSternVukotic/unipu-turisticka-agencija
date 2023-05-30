@@ -122,12 +122,11 @@ CREATE TABLE paket (
 CREATE TABLE putni_plan_stavka(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
-    id_transport INT NOT NULL REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
-    id_odrediste INT NOT NULL REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
-    id_aktivnost INT NOT NULL REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
+    id_transport INT REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
+    id_odrediste INT REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
+    id_aktivnost INT REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
     id_vodic INT REFERENCES vodic (id) ON DELETE CASCADE, # poveznica na vodica ako ova stavka ukljucuje jednog 
     opis TEXT(500) NOT NULL, # opis sto se dogadja u ovoj stavci
-    upute TEXT(500), # dodatne upute ako su potrebne
     pocetak DATETIME NOT NULL, # kada pocinje ovaj dio puta 
     trajanje_u_minutama INT # koliko dugo traje u minutama dio puta okvirno, ne mora biti ukljuceno, u slucaju npr. idenja natrag u hotel
 );
@@ -460,7 +459,115 @@ ON adresa_id = hotel.id_adresa;
  * Očekivani rezultat: C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/
  * Ukoliko se rezultat razlikuje, lokalno promijenite u skripti datoteku te tamo postavite datoteke.
  */
-
+ 
+ INSERT INTO putni_plan_stavka (id, id_paket, id_transport, id_odrediste, id_aktivnost, id_vodic, opis, pocetak, trajanje_u_minutama)
+ VALUES (1, 1, 253, 736, 327, 1, 'Visit Zagreb Cathedral, located in the heart of the city. Explore the stunning interior, including beautiful stained glass windows and an impressive altar. Afterwards, take a walk around Jelacic Square and savor the flavors of Croatian traditional food.', '2023-06-01 09:00:00', 180),
+		(2, 1, 253, NULL, NULL, 1, 'We will return to the Zagreb hotel for a well-deserved rest and a delicious dinner nearby. Recharge and relax in the hotels comfortable ambiance, savoring local cuisine and preparing for the next days adventures.', '2023-06-01 12:00:00', 30),
+        (3, 1, 253, 737, NULL, 1, 'Visiting Mirogoj will be an unforgettable experience. This beautiful cemetery park in Zagreb offers a peaceful oasis for walking and contemplation. After exploring Mirogoj, its time for us to part ways and head back to our respective homes.' '2023-06-01 09:00:00', 180),
+        (4, 2, 209, 740, 327, 1, 'X' '2023-06-01 09:00:00', 180),
+        (1, 1, 253, 736, 327, 1, 'X' '2023-06-01 09:00:00', 180);
+		
+ ;
+ 
+ INSERT INTO hoteli_paketa (id_hotel, id_paket, datum)
+ VALUES (100,1),
+		(98,2),
+        (101,3),
+        (189,4),
+        (189,5),
+        (99,6),
+        (190,7),
+        (159,8),
+        (158,9),
+        (162,10),
+        (94,11),
+        (27,12),
+        (122,13),
+        (123,14),
+        (116,15),
+        (155,16),
+        (154,17),
+        (175,18),
+        (90,19),
+        (102,20),
+        (191,21),
+        (149,22),
+        (180,23),
+        (25,24),
+        (6,25),
+        (79,26),
+        (35,27),
+        (64,28),
+        (32,29),
+        (31,30),
+        (180,31),
+        (163,32),
+        (166,33),
+        (13,34),
+        (154,35),
+        (22,36),
+        (22,37),
+        (169,38),
+        (177,39),
+        (98,40),
+        (90,40),
+        (149,40),
+        (154,40),
+        (101,41),
+        (27,41),
+        (31,41),
+        (162,41),
+        (158,42),
+        (25,42),
+        (175,42),
+        (13,42),
+        (177,42),
+        (163,43),
+        (123,43),
+        (180,43),
+        (191,43),
+        (116,43),
+        (155,44),
+        (169,44),
+        (79,44),
+        (90,44),
+        (98,45),
+        (99,45),
+        (154,45),
+        (27,45),
+        (32,45),
+        (22,46),
+        (31,46),
+        (122,46),
+        (64,46),
+        (166,46),
+        (64,47),
+        (191,47),
+        (6,47),
+        (27,47),
+        (32,47),
+        (98,48),
+        (158,48),
+        (25,48),
+        (154,48),
+        (79,48),
+        (98,49),
+        (149,49),
+        (164,49),
+        (31,49),
+        (27,49),
+        (100,50),
+        (190,50),
+        (189,50); 
+        
+ 
+ INSERT INTO hotel (ime, id_adresa, kontaktni_broj, email, slobodne_sobe, pogodnosti, opis)
+VALUES ('Hotel Pula', 1834, '123454321', 'hotelpula@example.com', 100, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A luxurious hotel situated in the beautiful city of Pula, offering stunning views of the Adriatic Sea and top-notch amenities for a memorable stay.'),
+		('Hotel Osijek', 1843, '383654322', 'hotelosijek@example.com', 80, "['Free Wi-Fi', 'Fitness Center', 'Conference Rooms']", 'A modern hotel located in the vibrant city of Osijek, offering comfortable accommodations and excellent facilities for both business and leisure travelers.'),
+		('Hotel Sakura', 752, '9935437899', 'hotelsakura@example.com', 120, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A serene and elegant hotel nestled amidst the cherry blossoms in Hiroshima, offering a harmonious blend of traditional Japanese hospitality and modern comforts.');
+#id ovog hotela pula amora biti 189 
+#ID OSIJEK 190
+#HIROSHIMA 191
 SHOW VARIABLES LIKE "secure_file_priv";
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kontinent.csv' 
