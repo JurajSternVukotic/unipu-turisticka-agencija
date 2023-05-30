@@ -704,8 +704,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/trans
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'
-    IGNORE 1 ROWS
-    (tip_transporta, kapacitet, cijena, ime_tvrtke, telefonski_broj, email, trajanje_u_minutama); 
+    IGNORE 1 ROWS; 
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv' 
 	INTO TABLE odrediste
@@ -830,7 +829,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/poseb
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
-    
+
 -- LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv' 
 -- 	INTO TABLE hoteli_paketa
 -- 	FIELDS TERMINATED BY ',' 
@@ -885,7 +884,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplat
 -- SELECT * FROM recenzija_zaposlenika;
  -- SELECT * FROM stavka_korisnicke_podrske;
  -- SELECT * FROM uplata;
- 
 -- id paketa posebnog zahtjeva
 -- SELECT * FROM stavka_korisnicke_podrske;
 -- SELECT * FROM rezervacija;
@@ -894,3 +892,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplat
 -- SELECT rezervacija.id, osiguranje_rezervacije.rezervacija_id  FROM rezervacija
 -- JOIN osiguranje_rezervacije
 -- ON rezervacija.id = osiguranje_rezervacije.rezervacija_id;
+-- SELECT * FROM kupon_rezervacija;
