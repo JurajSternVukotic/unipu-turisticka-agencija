@@ -41,7 +41,6 @@ CREATE TABLE rezervacija (
     osoba_id INT NOT NULL REFERENCES osoba (id), # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
     paket_id INT NOT NULL REFERENCES paket (id), # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
     zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
-    naziv VARCHAR(100) NOT NULL,
     vrijeme DATETIME NOT NULL, # Točno vrijeme u kojem je uspostavljena rezervacija.
     cijena NUMERIC(10, 2) NOT NULL
     CHECK (cijena >= 0) # Napomena: omogućuje besplatna putovanja iako je neuobičajeno.
@@ -123,12 +122,11 @@ CREATE TABLE paket (
 CREATE TABLE putni_plan_stavka(
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
-    id_transport INT NOT NULL REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
-    id_odrediste INT NOT NULL REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
-    id_aktivnost INT NOT NULL REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
+    id_transport INT REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
+    id_odrediste INT REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
+    id_aktivnost INT REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
     id_vodic INT REFERENCES vodic (id) ON DELETE CASCADE, # poveznica na vodica ako ova stavka ukljucuje jednog 
     opis TEXT(500) NOT NULL, # opis sto se dogadja u ovoj stavci
-    upute TEXT(500), # dodatne upute ako su potrebne
     pocetak DATETIME NOT NULL, # kada pocinje ovaj dio puta 
     trajanje_u_minutama INT # koliko dugo traje u minutama dio puta okvirno, ne mora biti ukljuceno, u slucaju npr. idenja natrag u hotel
 );
@@ -410,6 +408,8 @@ ON adresa_id = hotel.id_adresa;
 -- ON a.id = h.id_adresa
 -- WHERE h.id_adresa IS NULL;
 
+
+
 -- SELECT g.naziv AS naziv_grad, o.ime AS naziv_odrediste, a.naziv_ulice, a.id AS id_adresa, o.id
 -- FROM odrediste AS o
 -- JOIN grad AS g ON o.id_grad = g.id
@@ -417,21 +417,76 @@ ON adresa_id = hotel.id_adresa;
 -- LEFT JOIN hotel AS h ON a.id = h.id_adresa
 -- WHERE h.id_adresa IS NULL;
 
--- 1.List all packages a person has booked
+
 -- 2.List all the countries and the total number of persons from that country
+-- SELECT drzava.naziv, COUNT(osoba.id) as total_persons
+-- FROM drzava
+-- INNER JOIN grad ON drzava.id = grad.id_drzava
+-- INNER JOIN adresa ON grad.id = adresa.id_grad
+-- INNER JOIN osoba ON adresa.id = osoba.id_adresa
+-- GROUP BY drzava.id;
+
+
 -- 3. apply a 10% discount to the price of reservations that have an associated coupon with a discount greater than 20%
 -- 4. the count of reservations for each insurance
--- 5.the most expensive reservation for each package
+-- SELECT o.id AS 'Osiguranje ID', o.naziv AS 'Osiguranje', COUNT(*) AS 'Broj rezervacija'
+-- FROM osiguranje o
+-- JOIN osiguranje_rezervacije orz ON o.id = orz.osiguranje_id
+-- GROUP BY o.id, o.naziv
+-- ORDER BY COUNT(*) DESC;
+
+-- -- 5.the most expensive reservation for each package
 -- 6.list of customers who have spent more than $5000, sorted by total expenditure
 -- 7. Get the information about the packages that a certain user has booked
+-- SELECT paket.id, paket.naziv
+-- FROM paket
+-- JOIN rezervacija ON paket.id = rezervacija.paket_id
+-- JOIN osoba ON rezervacija.osoba_id = osoba.id
+-- WHERE osoba.ime = 'YourUserName';
+
 -- 8. Get the list of all tourist packages with the number of available places (maximum places - filled places)
+-- SELECT id, naziv, max_ljudi - popunjenih_mjesta AS available_places
+-- FROM paket;
+
 -- 9.Get a report of all the payments made within a certain time period, including the reservation details
+-- SELECT uplata.id, uplata.iznos, uplata.vrijeme, uplata.metoda, rezervacija.naziv, rezervacija.cijena, osoba.ime, osoba.prezime
+-- FROM uplata
+-- JOIN rezervacija ON uplata.rezervacija_id = rezervacija.id
+-- JOIN osoba ON rezervacija.osoba_id = osoba.id
+-- WHERE uplata.vrijeme BETWEEN '2023-01-01' AND '2023-12-31';
+
 -- 10.Find all the packages which are insured by a specific insurance provider
+-- SELECT paket.id, paket.naziv
+-- FROM paket
+-- JOIN rezervacija ON paket.id = rezervacija.paket_id
+-- JOIN osiguranje_rezervacije ON rezervacija.id = osiguranje_rezervacije.rezervacija_id
+-- JOIN osiguranje ON osiguranje_rezervacije.osiguranje_id = osiguranje.id
+-- WHERE osiguranje.davatelj = 'InsuranceProviderName';
+
 -- 11.Select the top 5 most popular packages (in terms of reservations)
+-- SELECT paket.id, paket.naziv, COUNT(rezervacija.id) as num_reservations
+-- FROM paket
+-- JOIN rezervacija ON paket.id = rezervacija.paket_id
+-- GROUP BY paket.id, paket.naziv
+-- ORDER BY num_reservations DESC
+-- LIMIT 5;
 -- 12. Create a VIEW that shows a summary of the total sales by product
 -- 13.create a view that aggregates all bookings by destination, and then shows the destinations sorted by popularity
 -- 14. Client Travel History- view shows all trips a particular client has made, sorted by the booking date
--- 15. all packages that have not been booked yet
+-- 15. List all packages with their destinations, transport types, and activities
+-- SELECT p.naziv AS 'Paket', d.naziv AS 'Odrediste', t.tip_transporta AS 'Transport', a.ime AS 'Aktivnost'
+-- FROM paket p
+-- JOIN putni_plan_stavka pp ON pp.id_paket = p.id
+-- LEFT JOIN odrediste d ON d.id = pp.id_odrediste
+-- LEFT JOIN transport t ON t.id = pp.id_transport
+-- LEFT JOIN aktivnost a ON a.id = pp.id_aktivnost;
+-- 16. apply a 30% discount to all reservations made by a specific employee (replace 'employee_name' with the actual employee's name):
+-- UPDATE rezervacija r
+-- JOIN osoba o ON o.id = r.zaposlenik_id
+-- SET r.cijena = r.cijena * 0.7
+-- WHERE o.puno_ime = 'employee_name';
+
+
 
 
 
@@ -461,7 +516,115 @@ ON adresa_id = hotel.id_adresa;
  * Očekivani rezultat: C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/
  * Ukoliko se rezultat razlikuje, lokalno promijenite u skripti datoteku te tamo postavite datoteke.
  */
-
+ 
+--  INSERT INTO putni_plan_stavka (id, id_paket, id_transport, id_odrediste, id_aktivnost, id_vodic, opis, pocetak, trajanje_u_minutama)
+--  VALUES (1, 1, 253, 736, 327, 1, 'Visit Zagreb Cathedral, located in the heart of the city. Explore the stunning interior, including beautiful stained glass windows and an impressive altar. Afterwards, take a walk around Jelacic Square and savor the flavors of Croatian traditional food.', '2023-06-01 09:00:00', 180),
+-- 		(2, 1, 253, NULL, NULL, 1, 'We will return to the Zagreb hotel for a well-deserved rest and a delicious dinner nearby. Recharge and relax in the hotels comfortable ambiance, savoring local cuisine and preparing for the next days adventures.', '2023-06-01 12:00:00', 30),
+--         (3, 1, 253, 737, NULL, 1, 'Visiting Mirogoj will be an unforgettable experience. This beautiful cemetery park in Zagreb offers a peaceful oasis for walking and contemplation. After exploring Mirogoj, its time for us to part ways and head back to our respective homes.' '2023-06-01 09:00:00', 180),
+--         (4, 2, 209, 740, 327, 1, 'X' '2023-06-01 09:00:00', 180),
+--         (1, 1, 253, 736, 327, 1, 'X' '2023-06-01 09:00:00', 180);
+-- 		
+--  ;
+--  
+--  INSERT INTO hoteli_paketa (id_hotel, id_paket, datum)
+--  VALUES (100,1),
+-- 		(98,2),
+--         (101,3),
+--         (189,4),
+--         (189,5),
+--         (99,6),
+--         (190,7),
+--         (159,8),
+--         (158,9),
+--         (162,10),
+--         (94,11),
+--         (27,12),
+--         (122,13),
+--         (123,14),
+--         (116,15),
+--         (155,16),
+--         (154,17),
+--         (175,18),
+--         (90,19),
+--         (102,20),
+--         (191,21),
+--         (149,22),
+--         (180,23),
+--         (25,24),
+--         (6,25),
+--         (79,26),
+--         (35,27),
+--         (64,28),
+--         (32,29),
+--         (31,30),
+--         (180,31),
+--         (163,32),
+--         (166,33),
+--         (13,34),
+--         (154,35),
+--         (22,36),
+--         (22,37),
+--         (169,38),
+--         (177,39),
+--         (98,40),
+--         (90,40),
+--         (149,40),
+--         (154,40),
+--         (101,41),
+--         (27,41),
+--         (31,41),
+--         (162,41),
+--         (158,42),
+--         (25,42),
+--         (175,42),
+--         (13,42),
+--         (177,42),
+--         (163,43),
+--         (123,43),
+--         (180,43),
+--         (191,43),
+--         (116,43),
+--         (155,44),
+--         (169,44),
+--         (79,44),
+--         (90,44),
+--         (98,45),
+--         (99,45),
+--         (154,45),
+--         (27,45),
+--         (32,45),
+--         (22,46),
+--         (31,46),
+--         (122,46),
+--         (64,46),
+--         (166,46),
+--         (64,47),
+--         (191,47),
+--         (6,47),
+--         (27,47),
+--         (32,47),
+--         (98,48),
+--         (158,48),
+--         (25,48),
+--         (154,48),
+--         (79,48),
+--         (98,49),
+--         (149,49),
+--         (164,49),
+--         (31,49),
+--         (27,49),
+--         (100,50),
+--         (190,50),
+--         (189,50); 
+        
+ 
+ INSERT INTO hotel (ime, id_adresa, kontaktni_broj, email, slobodne_sobe, pogodnosti, opis)
+VALUES ('Hotel Pula', 1834, '123454321', 'hotelpula@example.com', 100, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A luxurious hotel situated in the beautiful city of Pula, offering stunning views of the Adriatic Sea and top-notch amenities for a memorable stay.'),
+		('Hotel Osijek', 1843, '383654322', 'hotelosijek@example.com', 80, "['Free Wi-Fi', 'Fitness Center', 'Conference Rooms']", 'A modern hotel located in the vibrant city of Osijek, offering comfortable accommodations and excellent facilities for both business and leisure travelers.'),
+		('Hotel Sakura', 752, '9935437899', 'hotelsakura@example.com', 120, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A serene and elegant hotel nestled amidst the cherry blossoms in Hiroshima, offering a harmonious blend of traditional Japanese hospitality and modern comforts.');
+#id ovog hotela pula amora biti 189 
+#ID OSIJEK 190
+#HIROSHIMA 191
 SHOW VARIABLES LIKE "secure_file_priv";
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kontinent.csv' 
@@ -691,3 +854,13 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/stavk
 -- SELECT * FROM recenzija_vodica;
 -- SELECT * FROM recenzija_zaposlenika;
 -- SELECT * FROM stavka_korisnicke_podrske;
+
+
+
+
+
+
+
+
+
+
