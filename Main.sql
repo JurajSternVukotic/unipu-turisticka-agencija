@@ -831,12 +831,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/poseb
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
     
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje_rezervacije.csv' 
-	INTO TABLE osiguranje_rezervacije
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n';
-    
 -- LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv' 
 -- 	INTO TABLE hoteli_paketa
 -- 	FIELDS TERMINATED BY ',' 
@@ -900,4 +894,3 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplat
 -- SELECT rezervacija.id, osiguranje_rezervacije.rezervacija_id  FROM rezervacija
 -- JOIN osiguranje_rezervacije
 -- ON rezervacija.id = osiguranje_rezervacije.rezervacija_id;
-SELECT * FROM osiguranje_rezervacije;
