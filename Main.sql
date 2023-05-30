@@ -38,13 +38,6 @@ CREATE TABLE osiguranje (
     CHECK (cijena >= 0) # Cijena ne može biti negativna, ali može biti besplatno osiguranje.
 );
 
-# Omogućava definiciju popisa stavki koje su pokrivene određenim osiguranjem.
-CREATE TABLE pokrice_osiguranja (
-	id_osiguranje INT NOT NULL REFERENCES osiguranje (id),
-    pokrice VARCHAR (200) NOT NULL,
-    PRIMARY KEY (id_osiguranje, pokrice)
-);
-
 CREATE TABLE kupon_rezervacija (
 	kupon_id INT NOT NULL REFERENCES kupon (id),
     rezervacija_id INT NOT NULL REFERENCES rezervacija (id),
@@ -693,12 +686,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osigu
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n'; 
 
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pokrice_osiguranja.csv' 
-	INTO TABLE pokrice_osiguranja
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n'; 
-
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/transport.csv' 
 	INTO TABLE transport
 	FIELDS TERMINATED BY ',' 
@@ -830,13 +817,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/poseb
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
-    
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje_rezervacije.csv' 
-	INTO TABLE osiguranje_rezervacije
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n';
-    
 
 -- LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv' 
 -- 	INTO TABLE hoteli_paketa
@@ -877,7 +857,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplat
 -- SELECT * FROM kupon;
 -- SELECT * FROM pozicija;
 -- SELECT * FROM osiguranje;
--- SELECT * FROM pokrice_osiguranja;	
 -- SELECT * FROM transport;
 -- SELECT * FROM odrediste;
 -- SELECT * FROM aktivnost;
