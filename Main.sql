@@ -524,9 +524,9 @@ ON adresa_id = hotel.id_adresa;
 -- 		
 --  ;
 --  
---  INSERT INTO hoteli_paketa (id_hotel, id_paket, datum)
+ -- INSERT INTO hoteli_paketa (id_hotel, id_paket, datum)
 --  VALUES (100,1),
--- 		(98,2),
+-- 		   (98,2),
 --         (101,3),
 --         (189,4),
 --         (189,5),
@@ -836,6 +836,12 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osigu
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
+    
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv' 
+	INTO TABLE hoteli_paketa
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
@@ -868,9 +874,10 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osigu
 -- SELECT * FROM recenzija_transporta;
 -- SELECT * FROM recenzija_vodica;
 -- SELECT * FROM recenzija_zaposlenika;
--- SELECT * FROM stavka_korisnicke_podrske;
+ -- SELECT * FROM stavka_korisnicke_podrske;
+ 
+-- id paketa posebnog zahtjeva
 
-SELECT * FROM rezervacija;
 
 
 
