@@ -244,8 +244,8 @@ CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezervira
 CREATE TABLE zaposlenik (
     id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
     ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
-    plaća NUMERIC (10, 2) NOT NULL,
-    CHECK (plaća >= 0)
+    placa NUMERIC (10, 2) NOT NULL,
+    CHECK (placa >= 0)
 );
 
 CREATE TABLE pozicija (
@@ -622,10 +622,10 @@ ON adresa_id = hotel.id_adresa;
 --         (189,50); 
         
  
- INSERT INTO hotel (ime, id_adresa, kontaktni_broj, email, slobodne_sobe, pogodnosti, opis)
-VALUES ('Hotel Pula', 1834, '123454321', 'hotelpula@example.com', 100, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A luxurious hotel situated in the beautiful city of Pula, offering stunning views of the Adriatic Sea and top-notch amenities for a memorable stay.'),
-		('Hotel Osijek', 1843, '383654322', 'hotelosijek@example.com', 80, "['Free Wi-Fi', 'Fitness Center', 'Conference Rooms']", 'A modern hotel located in the vibrant city of Osijek, offering comfortable accommodations and excellent facilities for both business and leisure travelers.'),
-		('Hotel Sakura', 752, '9935437899', 'hotelsakura@example.com', 120, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A serene and elegant hotel nestled amidst the cherry blossoms in Hiroshima, offering a harmonious blend of traditional Japanese hospitality and modern comforts.');
+--  INSERT INTO hotel (ime, id_adresa, kontaktni_broj, email, slobodne_sobe, pogodnosti, opis)
+-- VALUES ('Hotel Pula', 1834, '123454321', 'hotelpula@example.com', 100, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A luxurious hotel situated in the beautiful city of Pula, offering stunning views of the Adriatic Sea and top-notch amenities for a memorable stay.'),
+-- 		('Hotel Osijek', 1843, '383654322', 'hotelosijek@example.com', 80, "['Free Wi-Fi', 'Fitness Center', 'Conference Rooms']", 'A modern hotel located in the vibrant city of Osijek, offering comfortable accommodations and excellent facilities for both business and leisure travelers.'),
+-- 		('Hotel Sakura', 752, '9935437899', 'hotelsakura@example.com', 120, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A serene and elegant hotel nestled amidst the cherry blossoms in Hiroshima, offering a harmonious blend of traditional Japanese hospitality and modern comforts.');
 #id ovog hotela pula amora biti 189 
 #ID OSIJEK 190
 #HIROSHIMA 191
@@ -894,16 +894,13 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 -- SELECT * FROM recenzija_transporta;
 -- SELECT * FROM recenzija_vodica;
 -- SELECT * FROM recenzija_zaposlenika;
-<<<<<<< HEAD
  -- SELECT * FROM stavka_korisnicke_podrske;
  
 -- id paketa posebnog zahtjeva
-
-=======
 -- SELECT * FROM stavka_korisnicke_podrske;
 -- SELECT * FROM rezervacija;
 -- SELECT * FROM kupon_rezervacija;
->>>>>>> 300e8334f7d69a0a506d5e7af6c75eedb5757a21
+
 
 
 
