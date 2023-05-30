@@ -8,7 +8,57 @@ SET GLOBAL local_infile=1;
 
 -- Odjeljak relacije
 
--- Autor: Alan Burić
+CREATE TABLE osoba (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    puno_ime VARCHAR(100) NOT NULL,
+	datum_rodenja DATE NOT NULL,
+	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
+	email VARCHAR(100) NOT NULL UNIQUE,
+    korisnicki_bodovi INT NOT NULL DEFAULT 0,
+    CHECK (korisnicki_bodovi >= 0),
+    id_adresa INT NOT NULL REFERENCES adresa (id)
+);
+
+CREATE TABLE zaposlenik (
+    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
+    ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
+    placa NUMERIC (10, 2) NOT NULL,
+    CHECK (placa >= 0)
+);
+
+CREATE TABLE pozicija (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    ime_pozicije ENUM ('turistički agent', 'putni agent', 'računovođa', 'promotor', 'IT podrška') NOT NULL UNIQUE,
+    opis_pozicije TEXT(500)
+);
+
+CREATE TABLE radna_smjena (
+	zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
+    smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
+    datum DATE NOT NULL
+);
+
+CREATE TABLE pozicija_zaposlenika (
+	id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
+    id_pozicija INT NOT NULL REFERENCES pozicija (id) ON DELETE CASCADE
+);
+
+CREATE TABLE stavka_korisnicke_podrske ( #support ticket
+	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
+	id_osoba INT NOT NULL REFERENCES osoba (id), # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
+    id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id), # zelimo uvijek imati tocno jednu osobu koja radi na ovoj podrsci, i da ostane cak i ako taj zaposlenik ode 
+    vrsta_problema ENUM ('Placanje', 'Rezervacija', 'Problemi sa zaposlenicima', 'Tehnicki problemi', 'Povrat novca', 'Drugo') NOT NULL, # ticket podrske moze biti samo jedna od ovih stvari
+    opis_problema TEXT (2500), # opis problema mora biti teksutalan i imati manje od 2500 znakova
+    CHECK (LENGTH(opis_problema) >= 50), # opis mora imati vise od 49 znakova kako bi smanjili zlouporabu sa praznim ili nedostatnim opisima 
+	status_problema ENUM('Zaprimljeno', 'U obradi', 'Na cekanju', 'Rjeseno') NOT NULL # svaki ticket ima svoje stanje, ovisno u kojoj fazi proceisranja je
+);
+
+CREATE TABLE vodic (
+    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
+	godine_iskustva INT NOT NULL,
+	CHECK (godine_iskustva >= 0)
+);
+
 CREATE TABLE kupon (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	kod VARCHAR(20) NOT NULL,
@@ -28,6 +78,13 @@ CREATE TABLE rezervacija (
     vrijeme DATETIME NOT NULL # Točno vrijeme u kojem je uspostavljena rezervacija.
 );
 
+CREATE TABLE kupon_rezervacija (
+	kupon_id INT NOT NULL REFERENCES kupon (id),
+    rezervacija_id INT NOT NULL REFERENCES rezervacija (id),
+    PRIMARY KEY (kupon_id, rezervacija_id)
+);
+
+
 CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     rezervacija_id INT NOT NULL UNIQUE REFERENCES rezervacija (id) ON DELETE CASCADE,
@@ -36,18 +93,6 @@ CREATE TABLE osiguranje (
     opis TINYTEXT,
     cijena NUMERIC(10, 2) NOT NULL,
     CHECK (cijena >= 0) # Cijena ne može biti negativna, ali može biti besplatno osiguranje.
-);
-
-CREATE TABLE kupon_rezervacija (
-	kupon_id INT NOT NULL REFERENCES kupon (id),
-    rezervacija_id INT NOT NULL REFERENCES rezervacija (id),
-    PRIMARY KEY (kupon_id, rezervacija_id)
-);
-
-CREATE TABLE posebni_zahtjev (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
-    opis TEXT(750)
 );
 
 CREATE TABLE uplata (
@@ -59,7 +104,35 @@ CREATE TABLE uplata (
     CHECK (iznos > 0) # Uplata ničega ili negativnog iznosa nije važeća.
 );
 
--- Autor: Juraj Štern-Vukotić
+CREATE TABLE posebni_zahtjev (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
+    opis TEXT(750)
+);
+
+CREATE TABLE kontinent (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    ime VARCHAR(25) NOT NULL UNIQUE,
+    opis TEXT(500)
+);
+
+CREATE TABLE drzava (
+	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
+    naziv VARCHAR(64) NOT NULL UNIQUE, # Najduzi naziv drzave je 56, tako da bi ovo trebalo biti dovoljno, ime mora biti jedinstveno
+    opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
+    valuta VARCHAR(50) NOT NULL, # Ime valute koja se koristi
+    tecaj_u_eurima NUMERIC(10, 6) NOT NULL, # Koliko je jedan euro vrijedan ove valute 
+    dokumenti_za_ulaz TEXT(500), # Kratki opis kakva je trenutna procedura za ulazak u drzavu, kasnije se moze dodati tablica koja gleda relaciju izmedju svake dvije drzave
+    jezik VARCHAR(50) NOT NULL, # Naziv jezika koji se prica
+    pozivni_broj INT NOT NULL UNIQUE, # pretpostavlja se da se ne pise niti 00 niti + izmedju posto je to preferenca formatiranja, takodjer da nema crtice nego samo se nastavi pisati posto je nepotrebno tako da moze biti INT, dvije drzave ne mogu imati isti pozivni broj
+	CHECK (pozivni_broj > 0) # pozivni broj ne moze biti negativan niti nula
+);
+
+CREATE TABLE drzava_kontinent ( 
+	id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE,
+    id_kontinent INT NOT NULL REFERENCES kontinent (id) ON DELETE CASCADE
+);
+
 CREATE TABLE grad (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL, # Najduzi naziv grada na svijetu ima 58 znakova, 64 bi trebalo biti dovoljno
@@ -75,27 +148,19 @@ CREATE TABLE adresa (
     id_grad INT NOT NULL REFERENCES grad (id) ON DELETE CASCADE # posto svaka adresa ima tocno jedan grad, ne treba specijalna tablica za ovo, ako grad nestane nestane i adresa
 );
 
-CREATE TABLE drzava (
-	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
-    naziv VARCHAR(64) NOT NULL UNIQUE, # Najduzi naziv drzave je 56, tako da bi ovo trebalo biti dovoljno, ime mora biti jedinstveno
-    opis TEXT(500), # 500 znakova bi trebalo biti dovoljno za opis da ne bude predug
-    valuta VARCHAR(50) NOT NULL, # Ime valute koja se koristi
-    tecaj_u_eurima NUMERIC(10, 6) NOT NULL, # Koliko je jedan euro vrijedan ove valute 
-    dokumenti_za_ulaz TEXT(500), # Kratki opis kakva je trenutna procedura za ulazak u drzavu, kasnije se moze dodati tablica koja gleda relaciju izmedju svake dvije drzave
-    jezik VARCHAR(50) NOT NULL, # Naziv jezika koji se prica
-    pozivni_broj INT NOT NULL UNIQUE, # pretpostavlja se da se ne pise niti 00 niti + izmedju posto je to preferenca formatiranja, takodjer da nema crtice nego samo se nastavi pisati posto je nepotrebno tako da moze biti INT, dvije drzave ne mogu imati isti pozivni broj
-	CHECK (pozivni_broj > 0) # pozivni broj ne moze biti negativan niti nula
-);	
+CREATE TABLE cjepivo (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    naziv ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis', 'COVID-19', 'Ebola', 'Malarija', 'Gripa', 'Tetanus', 'Kolera', 'Ospice', 'Zaušnjaci', 'Rubela', 'Difterija', 'Hripavost', 'Vodene kozice') UNIQUE
+);
 
-CREATE TABLE stavka_korisnicke_podrske ( #support ticket
-	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
-    # Mozda treba napraviti specijalnu tablicu sa id stavke, id korisnika i id zaposnelika???
-	id_osoba INT NOT NULL REFERENCES osoba (id), # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
-    id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id), # zelimo uvijek imati tocno jednu osobu koja radi na ovoj podrsci, i da ostane cak i ako taj zaposlenik ode 
-    vrsta_problema ENUM ('Placanje', 'Rezervacija', 'Problemi sa zaposlenicima', 'Tehnicki problemi', 'Povrat novca', 'Drugo') NOT NULL, # ticket podrske moze biti samo jedna od ovih stvari
-    opis_problema TEXT (2500), # opis problema mora biti teksutalan i imati manje od 2500 znakova
-    CHECK (LENGTH(opis_problema) >= 50), # opis mora imati vise od 49 znakova kako bi smanjili zlouporabu sa praznim ili nedostatnim opisima 
-	status_problema ENUM('Zaprimljeno', 'U obradi', 'Na cekanju', 'Rjeseno') NOT NULL # svaki ticket ima svoje stanje, ovisno u kojoj fazi proceisranja je
+CREATE TABLE cjepivo_drzava (
+	id_drzava INT NOT NULL REFERENCES drzava (id),
+    id_cijepiva INT NOT NULL REFERENCES cjepivo (id)
+);
+
+CREATE TABLE cijepljena_osoba (
+	id_cjepivo INT NOT NULL REFERENCES cjepivo (id),
+    id_osoba INT NOT NULL REFERENCES osoba (id)
 );
 
 CREATE TABLE paket (
@@ -112,41 +177,30 @@ CREATE TABLE paket (
     cijena_po_turistu NUMERIC(10, 2) NOT NULL # koliko kosta za jednu osobu paket
 );
 
-CREATE TABLE putni_plan_stavka(
-	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
-    id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
-    id_transport INT REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
-    id_odrediste INT REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
-    id_aktivnost INT REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
-    id_vodic INT REFERENCES vodic (id) ON DELETE CASCADE, # poveznica na vodica ako ova stavka ukljucuje jednog 
-    opis TEXT(500) NOT NULL, # opis sto se dogadja u ovoj stavci
-    pocetak DATETIME NOT NULL, # kada pocinje ovaj dio puta 
-    trajanje_u_minutama INT # koliko dugo traje u minutama dio puta okvirno, ne mora biti ukljuceno, u slucaju npr. idenja natrag u hotel
+CREATE TABLE hotel (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    ime VARCHAR(100) NOT NULL,
+    id_adresa INT NOT NULL REFERENCES adresa (id),
+    kontaktni_broj VARCHAR(15), 
+    email VARCHAR(100) NOT NULL UNIQUE,
+    CHECK (email LIKE '%@%.%'),
+    slobodne_sobe INT NOT NULL,
+    pogodnosti TEXT(500),
+    opis TEXT(500),
+    CHECK (slobodne_sobe >= 0)
 );
 
-CREATE TABLE osoba (
+CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezerviranim hotelima
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    puno_ime VARCHAR(100) NOT NULL,
-	datum_rodenja DATE NOT NULL,
-	kontaktni_broj VARCHAR(15) NOT NULL UNIQUE,
-	email VARCHAR(100) NOT NULL UNIQUE,
-    korisnicki_bodovi INT NOT NULL DEFAULT 0,
-    CHECK (korisnicki_bodovi >= 0),
-    id_adresa INT NOT NULL REFERENCES adresa (id)
+    id_hotel INT NOT NULL REFERENCES hotel (id) ON DELETE CASCADE,
+    id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE,
+    datum DATE # datum kada taj paket ima predvidjeno boravljenje u tom hotelu
 );
 
 CREATE TABLE dodatni_jezik (
     id_osoba INT NOT NULL REFERENCES osoba (id) ON DELETE CASCADE,
     dodatni_jezik VARCHAR (50) NOT NULL,
     PRIMARY KEY (id_osoba, dodatni_jezik)
-);
-    
--- Autor: Lucia Labinjan
-
-CREATE TABLE vodic (
-    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
-	godine_iskustva INT NOT NULL,
-	CHECK (godine_iskustva >= 0)
 );
 
 CREATE TABLE transport (
@@ -174,32 +228,6 @@ CREATE TABLE aktivnost (
     CHECK (trajanje> 0)
 );
 
-CREATE TABLE cjepivo (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    naziv ENUM('Žuta groznica', 'Hepatitis A', 'Hepatitis B', 'Hepatitis C', 'Tifus', 'Bjesnoća', 'Japanski encefalitis', 'Polio', 'Meningokokni meningitis', 'COVID-19', 'Ebola', 'Malarija', 'Gripa', 'Tetanus', 'Kolera', 'Ospice', 'Zaušnjaci', 'Rubela', 'Difterija', 'Hripavost', 'Vodene kozice') UNIQUE
-);
-
-CREATE TABLE kontinent (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(25) NOT NULL UNIQUE,
-    opis TEXT(500)
-);
-
-CREATE TABLE drzava_kontinent ( 
-	id_drzava INT NOT NULL REFERENCES drzava (id) ON DELETE CASCADE,
-    id_kontinent INT NOT NULL REFERENCES kontinent (id) ON DELETE CASCADE
-);
-
-CREATE TABLE cjepivo_drzava (
-	id_drzava INT NOT NULL REFERENCES drzava (id),
-    id_cijepiva INT NOT NULL REFERENCES cjepivo (id)
-);
-
-CREATE TABLE cijepljena_osoba (
-	id_cjepivo INT NOT NULL REFERENCES cjepivo (id),
-    id_osoba INT NOT NULL REFERENCES osoba (id)
-);
-
 CREATE TABLE odrediste (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(100) NOT NULL UNIQUE,
@@ -208,53 +236,18 @@ CREATE TABLE odrediste (
     opis TEXT(500)
 );
 
-CREATE TABLE hotel (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime VARCHAR(100) NOT NULL,
-    id_adresa INT NOT NULL REFERENCES adresa (id),
-    kontaktni_broj VARCHAR(15), 
-    email VARCHAR(100) NOT NULL UNIQUE,
-    CHECK (email LIKE '%@%.%'),
-    slobodne_sobe INT NOT NULL,
-    pogodnosti TEXT(500),
-    opis TEXT(500),
-    CHECK (slobodne_sobe >= 0)
+CREATE TABLE putni_plan_stavka (
+	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
+    id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE, # poveznica sa paketom kojem pripada stavka
+    id_transport INT REFERENCES transport (id) ON DELETE CASCADE, # poveznica sa transportom koji ukljucuje
+    id_odrediste INT REFERENCES odrediste (id) ON DELETE CASCADE, # poveznica sa odredistem na koje ide
+    id_aktivnost INT REFERENCES aktivnost (id) ON DELETE CASCADE, # poveznica sa aktivnoscu koje ukljucuje
+    id_vodic INT REFERENCES vodic (id) ON DELETE CASCADE, # poveznica na vodica ako ova stavka ukljucuje jednog 
+    opis TEXT(500) NOT NULL, # opis sto se dogadja u ovoj stavci
+    pocetak DATETIME NOT NULL, # kada pocinje ovaj dio puta 
+    trajanje_u_minutama INT # koliko dugo traje u minutama dio puta okvirno, ne mora biti ukljuceno, u slucaju npr. idenja natrag u hotel
 );
 
-CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezerviranim hotelima
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    id_hotel INT NOT NULL REFERENCES hotel (id) ON DELETE CASCADE,
-    id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE,
-    datum DATE # datum kada taj paket ima predvidjeno boravljenje u tom hotelu
-);
-
--- Autori: Mateo Udovčić i Karlo Bazina
-
-CREATE TABLE zaposlenik (
-    id INT NOT NULL PRIMARY KEY REFERENCES osoba (id) ON DELETE CASCADE,
-    ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
-    placa NUMERIC (10, 2) NOT NULL,
-    CHECK (placa >= 0)
-);
-
-CREATE TABLE pozicija (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    ime_pozicije ENUM ('turistički agent', 'putni agent', 'računovođa', 'promotor', 'IT podrška') NOT NULL UNIQUE,
-    opis_pozicije TEXT(500)
-);
-
-CREATE TABLE radna_smjena (
-	zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
-    smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
-    datum DATE NOT NULL
-);
-
-CREATE TABLE pozicija_zaposlenika (
-	id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
-    id_pozicija INT NOT NULL REFERENCES pozicija (id) ON DELETE CASCADE
-);
-    
-    
 CREATE TABLE recenzija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     osoba_id INT NOT NULL REFERENCES osoba (id),
