@@ -33,19 +33,19 @@ CREATE TABLE pozicija (
     opis_pozicije TEXT(500)
 );
 
-CREATE TABLE radna_smjena (
-	id_zaposlenik INT NOT NULL,
-    smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
-    datum DATE NOT NULL,
-    FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id) ON DELETE CASCADE
-);
-
 CREATE TABLE pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL,
     id_pozicija INT NOT NULL,
     FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id) ON DELETE CASCADE,
     FOREIGN KEY (id_pozicija) REFERENCES pozicija (id) ON DELETE CASCADE,
     PRIMARY KEY (id_zaposlenik, id_pozicija)
+);
+
+CREATE TABLE radna_smjena (
+	id_zaposlenik INT NOT NULL,
+    smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
+    datum DATE NOT NULL,
+    FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id) ON DELETE CASCADE
 );
 
 CREATE TABLE stavka_korisnicke_podrske ( #support ticket
@@ -147,20 +147,18 @@ CREATE TABLE paket (
     max_ljudi INT NOT NULL DEFAULT 1, # maksimalno ljudi koji mogu sudjelovati na putovanju
     CHECK (min_ljudi >= 1), # ne mozemo imati paket za manje od jednu osobu
     CHECK (max_ljudi >= min_ljudi), # maksimalan broj ljudi mora biti jednak ili veci od minimalnog
-    popunjenih_mjesta INT NOT NULL DEFAULT 0,
-    CHECK (popunjenih_mjesta <= max_ljudi), # ne moze biti vise popunjenih mjesta od max
-    CHECK (popunjenih_mjesta >= 0), # ne moze biti negativno ljudi
     cijena_po_turistu NUMERIC(10, 2) NOT NULL # koliko kosta za jednu osobu paket
 );
 
 CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    id_osoba INT NOT NULL, # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
+    id_korisnik INT NOT NULL, # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
     id_paket INT NOT NULL, # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
-    zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
+    id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
     vrijeme DATETIME NOT NULL, # Točno vrijeme u kojem je uspostavljena rezervacija.
-    FOREIGN KEY (id_osoba) REFERENCES osoba (id),
-    FOREIGN KEY (id_paket) REFERENCES paket (id)
+    FOREIGN KEY (id_korisnik) REFERENCES korisnik (id),
+    FOREIGN KEY (id_paket) REFERENCES paket (id),
+	FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id)
 );
 
 CREATE TABLE kupon_rezervacija (
