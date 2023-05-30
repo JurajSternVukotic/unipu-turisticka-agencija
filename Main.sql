@@ -917,3 +917,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplat
 -- SELECT * FROM stavka_korisnicke_podrske;
 -- SELECT * FROM rezervacija;
 -- SELECT * FROM kupon_rezervacija;
+-- SELECT * FROM grad JOIN drzava ON grad.id_drzava = drzava.id;
