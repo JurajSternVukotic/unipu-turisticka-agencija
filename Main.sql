@@ -44,6 +44,12 @@ CREATE TABLE rezervacija (
     vrijeme DATETIME NOT NULL # Točno vrijeme u kojem je uspostavljena rezervacija.
 );
 
+CREATE TABLE kupon_rezervacija (
+	kupon_id INT NOT NULL REFERENCES kupon (id),
+    rezervacija_id INT NOT NULL REFERENCES rezervacija (id),
+    PRIMARY KEY (kupon_id, rezervacija_id)
+);
+
 CREATE TABLE posebni_zahtjev (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
@@ -683,9 +689,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	INTO TABLE kupon
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n' 
-	IGNORE 1 ROWS
-    (kod, datum_pocetka, datum_kraja, iznos, postotni);
+	LINES TERMINATED BY '\r\n';
     
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv' 
 	INTO TABLE osiguranje
@@ -836,6 +840,20 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osigu
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
+    
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje_rezervacije.csv' 
+	INTO TABLE osiguranje_rezervacije
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon_rezervacija.csv' 
+	INTO TABLE kupon_rezervacija
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'
+    IGNORE 1 ROWS;
+
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
@@ -869,8 +887,8 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osigu
 -- SELECT * FROM recenzija_vodica;
 -- SELECT * FROM recenzija_zaposlenika;
 -- SELECT * FROM stavka_korisnicke_podrske;
-
-SELECT * FROM rezervacija;
+-- SELECT * FROM rezervacija;
+-- SELECT * FROM kupon_rezervacija;
 
 
 
