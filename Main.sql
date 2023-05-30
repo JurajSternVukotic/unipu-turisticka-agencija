@@ -154,10 +154,11 @@ CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_korisnik INT NOT NULL, # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
     id_paket INT NOT NULL, # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
-    zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
+    id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
     vrijeme DATETIME NOT NULL, # Točno vrijeme u kojem je uspostavljena rezervacija.
     FOREIGN KEY (id_korisnik) REFERENCES korisnik (id),
-    FOREIGN KEY (id_paket) REFERENCES paket (id)
+    FOREIGN KEY (id_paket) REFERENCES paket (id),
+	FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id)
 );
 
 CREATE TABLE kupon_rezervacija (
