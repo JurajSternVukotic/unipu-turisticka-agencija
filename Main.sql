@@ -64,7 +64,7 @@ CREATE TABLE osiguranje_rezervacije (
 CREATE TABLE uplata (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     rezervacija_id INT NOT NULL REFERENCES rezervacija (id)  ON DELETE CASCADE,
-    metoda ENUM('gotovina', 'kredit', 'debit', 'cek', 'redirect', 'transfer', 'voucher', 'wallet', 'ostalo') NOT NULL,
+    metoda ENUM('gotovina', 'kredit', 'debit', 'cek', 'redirect', 'wallet', 'paypal', 'ostalo') NOT NULL,
     iznos NUMERIC(10, 2) NOT NULL,
     vrijeme DATETIME NOT NULL, # Točno vrijeme uplate.
     CHECK (iznos > 0) # Uplata ničega ili negativnog iznosa nije važeća.
@@ -861,6 +861,12 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	LINES TERMINATED BY '\r\n'
     IGNORE 1 ROWS;
 
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplata.csv' 
+	INTO TABLE uplata
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n'
+    (rezervacija_id, metoda, iznos, vrijeme);
 
 -- Odjeljak TESTIRANJE
 
@@ -895,17 +901,9 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 -- SELECT * FROM recenzija_vodica;
 -- SELECT * FROM recenzija_zaposlenika;
  -- SELECT * FROM stavka_korisnicke_podrske;
+ -- SELECT * FROM uplata;
  
 -- id paketa posebnog zahtjeva
 -- SELECT * FROM stavka_korisnicke_podrske;
 -- SELECT * FROM rezervacija;
 -- SELECT * FROM kupon_rezervacija;
-
-
-
-
-
-
-
-
-
