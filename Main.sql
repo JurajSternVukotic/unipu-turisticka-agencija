@@ -33,19 +33,19 @@ CREATE TABLE pozicija (
     opis_pozicije TEXT(500)
 );
 
-CREATE TABLE radna_smjena (
-	id_zaposlenik INT NOT NULL,
-    smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
-    datum DATE NOT NULL,
-    FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id) ON DELETE CASCADE
-);
-
 CREATE TABLE pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL,
     id_pozicija INT NOT NULL,
     FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id) ON DELETE CASCADE,
     FOREIGN KEY (id_pozicija) REFERENCES pozicija (id) ON DELETE CASCADE,
     PRIMARY KEY (id_zaposlenik, id_pozicija)
+);
+
+CREATE TABLE radna_smjena (
+	id_zaposlenik INT NOT NULL,
+    smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
+    datum DATE NOT NULL,
+    FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id) ON DELETE CASCADE
 );
 
 CREATE TABLE stavka_korisnicke_podrske ( #support ticket
@@ -147,9 +147,6 @@ CREATE TABLE paket (
     max_ljudi INT NOT NULL DEFAULT 1, # maksimalno ljudi koji mogu sudjelovati na putovanju
     CHECK (min_ljudi >= 1), # ne mozemo imati paket za manje od jednu osobu
     CHECK (max_ljudi >= min_ljudi), # maksimalan broj ljudi mora biti jednak ili veci od minimalnog
-    popunjenih_mjesta INT NOT NULL DEFAULT 0,
-    CHECK (popunjenih_mjesta <= max_ljudi), # ne moze biti vise popunjenih mjesta od max
-    CHECK (popunjenih_mjesta >= 0), # ne moze biti negativno ljudi
     cijena_po_turistu NUMERIC(10, 2) NOT NULL # koliko kosta za jednu osobu paket
 );
 
