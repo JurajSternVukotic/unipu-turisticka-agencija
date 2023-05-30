@@ -6,7 +6,7 @@ USE turisticka_agencija;
 
 SET GLOBAL local_infile=1;
 
--- Odjeljak TABLICE
+-- Odjeljak relacije
 
 -- Autor: Alan Burić
 CREATE TABLE kupon (
@@ -679,7 +679,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
-    
+
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv' 
 	INTO TABLE osiguranje
 	FIELDS TERMINATED BY ',' 
@@ -849,8 +849,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplat
 -- SELECT * FROM kontinent;
 -- SELECT * FROM kupon;
 -- SELECT * FROM pozicija;
--- SELECT * FROM osiguranje;
--- SELECT * FROM pokrice_osiguranja;	
 -- SELECT * FROM transport;
 -- SELECT * FROM odrediste;
 -- SELECT * FROM aktivnost;
@@ -874,9 +872,4 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplat
 -- id paketa posebnog zahtjeva
 -- SELECT * FROM stavka_korisnicke_podrske;
 -- SELECT * FROM rezervacija;
--- SELECT * FROM kupon_rezervacija;
-
--- SELECT rezervacija.id, osiguranje_rezervacije.rezervacija_id  FROM rezervacija
--- JOIN osiguranje_rezervacije
--- ON rezervacija.id = osiguranje_rezervacije.rezervacija_id;
 -- SELECT * FROM kupon_rezervacija;
