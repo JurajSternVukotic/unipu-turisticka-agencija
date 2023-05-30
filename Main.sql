@@ -842,11 +842,11 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osigu
 	LINES TERMINATED BY '\r\n';
     
 
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv' 
-	INTO TABLE hoteli_paketa
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n';
+-- LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv' 
+-- 	INTO TABLE hoteli_paketa
+-- 	FIELDS TERMINATED BY ',' 
+-- 	ENCLOSED BY '"' 
+-- 	LINES TERMINATED BY '\r\n';
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje_rezervacije.csv' 
 	INTO TABLE osiguranje_rezervacije
