@@ -41,9 +41,7 @@ CREATE TABLE rezervacija (
     osoba_id INT NOT NULL REFERENCES osoba (id), # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
     paket_id INT NOT NULL REFERENCES paket (id), # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
     zaposlenik_id INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
-    vrijeme DATETIME NOT NULL, # Točno vrijeme u kojem je uspostavljena rezervacija.
-    cijena NUMERIC(10, 2) NOT NULL
-    CHECK (cijena >= 0) # Napomena: omogućuje besplatna putovanja iako je neuobičajeno.
+    vrijeme DATETIME NOT NULL # Točno vrijeme u kojem je uspostavljena rezervacija.
 );
 
 CREATE TABLE posebni_zahtjev (
@@ -307,65 +305,65 @@ CREATE TABLE recenzija_vodica (
 -- POGLEDI - pohranjeni upiti
 
 -- Prikazuje sve IDjeve zaposlenika koji su putni agenti.
-CREATE VIEW svi_putni_agenti AS SELECT id_zaposlenik AS id FROM pozicija_zaposlenika WHERE id_pozicija = (SELECT id FROM pozicija WHERE ime_pozicije = 'putni agent');
+-- CREATE VIEW svi_putni_agenti AS SELECT id_zaposlenik AS id FROM pozicija_zaposlenika WHERE id_pozicija = (SELECT id FROM pozicija WHERE ime_pozicije = 'putni agent');
 
--- 1. Pronađi ID pozicije 'putni agent'
--- 2. Pronađi sve zaposlenike s tom pozicijom (preko IDja)
--- 3. Pobroji njihova pojavljivanja
--- 4. Sortiraj ih od najmanjeg prema najvećem
+-- -- 1. Pronađi ID pozicije 'putni agent'
+-- -- 2. Pronađi sve zaposlenike s tom pozicijom (preko IDja)
+-- -- 3. Pobroji njihova pojavljivanja
+-- -- 4. Sortiraj ih od najmanjeg prema najvećem
 
-CREATE VIEW zaposlenost_rezervacije AS 
-	SELECT *, COUNT(*) AS kolicina_posla 
-		FROM svi_putni_agenti 
-			LEFT JOIN 
-	(SELECT zaposlenik_id AS id FROM rezervacija) AS rezervacija 
-			USING (id);
+-- CREATE VIEW zaposlenost_rezervacije AS 
+-- 	SELECT *, COUNT(*) AS kolicina_posla 
+-- 		FROM svi_putni_agenti 
+-- 			LEFT JOIN 
+-- 	(SELECT zaposlenik_id AS id FROM rezervacija) AS rezervacija 
+-- 			USING (id);
 
--- OKIDAČI - event handlers
+-- -- OKIDAČI - event handlers
 
--- Nužno je za razlikovanja završetka naredbe.
-DELIMITER //
+-- -- Nužno je za razlikovanja završetka naredbe.
+-- DELIMITER //
 
-CREATE TRIGGER ogranicenje_putnog_agenta BEFORE INSERT ON rezervacija
-	FOR EACH ROW
-		BEGIN
-			DECLARE poruka VARCHAR(128);
-        
-			IF NEW.zaposlenik_id NOT IN (svi_putni_agenti) THEN
-				SET poruka = CONCAT('Zadani zaposlenik s IDjem ', NEW.zaposlenik_id, ' nije putni agent za rezervacije!');
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
-			END IF;
-		END//
+-- CREATE TRIGGER ogranicenje_putnog_agenta BEFORE INSERT ON rezervacija
+-- 	FOR EACH ROW
+-- 		BEGIN
+-- 			DECLARE poruka VARCHAR(128);
+--         
+-- 			IF NEW.zaposlenik_id NOT IN (svi_putni_agenti) THEN
+-- 				SET poruka = CONCAT('Zadani zaposlenik s IDjem ', NEW.zaposlenik_id, ' nije putni agent za rezervacije!');
+-- 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
+-- 			END IF;
+-- 		END//
 
-/*
- * Ukoliko se zaposlenika otpusti, prema ON DELETE SET NULL ograničenju atributa zaposlenik_id u
- * relaciji rezervacije će atribut s IDjem otpuštenog zaposlenika postati NULL. Potrebno je postaviti novog
- * zaposlenika na tu poziciju kako bi korisnici imali zaposlenika turističke agencije kojeg mogu kontaktirati
- * u vezi s njihovom rezervacijom.
- */
-CREATE TRIGGER postavi_novog_zaposlenika BEFORE UPDATE ON rezervacija
-	FOR EACH ROW
-		BEGIN
-			IF NEW.zaposlenik_id IS NULL THEN
-				SET NEW.zaposlenik_id = (SELECT * FROM zaposlenost_rezervacije GROUP BY id ORDER BY kolicina_posla ASC LIMIT 1);
-			END IF;
-		END//
+-- /*
+--  * Ukoliko se zaposlenika otpusti, prema ON DELETE SET NULL ograničenju atributa zaposlenik_id u
+--  * relaciji rezervacije će atribut s IDjem otpuštenog zaposlenika postati NULL. Potrebno je postaviti novog
+--  * zaposlenika na tu poziciju kako bi korisnici imali zaposlenika turističke agencije kojeg mogu kontaktirati
+--  * u vezi s njihovom rezervacijom.
+--  */
+-- CREATE TRIGGER postavi_novog_zaposlenika BEFORE UPDATE ON rezervacija
+-- 	FOR EACH ROW
+-- 		BEGIN
+-- 			IF NEW.zaposlenik_id IS NULL THEN
+-- 				SET NEW.zaposlenik_id = (SELECT * FROM zaposlenost_rezervacije GROUP BY id ORDER BY kolicina_posla ASC LIMIT 1);
+-- 			END IF;
+-- 		END//
 
-CREATE TRIGGER istovremeni_kod BEFORE INSERT ON kupon
-	FOR EACH ROW
-		BEGIN
-            DECLARE poruka VARCHAR(128);
-            
-            -- Želimo da su svi kodovi zapisani velikim slovima radi jednostavnosti i tipičnog formata.
-			SET NEW.kod = UPPER(NEW.kod);
-        
-			IF EXISTS(SELECT * FROM kupon WHERE NEW.kod = kupon.kod AND NEW.datum_pocetka <= datum_kraja AND NEW.datum_kraja > datum_pocetka) THEN
-				SET poruka = CONCAT('Već postoji isti kod u preklapajućem vremenu za kod ', NEW.kod);
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
-			END IF;
-		END//
+-- CREATE TRIGGER istovremeni_kod BEFORE INSERT ON kupon
+-- 	FOR EACH ROW
+-- 		BEGIN
+--             DECLARE poruka VARCHAR(128);
+--             
+--             -- Želimo da su svi kodovi zapisani velikim slovima radi jednostavnosti i tipičnog formata.
+-- 			SET NEW.kod = UPPER(NEW.kod);
+--         
+-- 			IF EXISTS(SELECT * FROM kupon WHERE NEW.kod = kupon.kod AND NEW.datum_pocetka <= datum_kraja AND NEW.datum_kraja > datum_pocetka) THEN
+-- 				SET poruka = CONCAT('Već postoji isti kod u preklapajućem vremenu za kod ', NEW.kod);
+-- 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
+-- 			END IF;
+-- 		END//
 
-DELIMITER ;
+-- DELIMITER ;
 
 -- Autor: Juraj Štern-Vukotić
 
@@ -820,7 +818,24 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/stavk
 	FIELDS TERMINATED BY ',' 
 	ENCLOSED BY '"' 
 	LINES TERMINATED BY '\r\n';
+
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/rezervacija.csv' 
+	INTO TABLE rezervacija
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
     
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/posebni_zahtjev.csv' 
+	INTO TABLE posebni_zahtjev
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
+    
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje_rezervacije.csv' 
+	INTO TABLE osiguranje_rezervacije
+	FIELDS TERMINATED BY ',' 
+	ENCLOSED BY '"' 
+	LINES TERMINATED BY '\r\n';
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
@@ -855,7 +870,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/stavk
 -- SELECT * FROM recenzija_zaposlenika;
 -- SELECT * FROM stavka_korisnicke_podrske;
 
-
+SELECT * FROM rezervacija;
 
 
 
