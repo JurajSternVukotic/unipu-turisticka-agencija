@@ -9,22 +9,6 @@ SET GLOBAL local_infile=1;
 -- Odjeljak TABLICE
 
 -- Autor: Alan Burić
-CREATE TABLE osiguranje (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    naziv VARCHAR(100) NOT NULL,
-    davatelj VARCHAR(100) NOT NULL, # Davatelj osiguranja (eng. insurance provider) obično je osiguravateljska kuća, tj. tvrtka.
-    opis TINYTEXT,
-    cijena NUMERIC(10, 2) NOT NULL,
-    CHECK (cijena >= 0) # Cijena ne može biti negativna, ali može biti besplatno osiguranje.
-);
-
-# Omogućava definiciju popisa stavki koje su pokrivene određenim osiguranjem.
-CREATE TABLE pokrice_osiguranja (
-	id_osiguranje INT NOT NULL REFERENCES osiguranje (id),
-    pokrice VARCHAR (200) NOT NULL,
-    PRIMARY KEY (id_osiguranje, pokrice)
-);
-
 CREATE TABLE kupon (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	kod VARCHAR(20) NOT NULL,
@@ -44,6 +28,23 @@ CREATE TABLE rezervacija (
     vrijeme DATETIME NOT NULL # Točno vrijeme u kojem je uspostavljena rezervacija.
 );
 
+CREATE TABLE osiguranje (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    rezervacija_id INT NOT NULL UNIQUE REFERENCES rezervacija (id) ON DELETE CASCADE,
+    naziv VARCHAR(100) NOT NULL,
+    davatelj VARCHAR(100) NOT NULL, # Davatelj osiguranja (eng. insurance provider) obično je osiguravateljska kuća, tj. tvrtka.
+    opis TINYTEXT,
+    cijena NUMERIC(10, 2) NOT NULL,
+    CHECK (cijena >= 0) # Cijena ne može biti negativna, ali može biti besplatno osiguranje.
+);
+
+# Omogućava definiciju popisa stavki koje su pokrivene određenim osiguranjem.
+CREATE TABLE pokrice_osiguranja (
+	id_osiguranje INT NOT NULL REFERENCES osiguranje (id),
+    pokrice VARCHAR (200) NOT NULL,
+    PRIMARY KEY (id_osiguranje, pokrice)
+);
+
 CREATE TABLE kupon_rezervacija (
 	kupon_id INT NOT NULL REFERENCES kupon (id),
     rezervacija_id INT NOT NULL REFERENCES rezervacija (id),
@@ -54,11 +55,6 @@ CREATE TABLE posebni_zahtjev (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
     opis TEXT(750)
-);
-
-CREATE TABLE osiguranje_rezervacije (
-    rezervacija_id INT NOT NULL REFERENCES rezervacija (id) ON DELETE CASCADE,
-    osiguranje_id INT NOT NULL REFERENCES osiguranje (id) ON DELETE CASCADE
 );
 
 CREATE TABLE uplata (
