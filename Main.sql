@@ -500,11 +500,11 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hotel
 	ENCLOSED BY '"'
 	LINES TERMINATED BY '\r\n';
 
--- LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv'
--- 	INTO TABLE hoteli_paketa
--- 	FIELDS TERMINATED BY ','
--- 	ENCLOSED BY '"'
--- 	LINES TERMINATED BY '\r\n';
+LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv'
+	INTO TABLE hoteli_paketa
+	FIELDS TERMINATED BY ','
+	ENCLOSED BY '"'
+	LINES TERMINATED BY '\r\n';
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_hotela.csv'
 	INTO TABLE recenzija_hotela
@@ -786,98 +786,6 @@ ON adresa_id = hotel.id_adresa;
 --         (1, 1, 253, 736, 327, 1, 'X' '2023-06-01 09:00:00', 180);
 -- 		
 --  ;
---  
- -- INSERT INTO hoteli_paketa (id_hotel, id_paket, datum)
---  VALUES (100,1),
--- 		   (98,2),
---         (101,3),
---         (189,4),
---         (189,5),
---         (99,6),
---         (190,7),
---         (159,8),
---         (158,9),
---         (162,10),
---         (94,11),
---         (27,12),
---         (122,13),
---         (123,14),
---         (116,15),
---         (155,16),
---         (154,17),
---         (175,18),
---         (90,19),
---         (102,20),
---         (191,21),
---         (149,22),
---         (180,23),
---         (25,24),
---         (6,25),
---         (79,26),
---         (35,27),
---         (64,28),
---         (32,29),
---         (31,30),
---         (180,31),
---         (163,32),
---         (166,33),
---         (13,34),
---         (154,35),
---         (22,36),
---         (22,37),
---         (169,38),
---         (177,39),
---         (98,40),
---         (90,40),
---         (149,40),
---         (154,40),
---         (101,41),
---         (27,41),
---         (31,41),
---         (162,41),
---         (158,42),
---         (25,42),
---         (175,42),
---         (13,42),
---         (177,42),
---         (163,43),
---         (123,43),
---         (180,43),
---         (191,43),
---         (116,43),
---         (155,44),
---         (169,44),
---         (79,44),
---         (90,44),
---         (98,45),
---         (99,45),
---         (154,45),
---         (27,45),
---         (32,45),
---         (22,46),
---         (31,46),
---         (122,46),
---         (64,46),
---         (166,46),
---         (64,47),
---         (191,47),
---         (6,47),
---         (27,47),
---         (32,47),
---         (98,48),
---         (158,48),
---         (25,48),
---         (154,48),
---         (79,48),
---         (98,49),
---         (149,49),
---         (164,49),
---         (31,49),
---         (27,49),
---         (100,50),
---         (190,50),
---         (189,50); 
-        
  
 --  INSERT INTO hotel (ime, id_adresa, kontaktni_broj, email, slobodne_sobe, pogodnosti, opis)
 -- VALUES ('Hotel Pula', 1834, '123454321', 'hotelpula@example.com', 100, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A luxurious hotel situated in the beautiful city of Pula, offering stunning views of the Adriatic Sea and top-notch amenities for a memorable stay.'),
@@ -930,6 +838,6 @@ ON adresa_id = hotel.id_adresa;
 -- FROM recenzija_vodica
 -- WHERE id_vodic NOT IN (SELECT id FROM vodic);
 
-SELECT * FROM rezervacija;
+SELECT * FROM aktivnost;
 
 -- SELECT * FROM recenzija_transporta WHERE id_recenzija = 0; 
