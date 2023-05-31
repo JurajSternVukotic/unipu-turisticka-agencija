@@ -808,6 +808,23 @@ FROM paket p
 LEFT JOIN rezervacija r ON p.id = r.id_paket
 GROUP BY p.id;
 
+-- naci sve posebne zahjeve za paket X
+SELECT pz.*
+FROM posebni_zahtjev pz
+JOIN rezervacija r ON pz.id_rezervacija = r.id
+WHERE r.id_paket = X;
+
+-- Naci sva osiguranja za paket X
+SELECT o.*
+FROM osiguranje o
+JOIN rezervacija r ON o.id_rezervacija = r.id
+WHERE r.id_paket = X;
+
+-- naci sve rezervacije bez osiguranja za paket X
+SELECT r.*
+FROM rezervacija r
+LEFT JOIN osiguranje o ON r.id = o.id_rezervacija
+WHERE r.id_paket = X AND o.id IS NULL;
 
 #SELECT id_osoba, id_zaposlenik FROM rezervacija
 #JOIN jezici_osobe ON id_osoba;
