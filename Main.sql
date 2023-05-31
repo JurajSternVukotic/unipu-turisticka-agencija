@@ -925,3 +925,9 @@ ON adresa_id = hotel.id_adresa;
 -- SELECT * FROM rezervacija;
 -- SELECT * FROM kupon_rezervacija;
 -- SELECT * FROM grad JOIN drzava ON grad.id_drzava = drzava.id;
+
+SELECT DISTINCT id_recenzija
+FROM recenzija_hotela
+WHERE id_recenzija NOT IN (SELECT id FROM recenzija);
+
+-- SELECT * FROM recenzija_transporta WHERE id_recenzija = 0; 
