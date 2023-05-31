@@ -857,92 +857,71 @@ WHERE co.id_osoba = 1389 AND d.id NOT IN (
 
 
 -- Autor: Lucia Labinjan
--- SELECT a.*
--- FROM adresa a
--- LEFT JOIN hotel h
--- ON a.id = h.id_adresa
--- WHERE h.id_adresa IS NULL;
+SELECT
+    paket.naziv AS Naziv_Paketa,
+    COUNT(rezervacija.id) AS Broj_Rezervacija,
+    AVG(
+        CASE WHEN recenzija.ocjena IS NULL THEN 0 ELSE recenzija.ocjena END
+    ) AS Prosjecna_Ocjena
+FROM
+    paket
+LEFT JOIN
+    rezervacija ON paket.id = rezervacija.id_paket
+LEFT JOIN
+    recenzija_paketa ON paket.id = recenzija_paketa.id_paket
+LEFT JOIN
+    recenzija ON recenzija_paketa.id_recenzija = recenzija.id
+GROUP BY
+    paket.naziv;
+
+
+ CREATE VIEW paket_recenzije AS
+SELECT
+    paket.naziv AS PackageName,
+    recenzija.ocjena AS ReviewRating,
+    recenzija.komentar AS ReviewComment,
+    recenzija.datum AS ReviewDate,
+    osoba.puno_ime AS ReviewerName
+FROM
+    paket
+JOIN
+    recenzija_paketa ON paket.id = recenzija_paketa.id_paket
+JOIN
+    recenzija ON recenzija_paketa.id_recenzija = recenzija.id
+JOIN
+    osoba ON recenzija.id_osoba = osoba.id;
+
+
+-- Create a view linking support tickets to the person who created them
+CREATE VIEW korisnicke_podrske AS
+SELECT
+    skp.vrsta_problema AS SupportTicketType,
+    skp.opis_problema AS SupportTicketDescription,
+    skp.status_problema AS SupportTicketStatus,
+    osoba.puno_ime AS PersonName
+FROM
+    stavka_korisnicke_podrske skp
+JOIN
+    osoba ON skp.id_osoba = osoba.id;
+
+
+-- Retrieve all the package reviews written by a person who has also made a support ticket
+SELECT
+    pr.PackageName,
+    pr.ReviewRating,
+    pr.ReviewComment,
+    pr.ReviewDate,
+    kp.SupportTicketType,
+    kp.SupportTicketDescription,
+    kp.SupportTicketStatus
+FROM
+    paket_recenzije pr
+JOIN
+    korisnicke_podrske kp ON pr.ReviewerName = kp.PersonName;
 
 
 
--- SELECT g.naziv AS naziv_grad, o.ime AS naziv_odrediste, a.naziv_ulice, a.id AS id_adresa, o.id
--- FROM odrediste AS o
--- JOIN grad AS g ON o.id_grad = g.id
--- JOIN adresa AS a ON a.id_grad = g.id
--- LEFT JOIN hotel AS h ON a.id = h.id_adresa
--- WHERE h.id_adresa IS NULL;
-
-
--- 2.List all the countries and the total number of persons from that country
--- SELECT drzava.naziv, COUNT(osoba.id) as total_persons
--- FROM drzava
--- INNER JOIN grad ON drzava.id = grad.id_drzava
--- INNER JOIN adresa ON grad.id = adresa.id_grad
--- INNER JOIN osoba ON adresa.id = osoba.id_adresa
--- GROUP BY drzava.id;
-
-
--- 3. apply a 10% discount to the price of reservations that have an associated coupon with a discount greater than 20%
--- 4. the count of reservations for each insurance
--- SELECT o.id AS 'Osiguranje ID', o.naziv AS 'Osiguranje', COUNT(*) AS 'Broj rezervacija'
--- FROM osiguranje o
--- JOIN osiguranje_rezervacije orz ON o.id = orz.osiguranje_id
--- GROUP BY o.id, o.naziv
--- ORDER BY COUNT(*) DESC;
-
--- -- 5.the most expensive reservation for each package
--- 6.list of customers who have spent more than $5000, sorted by total expenditure
--- 7. Get the information about the packages that a certain user has booked
--- SELECT paket.id, paket.naziv
--- FROM paket
--- JOIN rezervacija ON paket.id = rezervacija.paket_id
--- JOIN osoba ON rezervacija.osoba_id = osoba.id
--- WHERE osoba.ime = 'YourUserName';
-
--- 8. Get the list of all tourist packages with the number of available places (maximum places - filled places)
--- SELECT id, naziv, max_ljudi - popunjenih_mjesta AS available_places
--- FROM paket;
-
--- 9.Get a report of all the payments made within a certain time period, including the reservation details
--- SELECT uplata.id, uplata.iznos, uplata.vrijeme, uplata.metoda, rezervacija.naziv, rezervacija.cijena, osoba.ime, osoba.prezime
--- FROM uplata
--- JOIN rezervacija ON uplata.rezervacija_id = rezervacija.id
--- JOIN osoba ON rezervacija.osoba_id = osoba.id
--- WHERE uplata.vrijeme BETWEEN '2023-01-01' AND '2023-12-31';
-
--- 10.Find all the packages which are insured by a specific insurance provider
--- SELECT paket.id, paket.naziv
--- FROM paket
--- JOIN rezervacija ON paket.id = rezervacija.paket_id
--- JOIN osiguranje_rezervacije ON rezervacija.id = osiguranje_rezervacije.rezervacija_id
--- JOIN osiguranje ON osiguranje_rezervacije.osiguranje_id = osiguranje.id
--- WHERE osiguranje.davatelj = 'InsuranceProviderName';
-
--- 11.Select the top 5 most popular packages (in terms of reservations)
--- SELECT paket.id, paket.naziv, COUNT(rezervacija.id) as num_reservations
--- FROM paket
--- JOIN rezervacija ON paket.id = rezervacija.paket_id
--- GROUP BY paket.id, paket.naziv
--- ORDER BY num_reservations DESC
--- LIMIT 5;
--- 12. Create a VIEW that shows a summary of the total sales by product
--- 13.create a view that aggregates all bookings by destination, and then shows the destinations sorted by popularity
--- 14. Client Travel History- view shows all trips a particular client has made, sorted by the booking date
--- 15. List all packages with their destinations, transport types, and activities
--- SELECT p.naziv AS 'Paket', d.naziv AS 'Odrediste', t.tip_transporta AS 'Transport', a.ime AS 'Aktivnost'
--- FROM paket p
--- JOIN putni_plan_stavka pp ON pp.id_paket = p.id
--- LEFT JOIN odrediste d ON d.id = pp.id_odrediste
--- LEFT JOIN transport t ON t.id = pp.id_transport
--- LEFT JOIN aktivnost a ON a.id = pp.id_aktivnost;
--- 16. apply a 30% discount to all reservations made by a specific employee (replace 'employee_name' with the actual employee's name):
--- UPDATE rezervacija r
--- JOIN osoba o ON o.id = r.zaposlenik_id
--- SET r.cijena = r.cijena * 0.7
--- WHERE o.puno_ime = 'employee_name';
-
-
-
+--
 
 
 -- Autor: Mateo Udovčić
