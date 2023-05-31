@@ -680,6 +680,7 @@ CREATE VIEW jezici_zaposlenika AS
 SELECT zaposlenik.id, jezici_osobe.jezik FROM zaposlenik
 JOIN jezici_osobe WHERE zaposlenik.id = jezici_osobe.id;
 
+CREATE VIEW RezervacijaView AS
 SELECT rezervacija.id AS rezervacija_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
 FROM rezervacija
 JOIN zaposlenik ON rezervacija.id_zaposlenik = zaposlenik.id
@@ -691,6 +692,7 @@ WHERE NOT EXISTS (
     WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
 );
 
+CREATE VIEW StavkaKorisnickePodrskeView AS
 SELECT stavka_korisnicke_podrske.id AS stavka_korisnicke_podrske_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
 FROM stavka_korisnicke_podrske
 JOIN zaposlenik ON stavka_korisnicke_podrske.id_zaposlenik = zaposlenik.id
@@ -702,7 +704,23 @@ WHERE NOT EXISTS (
     WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
 );
 
+SELECT RezervacijaView.rezervacija_id, RezervacijaView.osoba_id, alt_zaposlenik.id AS alt_zaposlenik_id
+FROM RezervacijaView
+JOIN jezici_osobe jo ON RezervacijaView.osoba_id = jo.id
+JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
+JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
+
+SELECT StavkaKorisnickePodrskeView.stavka_korisnicke_podrske_id, StavkaKorisnickePodrskeView.osoba_id, alt_zaposlenik.id AS alt_zaposlenik_id
+FROM StavkaKorisnickePodrskeView
+JOIN jezici_osobe jo ON StavkaKorisnickePodrskeView.osoba_id = jo.id
+JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
+JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
+
+
+
+
 -- TREBA DODATI DA SE REASSIGNA!!
+
 
 
 #SELECT id_osoba, id_zaposlenik FROM rezervacija
