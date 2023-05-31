@@ -655,6 +655,36 @@ FROM drzava_grad_adresa
 JOIN hotel
 ON adresa_id = hotel.id_adresa;
 
+-- Ako zaposlenik koji je assigned osobi u rezervaciji/korisnickoj podrsci prica isti jezik kao osoba, ako ne reassign drugi koji prica i ima najmanje
+
+-- CREATE VIEW drzava_osobe AS
+-- SELECT osoba.id, drzava.id FROM osoba
+-- JOIN adresa ON osoba.id_adresa = adresa.id
+-- JOIN grad ON adresa.id_grad = grad.id
+-- JOIN drzava ON grad.id_drzava = drzava.id;
+
+CREATE VIEW materini_jezik AS
+SELECT osoba.id, drzava.jezik
+FROM osoba
+JOIN adresa ON osoba.id_adresa = adresa.id
+JOIN grad ON adresa.id_grad = grad.id
+JOIN drzava ON grad.id_drzava = drzava.id;
+
+CREATE VIEW jezici_osobe AS
+SELECT * FROM materini_jezik
+UNION
+SELECT osoba.id, dodatni_jezik.dodatni_jezik FROM dodatni_jezik
+JOIN osoba WHERE dodatni_jezik.id_osoba = osoba.id;
+
+
+
+CREATE VIEW jezici_zaposlenika AS
+SELECT zaposlenik.id, jezici_osobe.jezik FROM zaposlenik
+JOIN jezici_osobe WHERE zaposlenik.id = jezici_osobe.id;
+
+#SELECT id_osoba, id_zaposlenik FROM rezervacija
+#JOIN jezici_osobe ON id_osoba;
+
 -- CREATE VIEW studentski_ugovori AS
 -- SELECT * FROM osoba
 -- JOIN zaposlenik
@@ -838,6 +868,6 @@ ON adresa_id = hotel.id_adresa;
 -- FROM recenzija_vodica
 -- WHERE id_vodic NOT IN (SELECT id FROM vodic);
 
-SELECT * FROM adresa;
+#SELECT * FROM putni_plan_stavka;
 
 -- SELECT * FROM recenzija_transporta WHERE id_recenzija = 0; 
