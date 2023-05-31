@@ -935,7 +935,7 @@ LEFT JOIN
 GROUP BY
     paket.naziv;
 
-
+-- upit 2
  CREATE VIEW paket_recenzije AS
 SELECT
     paket.naziv AS PackageName,
@@ -979,8 +979,36 @@ FROM
     paket_recenzije pr
 JOIN
     korisnicke_podrske kp ON pr.ReviewerName = kp.PersonName;
-
-
+-- Upit 3
+SELECT 
+    osoba.puno_ime AS CustomerName,
+    paket.naziv AS PackageName,
+    rezervacija.vrijeme AS BookingTime,
+    recenzija.ocjena AS ReviewRating,
+    recenzija.komentar AS ReviewComment,
+    recenzija.datum AS ReviewDate,
+    kupon.kod AS CouponCode,
+    kupon.iznos AS CouponAmount,
+    kupon.postotni AS IsCouponPercentage,
+    stavka_korisnicke_podrske.vrsta_problema AS TicketType,
+    stavka_korisnicke_podrske.opis_problema AS TicketDescription,
+    stavka_korisnicke_podrske.status_problema AS TicketStatus
+FROM 
+    osoba
+LEFT JOIN 
+    rezervacija ON osoba.id = rezervacija.id_osoba
+LEFT JOIN 
+    paket ON rezervacija.id_paket = paket.id
+LEFT JOIN 
+    recenzija ON osoba.id = recenzija.id_osoba
+LEFT JOIN 
+    kupon_rezervacija ON rezervacija.id = kupon_rezervacija.id_rezervacija
+LEFT JOIN 
+    kupon ON kupon_rezervacija.id_kupon = kupon.id
+LEFT JOIN 
+    stavka_korisnicke_podrske ON osoba.id = stavka_korisnicke_podrske.id_osoba
+ORDER BY 
+    osoba.puno_ime ASC, rezervacija.vrijeme DESC;
 
 --
 
