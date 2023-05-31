@@ -838,6 +838,6 @@ ON adresa_id = hotel.id_adresa;
 -- FROM recenzija_vodica
 -- WHERE id_vodic NOT IN (SELECT id FROM vodic);
 
-SELECT * FROM putni_plan_stavka;
+SELECT * FROM adresa;
 
 -- SELECT * FROM recenzija_transporta WHERE id_recenzija = 0; 
