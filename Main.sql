@@ -625,22 +625,6 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/putni
 
 -- Autor: Juraj Štern-Vukotić
 
--- Koje cjepivo drzave zahtjevaju, ime drzave i cjepiva sa idevima
-CREATE VIEW drzave_sa_cjepivima AS
-SELECT drzava.id AS id_drzava, 
-       drzava.naziv AS naziv_drzava, 
-       cjepivo.id AS id_cjepivo, 
-       cjepivo.naziv AS naziv_cjepivo
-FROM drzava
-INNER JOIN cjepivo_drzava ON drzava.id = cjepivo_drzava.id_drzava
-INNER JOIN cjepivo ON cjepivo_drzava.id_cjepivo = cjepivo.id;
-
--- Prikaz iz koje je drzave osoba
-CREATE VIEW drzava_osobe AS
-SELECT osoba.id, drzava.id FROM osoba
-JOIN adresa ON osoba.id_adresa = adresa.id
-JOIN grad ON adresa.id_grad = grad.id
-JOIN drzava ON grad.id_drzava = drzava.id;
 
 -- Prikaz osoba sa materinjim jezikom
 CREATE VIEW materini_jezik AS
@@ -761,6 +745,7 @@ FROM radna_smjena_view rs_view
 JOIN pozicija_zaposlenika_view pz_view ON rs_view.id_zaposlenik = pz_view.id_zaposlenik
 GROUP BY rs_view.datum, rs_view.smjena, pz_view.ime_pozicije;
 
+-- ----------------------------------------
 -- nac broj rezervacija za svaki paket
 SELECT p.naziv AS Paket, COUNT(r.id) AS Broj_Rezervacija
 FROM paket p
@@ -772,25 +757,50 @@ SELECT pz.*, os.puno_ime, os.kontaktni_broj
 FROM posebni_zahtjev pz
 JOIN rezervacija r ON pz.id_rezervacija = r.id
 JOIN osoba os ON r.id_osoba = os.id
-WHERE r.id_paket = X;
+WHERE r.id_paket = 40;
 
 -- Naci sva osiguranja za paket X
 SELECT o.*, os.puno_ime
 FROM osiguranje o
 JOIN rezervacija r ON o.id_rezervacija = r.id
 JOIN osoba os ON r.id_osoba = os.id
-WHERE r.id_paket = X;
+WHERE r.id_paket = 40;
 
 -- naci sve rezervacije bez osiguranja za paket X
 SELECT r.*, os.puno_ime, os.kontaktni_broj
 FROM rezervacija r
 JOIN osoba os ON r.id_osoba = os.id
 LEFT JOIN osiguranje o ON r.id = o.id_rezervacija
-WHERE r.id_paket = 1 AND o.id IS NULL;
+WHERE r.id_paket = 40 AND o.id IS NULL;
 
-######## za neku osobu naci sve destinacije u koju moze sa dokumentom, cjepivima i di zna jezik mozda?
-######## naci za rezervaciju alternative neke stakve ako se ne svidja osobi naci ono na sto misli i ne svidja joj se jedan dio putne stavke, ponuditi alternative u blizini
-######## nadji nadjbolje/najgore X po recenzijama, da bi mogli izbaciti ili vise koristiti nesto od toga kako bi paketi bili bolji
+-- --------------------------
+
+-- Koje cjepivo drzave zahtjevaju, ime drzave i cjepiva sa idevima
+CREATE VIEW drzave_sa_cjepivima AS
+SELECT drzava.id AS id_drzava, 
+       drzava.naziv AS naziv_drzava, 
+       cjepivo.id AS id_cjepivo, 
+       cjepivo.naziv AS naziv_cjepivo
+FROM drzava
+INNER JOIN cjepivo_drzava ON drzava.id = cjepivo_drzava.id_drzava
+INNER JOIN cjepivo ON cjepivo_drzava.id_cjepivo = cjepivo.id;
+
+SELECT DISTINCT d.naziv AS drzava_name
+FROM drzava d
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM cjepivo_drzava cd
+  WHERE cd.id_drzava = d.id
+    AND NOT EXISTS (
+      SELECT 1
+      FROM cjepljena_osoba co
+      WHERE co.id_cjepivo = cd.id_cjepivo AND co.id_osoba = 99 -- KOJU OSOBU GLEDAMO
+    )
+);
+
+
+
+-- -------------------------
 
 SELECT 
   paket.naziv AS PackageName,
@@ -817,7 +827,7 @@ JOIN
 JOIN 
   aktivnost ON putni_plan_stavka.id_aktivnost = aktivnost.id
 WHERE 
-  paket.id = 49;
+  paket.id = 45;
 
 (SELECT 
   paket.naziv AS ReviewSubject,
@@ -904,29 +914,7 @@ JOIN
 WHERE 
   aktivnost.id IN (SELECT id_aktivnost FROM putni_plan_stavka WHERE id_paket = 49));
 
-
-########sve drzave di moze osoba ici sa cjepivima dokumentima i jezicima
-SELECT DISTINCT d.*
-FROM drzava d
-JOIN cjepivo_drzava cd ON d.id = cd.id_drzava
-JOIN cjepljena_osoba co ON co.id_cjepivo = cd.id_cjepivo
-WHERE co.id_osoba = 1389 AND d.id NOT IN (
-  SELECT d.id
-  FROM drzava d
-  JOIN cjepivo_drzava cd ON d.id = cd.id_drzava
-  LEFT JOIN cjepljena_osoba co ON co.id_cjepivo = cd.id_cjepivo AND co.id_osoba = 1
-  WHERE co.id_cjepivo IS NULL
-);
-
-
-#SELECT id_osoba, id_zaposlenik FROM rezervacija
-#JOIN jezici_osobe ON id_osoba;
-
--- CREATE VIEW studentski_ugovori AS
--- SELECT * FROM osoba
--- JOIN zaposlenik
--- ON osoba.id = zaposlenik.id
--- WHERE zaposlenik.ugovor_o_radu = "studentski";
+-- ---------------------
 
 
 -- Autor: Lucia Labinjan
