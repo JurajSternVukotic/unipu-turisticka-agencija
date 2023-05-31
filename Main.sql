@@ -702,9 +702,18 @@ WHERE NOT EXISTS (
     FROM jezici_zaposlenika jz 
     JOIN jezici_osobe jo ON jz.jezik = jo.jezik
     WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
-);
+) AND stavka_korisnicke_podrske.status_problema != 'Rješeno';
 
-SELECT RezervacijaView.rezervacija_id, RezervacijaView.osoba_id, alt_zaposlenik.id AS alt_zaposlenik_id
+CREATE VIEW ZaposlenikView AS
+SELECT z.id, COUNT(r.id) + COUNT(s.id) AS task_count
+FROM zaposlenik z
+LEFT JOIN rezervacija r ON r.id_zaposlenik = z.id
+LEFT JOIN stavka_korisnicke_podrske s ON s.id_zaposlenik = z.id
+GROUP BY z.id
+ORDER BY task_count DESC;
+
+CREATE VIEW altzaposlenikview AS
+SELECT RezervacijaView.rezervacija_id, RezervacijaView.osoba_id, alt_zaposlenik.id AS id_zaposlenik
 FROM RezervacijaView
 JOIN jezici_osobe jo ON RezervacijaView.osoba_id = jo.id
 JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
@@ -716,12 +725,82 @@ JOIN jezici_osobe jo ON StavkaKorisnickePodrskeView.osoba_id = jo.id
 JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
 JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
 
+DELIMITER //
+CREATE PROCEDURE reassign_rezervacija()
+BEGIN
+  DECLARE done BOOLEAN DEFAULT FALSE;
+  DECLARE rez_id INT;
+  DECLARE osoba_id INT;
+  DECLARE alt_zaposlenik_id INT;
+  DECLARE cur CURSOR FOR SELECT rezervacija_id, osoba_id FROM RezervacijaView;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
+  CREATE TEMPORARY TABLE IF NOT EXISTS TempZaposlenikView AS
+  SELECT * FROM ZaposlenikView;
 
+  OPEN cur;
+  
+  read_loop: LOOP
+    FETCH cur INTO rez_id, osoba_id;
 
+    IF done THEN
+      LEAVE read_loop;
+    END IF;
+
+    SELECT id INTO alt_zaposlenik_id
+    FROM TempZaposlenikView
+    WHERE id IN (
+        SELECT alt_zaposlenik_id
+        FROM AltZaposlenikView
+        WHERE osoba_id = osoba_id
+    )
+    ORDER BY task_count
+    LIMIT 1;
+
+    IF alt_zaposlenik_id IS NULL THEN
+      SELECT CONCAT('Could not find zaposlenik for rezervacija_id = ', rez_id, ', osoba_id = ', osoba_id) AS DebugMessage;
+    ELSE
+      UPDATE rezervacija
+      SET id_zaposlenik = alt_zaposlenik_id
+      WHERE id = rez_id;
+
+      UPDATE TempZaposlenikView
+      SET task_count = task_count + 1
+      WHERE id = alt_zaposlenik_id;
+    END IF;
+  END LOOP;
+  
+  CLOSE cur;
+END //
+DELIMITER ;
+CALL reassign_rezervacija();
+SELECT * FROM rezervacija;
+SELECT * FROM TempZaposlenikView ORDER BY task_count;
 -- TREBA DODATI DA SE REASSIGNA!!
 
+-- Naci smjene i koliko ljudi je u kojoj?
+SELECT datum, smjena, COUNT(id_zaposlenik) AS broj_zaposlenika
+FROM radna_smjena
+GROUP BY datum, smjena;
 
+SELECT p.ime_pozicije, COUNT(pz.id_zaposlenik) AS broj_zaposlenika
+FROM pozicija_zaposlenika pz
+JOIN pozicija p ON pz.id_pozicija = p.id
+GROUP BY p.ime_pozicije;
+
+CREATE VIEW radna_smjena_view AS
+SELECT datum, smjena, id_zaposlenik
+FROM radna_smjena;
+
+CREATE VIEW pozicija_zaposlenika_view AS
+SELECT pz.id_zaposlenik, p.ime_pozicije
+FROM pozicija_zaposlenika pz
+JOIN pozicija p ON pz.id_pozicija = p.id;
+
+SELECT rs_view.datum, rs_view.smjena, pz_view.ime_pozicije, COUNT(rs_view.id_zaposlenik) AS broj_zaposlenika
+FROM radna_smjena_view rs_view
+JOIN pozicija_zaposlenika_view pz_view ON rs_view.id_zaposlenik = pz_view.id_zaposlenik
+GROUP BY rs_view.datum, rs_view.smjena, pz_view.ime_pozicije;
 
 #SELECT id_osoba, id_zaposlenik FROM rezervacija
 #JOIN jezici_osobe ON id_osoba;
