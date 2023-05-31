@@ -500,11 +500,11 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hotel
 	ENCLOSED BY '"'
 	LINES TERMINATED BY '\r\n';
 
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv'
-	INTO TABLE hoteli_paketa
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
+-- LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv'
+-- 	INTO TABLE hoteli_paketa
+-- 	FIELDS TERMINATED BY ','
+-- 	ENCLOSED BY '"'
+-- 	LINES TERMINATED BY '\r\n';
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_hotela.csv'
 	INTO TABLE recenzija_hotela
@@ -926,8 +926,10 @@ ON adresa_id = hotel.id_adresa;
 -- SELECT * FROM kupon_rezervacija;
 -- SELECT * FROM grad JOIN drzava ON grad.id_drzava = drzava.id;
 
-SELECT DISTINCT id_recenzija
-FROM recenzija_hotela
-WHERE id_recenzija NOT IN (SELECT id FROM recenzija);
+-- SELECT DISTINCT id_vodic
+-- FROM recenzija_vodica
+-- WHERE id_vodic NOT IN (SELECT id FROM vodic);
+
+SELECT * FROM rezervacija;
 
 -- SELECT * FROM recenzija_transporta WHERE id_recenzija = 0; 
