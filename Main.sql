@@ -802,6 +802,13 @@ FROM radna_smjena_view rs_view
 JOIN pozicija_zaposlenika_view pz_view ON rs_view.id_zaposlenik = pz_view.id_zaposlenik
 GROUP BY rs_view.datum, rs_view.smjena, pz_view.ime_pozicije;
 
+-- nac popularnost paketa
+SELECT p.naziv AS Paket, COUNT(r.id) AS Broj_Rezervacija
+FROM paket p
+LEFT JOIN rezervacija r ON p.id = r.id_paket
+GROUP BY p.id;
+
+
 #SELECT id_osoba, id_zaposlenik FROM rezervacija
 #JOIN jezici_osobe ON id_osoba;
 
