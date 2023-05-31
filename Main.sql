@@ -827,9 +827,24 @@ ON adresa_id = hotel.id_adresa;
 ######## za neku osobu naci sve destinacije u koju moze sa dokumentom, cjepivima i di zna jezik mozda?
 ######## osoba je izgubila id rezervacije, naci ono na sto misli i ne svidja joj se jedan dio putne stavke, ponuditi alternative u blizini
 ######## izracunati profit???
-########
+######## prikazati sve recenzije stvari sa kojima interactaju na nekom paketu
+######## statistike o paketu... koliko gradova, koliko adresa, odredista etc.
+######## nadji nadjbolje/najgore X po recenzijama, da bi mogli izbaciti ili vise koristiti nesto od toga kako bi paketi bili bolji
 
-SELECT id_cjepivo FROM cjepljena_osoba WHERE id_osoba = 1;
+
+########sve drzave di moze osoba ici sa cjepivima dokumentima i jezicima
+SELECT DISTINCT d.*
+FROM drzava d
+JOIN cjepivo_drzava cd ON d.id = cd.id_drzava
+JOIN cjepljena_osoba co ON co.id_cjepivo = cd.id_cjepivo
+WHERE co.id_osoba = 1389 AND d.id NOT IN (
+  SELECT d.id
+  FROM drzava d
+  JOIN cjepivo_drzava cd ON d.id = cd.id_drzava
+  LEFT JOIN cjepljena_osoba co ON co.id_cjepivo = cd.id_cjepivo AND co.id_osoba = 1
+  WHERE co.id_cjepivo IS NULL
+);
+
 
 #SELECT id_osoba, id_zaposlenik FROM rezervacija
 #JOIN jezici_osobe ON id_osoba;
