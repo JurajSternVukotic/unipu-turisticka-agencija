@@ -323,9 +323,6 @@ CREATE TABLE putni_plan_stavka (
     id_odrediste INT, # poveznica sa odredistem na koje ide
     id_aktivnost INT, # poveznica sa aktivnoscu koje ukljucuje
     id_vodic INT , # poveznica na vodica ako ova stavka ukljucuje jednog 
-    opis TEXT(500) NOT NULL, # opis sto se dogadja u ovoj stavci
-    pocetak DATETIME NOT NULL, # kada pocinje ovaj dio puta 
-    trajanje_u_minutama INT, # koliko dugo traje u minutama dio puta okvirno, ne mora biti ukljuceno, u slucaju npr. idenja natrag u hotel
     FOREIGN KEY (id_paket) REFERENCES paket (id) ON DELETE CASCADE,
     FOREIGN KEY (id_transport) REFERENCES transport (id),
     FOREIGN KEY (id_odrediste) REFERENCES odrediste (id),
@@ -568,10 +565,10 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/putni
 -- Prikazuje sve IDjeve zaposlenika koji su putni agenti.
 -- CREATE VIEW svi_putni_agenti AS SELECT id_zaposlenik AS id FROM pozicija_zaposlenika WHERE id_pozicija = (SELECT id FROM pozicija WHERE ime_pozicije = 'putni agent');
 
--- -- 1. Pronađi ID pozicije 'putni agent'
--- -- 2. Pronađi sve zaposlenike s tom pozicijom (preko IDja)
--- -- 3. Pobroji njihova pojavljivanja
--- -- 4. Sortiraj ih od najmanjeg prema najvećem
+-- 1. Pronađi ID pozicije 'putni agent'
+-- 2. Pronađi sve zaposlenike s tom pozicijom (preko IDja)
+-- 3. Pobroji njihova pojavljivanja
+-- 4. Sortiraj ih od najmanjeg prema najvećem
 
 -- CREATE VIEW zaposlenost_rezervacije AS 
 -- 	SELECT *, COUNT(*) AS kolicina_posla 
@@ -580,9 +577,9 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/putni
 -- 	(SELECT zaposlenik_id AS id FROM rezervacija) AS rezervacija 
 -- 			USING (id);
 
--- -- OKIDAČI - event handlers
+-- OKIDAČI - event handlers
 
--- -- Nužno je za razlikovanja završetka naredbe.
+-- Nužno je za razlikovanja završetka naredbe.
 -- DELIMITER //
 
 -- CREATE TRIGGER ogranicenje_putnog_agenta BEFORE INSERT ON rezervacija
@@ -692,7 +689,7 @@ WHERE NOT EXISTS (
 ) AND stavka_korisnicke_podrske.status_problema != 'Rješeno';
 
 -- Gledamo koliko su zaposlenici zaposleni odnosno za koliko su rezervacija i korisnickih podrski zasluzni
-CREATE VIEW ZaposlenikView AS
+CREATE VIEW zaposlenik_zaposlenost AS
 SELECT z.id, COUNT(r.id) + COUNT(s.id) AS task_count
 FROM zaposlenik z
 LEFT JOIN rezervacija r ON r.id_zaposlenik = z.id
@@ -701,18 +698,41 @@ GROUP BY z.id
 ORDER BY task_count DESC;
 
 -- Alternativni zaposlenici koji bi se mogli pridonjeti rezervacijama sa krivim jezikom
-SELECT rezervacija_krivi_jezik.rezervacija_id, rezervacija_krivi_jezik.osoba_id, alt_zaposlenik.id AS id_zaposlenik
-FROM rezervacija_krivi_jezik
-JOIN jezici_osobe jo ON rezervacija_krivi_jezik.osoba_id = jo.id
-JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
-JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
+SELECT 
+    rezervacija_krivi_jezik.rezervacija_id, 
+    rezervacija_krivi_jezik.osoba_id, 
+    alt_zaposlenik.id AS id_zaposlenik,
+    z_z.task_count AS alt_zaposlenik_task_count
+FROM 
+    rezervacija_krivi_jezik
+JOIN 
+    jezici_osobe jo ON rezervacija_krivi_jezik.osoba_id = jo.id
+JOIN 
+    jezici_zaposlenika jz ON jo.jezik = jz.jezik
+JOIN 
+    zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id
+JOIN 
+    zaposlenik_zaposlenost z_z ON alt_zaposlenik.id = z_z.id;
+
 
 -- Alternativni zaposlenici koji bi se mogli pridonjeti rezervacijama sa krivim jezikom
-SELECT podrska_krivi_jezik.stavka_korisnicke_podrske_id, podrska_krivi_jezik.osoba_id, alt_zaposlenik.id AS alt_zaposlenik_id
-FROM podrska_krivi_jezik
-JOIN jezici_osobe jo ON podrska_krivi_jezik.osoba_id = jo.id
-JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
-JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
+SELECT 
+    podrska_krivi_jezik.stavka_korisnicke_podrske_id, 
+    podrska_krivi_jezik.osoba_id, 
+    alt_zaposlenik.id AS alt_zaposlenik_id,
+    z_z.task_count AS alt_zaposlenik_task_count
+FROM 
+    podrska_krivi_jezik
+JOIN 
+    jezici_osobe jo ON podrska_krivi_jezik.osoba_id = jo.id
+JOIN 
+    jezici_zaposlenika jz ON jo.jezik = jz.jezik
+JOIN 
+    zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id
+JOIN 
+    zaposlenik_zaposlenost z_z ON alt_zaposlenik.id = z_z.id;
+
+-- ----------------------------------------------------------
 
 -- Za svaki datum koliko zaposlenika je u kojoj smjeni
 SELECT datum, smjena, COUNT(id_zaposlenik) AS broj_zaposlenika
