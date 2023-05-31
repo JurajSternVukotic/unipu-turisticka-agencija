@@ -628,16 +628,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/putni
 
 -- Autor: Juraj Štern-Vukotić
 
-CREATE VIEW gradovi_sa_drzavama AS
-SELECT grad.id as grad_id, grad.naziv as grad_naziv, drzava.naziv as drzava_naziv, drzava.id as drzava_id FROM grad
-JOIN drzava ON grad.id_drzava = drzava.id;
-
-CREATE VIEW drzava_grad_adresa AS
-SELECT drzava_naziv, grad_naziv, adresa.naziv_ulice AS ulica, adresa.id AS adresa_id 
-FROM gradovi_sa_drzavama 
-JOIN adresa
-ON grad_id = adresa.id_grad; 
-
+-- Koje cjepivo drzave zahtjevaju, ime drzave i cjepiva sa idevima
 CREATE VIEW drzave_sa_cjepivima AS
 SELECT drzava.id AS id_drzava, 
        drzava.naziv AS naziv_drzava, 
@@ -647,189 +638,251 @@ FROM drzava
 INNER JOIN cjepivo_drzava ON drzava.id = cjepivo_drzava.id_drzava
 INNER JOIN cjepivo ON cjepivo_drzava.id_cjepivo = cjepivo.id;
 
-CREATE VIEW drzava_grad_adresa_hotel AS
-SELECT drzava_naziv, grad_naziv, ulica, adresa_id, hotel.ime AS hotel_naziv, hotel.id AS hotel_id
-FROM drzava_grad_adresa
-JOIN hotel
-ON adresa_id = hotel.id_adresa;
+-- Prikaz iz koje je drzave osoba
+CREATE VIEW drzava_osobe AS
+SELECT osoba.id, drzava.id FROM osoba
+JOIN adresa ON osoba.id_adresa = adresa.id
+JOIN grad ON adresa.id_grad = grad.id
+JOIN drzava ON grad.id_drzava = drzava.id;
 
--- Ako zaposlenik koji je assigned osobi u rezervaciji/korisnickoj podrsci prica isti jezik kao osoba, ako ne reassign drugi koji prica i ima najmanje
+-- Prikaz osoba sa materinjim jezikom
+CREATE VIEW materini_jezik AS
+SELECT osoba.id, drzava.jezik
+FROM osoba
+JOIN adresa ON osoba.id_adresa = adresa.id
+JOIN grad ON adresa.id_grad = grad.id
+JOIN drzava ON grad.id_drzava = drzava.id;
 
--- CREATE VIEW drzava_osobe AS
--- SELECT osoba.id, drzava.id FROM osoba
--- JOIN adresa ON osoba.id_adresa = adresa.id
--- JOIN grad ON adresa.id_grad = grad.id
--- JOIN drzava ON grad.id_drzava = drzava.id;
+-- Prikaz svih jezika koje osoba prica sa materinjim
+CREATE VIEW jezici_osobe AS
+SELECT * FROM materini_jezik
+UNION
+SELECT osoba.id, dodatni_jezik.dodatni_jezik FROM dodatni_jezik
+JOIN osoba WHERE dodatni_jezik.id_osoba = osoba.id;
 
--- CREATE VIEW materini_jezik AS
--- SELECT osoba.id, drzava.jezik
--- FROM osoba
--- JOIN adresa ON osoba.id_adresa = adresa.id
--- JOIN grad ON adresa.id_grad = grad.id
--- JOIN drzava ON grad.id_drzava = drzava.id;
+-- Filtriramo zaposlenike iz jezika osoba
+CREATE VIEW jezici_zaposlenika AS
+SELECT zaposlenik.id, jezici_osobe.jezik FROM zaposlenik
+JOIN jezici_osobe WHERE zaposlenik.id = jezici_osobe.id;
 
--- CREATE VIEW jezici_osobe AS
--- SELECT * FROM materini_jezik
--- UNION
--- SELECT osoba.id, dodatni_jezik.dodatni_jezik FROM dodatni_jezik
--- JOIN osoba WHERE dodatni_jezik.id_osoba = osoba.id;
+-- Ovdje nalazimo sve rezervacije gdje zaposlenik ne prica nijedan jezik ko osoba koje je rezervirala
+CREATE VIEW rezervacija_krivi_jezik AS
+SELECT rezervacija.id AS rezervacija_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
+FROM rezervacija
+JOIN zaposlenik ON rezervacija.id_zaposlenik = zaposlenik.id
+JOIN osoba ON rezervacija.id_osoba = osoba.id
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM jezici_zaposlenika jz 
+    JOIN jezici_osobe jo ON jz.jezik = jo.jezik
+    WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
+);
 
--- CREATE VIEW jezici_zaposlenika AS
--- SELECT zaposlenik.id, jezici_osobe.jezik FROM zaposlenik
--- JOIN jezici_osobe WHERE zaposlenik.id = jezici_osobe.id;
+-- Ovdje nalazimo sve stavke korisnicke podrske koje nisu rjesene gdje zaposlenik ne prica nijedan jezik ko osoba koje ju je podnjela
+CREATE VIEW podrska_krivi_jezik AS
+SELECT stavka_korisnicke_podrske.id AS stavka_korisnicke_podrske_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
+FROM stavka_korisnicke_podrske
+JOIN zaposlenik ON stavka_korisnicke_podrske.id_zaposlenik = zaposlenik.id
+JOIN osoba ON stavka_korisnicke_podrske.id_osoba = osoba.id
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM jezici_zaposlenika jz 
+    JOIN jezici_osobe jo ON jz.jezik = jo.jezik
+    WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
+) AND stavka_korisnicke_podrske.status_problema != 'Rješeno';
 
--- CREATE VIEW RezervacijaView AS
--- SELECT rezervacija.id AS rezervacija_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
--- FROM rezervacija
--- JOIN zaposlenik ON rezervacija.id_zaposlenik = zaposlenik.id
--- JOIN osoba ON rezervacija.id_osoba = osoba.id
--- WHERE NOT EXISTS (
---     SELECT 1
---     FROM jezici_zaposlenika jz 
---     JOIN jezici_osobe jo ON jz.jezik = jo.jezik
---     WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
--- );
+-- Gledamo koliko su zaposlenici zaposleni odnosno za koliko su rezervacija i korisnickih podrski zasluzni
+CREATE VIEW ZaposlenikView AS
+SELECT z.id, COUNT(r.id) + COUNT(s.id) AS task_count
+FROM zaposlenik z
+LEFT JOIN rezervacija r ON r.id_zaposlenik = z.id
+LEFT JOIN stavka_korisnicke_podrske s ON s.id_zaposlenik = z.id
+GROUP BY z.id
+ORDER BY task_count DESC;
 
--- CREATE VIEW StavkaKorisnickePodrskeView AS
--- SELECT stavka_korisnicke_podrske.id AS stavka_korisnicke_podrske_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
--- FROM stavka_korisnicke_podrske
--- JOIN zaposlenik ON stavka_korisnicke_podrske.id_zaposlenik = zaposlenik.id
--- JOIN osoba ON stavka_korisnicke_podrske.id_osoba = osoba.id
--- WHERE NOT EXISTS (
---     SELECT 1
---     FROM jezici_zaposlenika jz 
---     JOIN jezici_osobe jo ON jz.jezik = jo.jezik
---     WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
--- ) AND stavka_korisnicke_podrske.status_problema != 'Rješeno';
+-- Alternativni zaposlenici koji bi se mogli pridonjeti rezervacijama sa krivim jezikom
+SELECT rezervacija_krivi_jezik.rezervacija_id, rezervacija_krivi_jezik.osoba_id, alt_zaposlenik.id AS id_zaposlenik
+FROM rezervacija_krivi_jezik
+JOIN jezici_osobe jo ON rezervacija_krivi_jezik.osoba_id = jo.id
+JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
+JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
 
--- CREATE VIEW ZaposlenikView AS
--- SELECT z.id, COUNT(r.id) + COUNT(s.id) AS task_count
--- FROM zaposlenik z
--- LEFT JOIN rezervacija r ON r.id_zaposlenik = z.id
--- LEFT JOIN stavka_korisnicke_podrske s ON s.id_zaposlenik = z.id
--- GROUP BY z.id
--- ORDER BY task_count DESC;
+-- Alternativni zaposlenici koji bi se mogli pridonjeti rezervacijama sa krivim jezikom
+SELECT podrska_krivi_jezik.stavka_korisnicke_podrske_id, podrska_krivi_jezik.osoba_id, alt_zaposlenik.id AS alt_zaposlenik_id
+FROM podrska_krivi_jezik
+JOIN jezici_osobe jo ON podrska_krivi_jezik.osoba_id = jo.id
+JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
+JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
 
--- CREATE VIEW altzaposlenikview AS
--- SELECT RezervacijaView.rezervacija_id, RezervacijaView.osoba_id, alt_zaposlenik.id AS id_zaposlenik
--- FROM RezervacijaView
--- JOIN jezici_osobe jo ON RezervacijaView.osoba_id = jo.id
--- JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
--- JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
+-- Za svaki datum koliko zaposlenika je u kojoj smjeni
+SELECT datum, smjena, COUNT(id_zaposlenik) AS broj_zaposlenika
+FROM radna_smjena
+GROUP BY datum, smjena;
 
--- SELECT StavkaKorisnickePodrskeView.stavka_korisnicke_podrske_id, StavkaKorisnickePodrskeView.osoba_id, alt_zaposlenik.id AS alt_zaposlenik_id
--- FROM StavkaKorisnickePodrskeView
--- JOIN jezici_osobe jo ON StavkaKorisnickePodrskeView.osoba_id = jo.id
--- JOIN jezici_zaposlenika jz ON jo.jezik = jz.jezik
--- JOIN zaposlenik alt_zaposlenik ON jz.id = alt_zaposlenik.id;
+-- Prebrojati koliko imamo zaposlenika na nekoj poziciji
+CREATE VIEW broj_pozicija AS
+SELECT p.ime_pozicije, COUNT(pz.id_zaposlenik) AS broj_zaposlenika
+FROM pozicija_zaposlenika pz
+JOIN pozicija p ON pz.id_pozicija = p.id
+GROUP BY p.ime_pozicije;
 
--- DELIMITER //
--- CREATE PROCEDURE reassign_rezervacija()
--- BEGIN
---   DECLARE done BOOLEAN DEFAULT FALSE;
---   DECLARE rez_id INT;
---   DECLARE osoba_id INT;
---   DECLARE alt_zaposlenik_id INT;
---   DECLARE cur CURSOR FOR SELECT rezervacija_id, osoba_id FROM RezervacijaView;
---   DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+CREATE VIEW radna_smjena_view AS
+SELECT datum, smjena, id_zaposlenik
+FROM radna_smjena;
 
---   CREATE TEMPORARY TABLE IF NOT EXISTS TempZaposlenikView AS
---   SELECT * FROM ZaposlenikView;
+CREATE VIEW pozicija_zaposlenika_view AS
+SELECT pz.id_zaposlenik, p.ime_pozicije
+FROM pozicija_zaposlenika pz
+JOIN pozicija p ON pz.id_pozicija = p.id;
 
---   OPEN cur;
---   
---   read_loop: LOOP
---     FETCH cur INTO rez_id, osoba_id;
+-- Koliko je u svakoj smjeni određene pozicije zaposlenika
+SELECT rs_view.datum, rs_view.smjena, pz_view.ime_pozicije, COUNT(rs_view.id_zaposlenik) AS broj_zaposlenika
+FROM radna_smjena_view rs_view
+JOIN pozicija_zaposlenika_view pz_view ON rs_view.id_zaposlenik = pz_view.id_zaposlenik
+GROUP BY rs_view.datum, rs_view.smjena, pz_view.ime_pozicije;
 
---     IF done THEN
---       LEAVE read_loop;
---     END IF;
+-- nac broj rezervacija za svaki paket
+SELECT p.naziv AS Paket, COUNT(r.id) AS Broj_Rezervacija
+FROM paket p
+LEFT JOIN rezervacija r ON p.id = r.id_paket
+GROUP BY p.id;
 
---     SELECT id INTO alt_zaposlenik_id
---     FROM TempZaposlenikView
---     WHERE id IN (
---         SELECT alt_zaposlenik_id
---         FROM AltZaposlenikView
---         WHERE osoba_id = osoba_id
---     )
---     ORDER BY task_count
---     LIMIT 1;
+-- naci sve posebne zahjeve za paket X
+SELECT pz.*, os.puno_ime, os.kontaktni_broj
+FROM posebni_zahtjev pz
+JOIN rezervacija r ON pz.id_rezervacija = r.id
+JOIN osoba os ON r.id_osoba = os.id
+WHERE r.id_paket = X;
 
---     IF alt_zaposlenik_id IS NULL THEN
---       SELECT CONCAT('Could not find zaposlenik for rezervacija_id = ', rez_id, ', osoba_id = ', osoba_id) AS DebugMessage;
---     ELSE
---       UPDATE rezervacija
---       SET id_zaposlenik = alt_zaposlenik_id
---       WHERE id = rez_id;
+-- Naci sva osiguranja za paket X
+SELECT o.*, os.puno_ime
+FROM osiguranje o
+JOIN rezervacija r ON o.id_rezervacija = r.id
+JOIN osoba os ON r.id_osoba = os.id
+WHERE r.id_paket = X;
 
---       UPDATE TempZaposlenikView
---       SET task_count = task_count + 1
---       WHERE id = alt_zaposlenik_id;
---     END IF;
---   END LOOP;
---   
---   CLOSE cur;
--- END //
--- DELIMITER ;
--- CALL reassign_rezervacija();
--- SELECT * FROM rezervacija;
--- SELECT * FROM TempZaposlenikView ORDER BY task_count;
--- -- TREBA DODATI DA SE REASSIGNA!!
-
--- -- Naci smjene i koliko ljudi je u kojoj?
--- SELECT datum, smjena, COUNT(id_zaposlenik) AS broj_zaposlenika
--- FROM radna_smjena
--- GROUP BY datum, smjena;
-
--- SELECT p.ime_pozicije, COUNT(pz.id_zaposlenik) AS broj_zaposlenika
--- FROM pozicija_zaposlenika pz
--- JOIN pozicija p ON pz.id_pozicija = p.id
--- GROUP BY p.ime_pozicije;
-
--- CREATE VIEW radna_smjena_view AS
--- SELECT datum, smjena, id_zaposlenik
--- FROM radna_smjena;
-
--- CREATE VIEW pozicija_zaposlenika_view AS
--- SELECT pz.id_zaposlenik, p.ime_pozicije
--- FROM pozicija_zaposlenika pz
--- JOIN pozicija p ON pz.id_pozicija = p.id;
-
--- SELECT rs_view.datum, rs_view.smjena, pz_view.ime_pozicije, COUNT(rs_view.id_zaposlenik) AS broj_zaposlenika
--- FROM radna_smjena_view rs_view
--- JOIN pozicija_zaposlenika_view pz_view ON rs_view.id_zaposlenik = pz_view.id_zaposlenik
--- GROUP BY rs_view.datum, rs_view.smjena, pz_view.ime_pozicije;
-
--- -- nac popularnost paketa
--- SELECT p.naziv AS Paket, COUNT(r.id) AS Broj_Rezervacija
--- FROM paket p
--- LEFT JOIN rezervacija r ON p.id = r.id_paket
--- GROUP BY p.id;
-
--- -- naci sve posebne zahjeve za paket X
--- SELECT pz.*
--- FROM posebni_zahtjev pz
--- JOIN rezervacija r ON pz.id_rezervacija = r.id
--- WHERE r.id_paket = X;
-
--- -- Naci sva osiguranja za paket X
--- SELECT o.*
--- FROM osiguranje o
--- JOIN rezervacija r ON o.id_rezervacija = r.id
--- WHERE r.id_paket = X;
-
--- -- naci sve rezervacije bez osiguranja za paket X
--- SELECT r.*
--- FROM rezervacija r
--- LEFT JOIN osiguranje o ON r.id = o.id_rezervacija
--- WHERE r.id_paket = X AND o.id IS NULL;
+-- naci sve rezervacije bez osiguranja za paket X
+SELECT r.*, os.puno_ime, os.kontaktni_broj
+FROM rezervacija r
+JOIN osoba os ON r.id_osoba = os.id
+LEFT JOIN osiguranje o ON r.id = o.id_rezervacija
+WHERE r.id_paket = 1 AND o.id IS NULL;
 
 ######## za neku osobu naci sve destinacije u koju moze sa dokumentom, cjepivima i di zna jezik mozda?
-######## osoba je izgubila id rezervacije, naci ono na sto misli i ne svidja joj se jedan dio putne stavke, ponuditi alternative u blizini
-######## izracunati profit???
-######## prikazati sve recenzije stvari sa kojima interactaju na nekom paketu
-######## statistike o paketu... koliko gradova, koliko adresa, odredista etc.
+######## naci za rezervaciju alternative neke stakve ako se ne svidja osobi naci ono na sto misli i ne svidja joj se jedan dio putne stavke, ponuditi alternative u blizini
 ######## nadji nadjbolje/najgore X po recenzijama, da bi mogli izbaciti ili vise koristiti nesto od toga kako bi paketi bili bolji
+
+SELECT 
+  paket.naziv AS PackageName,
+  hotel.ime AS HotelName,
+  transport.tip_transporta AS TransportType,
+  transport.ime_tvrtke AS TransportCompany,
+  vodic.godine_iskustva AS GuideExperienceYears,
+  odrediste.ime AS DestinationName,
+  aktivnost.ime AS ActivityName
+FROM 
+  putni_plan_stavka 
+JOIN 
+  paket ON putni_plan_stavka.id_paket = paket.id 
+JOIN 
+  hoteli_paketa ON paket.id = hoteli_paketa.id_paket 
+JOIN 
+  hotel ON hoteli_paketa.id_hotel = hotel.id
+JOIN 
+  transport ON putni_plan_stavka.id_transport = transport.id
+JOIN 
+  vodic ON putni_plan_stavka.id_vodic = vodic.id
+JOIN 
+  odrediste ON putni_plan_stavka.id_odrediste = odrediste.id
+JOIN 
+  aktivnost ON putni_plan_stavka.id_aktivnost = aktivnost.id
+WHERE 
+  paket.id = 49;
+
+(SELECT 
+  paket.naziv AS ReviewSubject,
+  paketRecenzija.ocjena AS Rating,
+  paketRecenzija.komentar AS Comment,
+  osoba.puno_ime AS ReviewerName,
+  paketRecenzija.datum AS ReviewDate
+FROM 
+  paket 
+JOIN 
+  recenzija_paketa ON paket.id = recenzija_paketa.id_paket 
+JOIN 
+  recenzija paketRecenzija ON recenzija_paketa.id_recenzija = paketRecenzija.id
+JOIN 
+  osoba ON paketRecenzija.id_osoba = osoba.id
+WHERE 
+  paket.id = 49)
+UNION
+(SELECT 
+  vodic.id AS ReviewSubject,
+  vodicRecenzija.ocjena AS Rating,
+  vodicRecenzija.komentar AS Comment,
+  osoba.puno_ime AS ReviewerName,
+  vodicRecenzija.datum AS ReviewDate
+FROM 
+  vodic 
+JOIN 
+  recenzija_vodica ON vodic.id = recenzija_vodica.id_vodic 
+JOIN 
+  recenzija vodicRecenzija ON recenzija_vodica.id_recenzija = vodicRecenzija.id
+JOIN 
+  osoba ON vodicRecenzija.id_osoba = osoba.id
+WHERE 
+  vodic.id IN (SELECT id_vodic FROM putni_plan_stavka WHERE id_paket = 49))
+UNION
+(SELECT 
+  hotel.ime AS ReviewSubject,
+  hotelRecenzija.ocjena AS Rating,
+  hotelRecenzija.komentar AS Comment,
+  osoba.puno_ime AS ReviewerName,
+  hotelRecenzija.datum AS ReviewDate
+FROM 
+  hotel 
+JOIN 
+  recenzija_hotela ON hotel.id = recenzija_hotela.id_hotel 
+JOIN 
+  recenzija hotelRecenzija ON recenzija_hotela.id_recenzija = hotelRecenzija.id
+JOIN 
+  osoba ON hotelRecenzija.id_osoba = osoba.id
+WHERE 
+  hotel.id IN (SELECT id_hotel FROM hoteli_paketa WHERE id_paket = 49))
+UNION
+(SELECT 
+  transport.tip_transporta AS ReviewSubject,
+  transportRecenzija.ocjena AS Rating,
+  transportRecenzija.komentar AS Comment,
+  osoba.puno_ime AS ReviewerName,
+  transportRecenzija.datum AS ReviewDate
+FROM 
+  transport 
+JOIN 
+  recenzija_transporta ON transport.id = recenzija_transporta.id_transport 
+JOIN 
+  recenzija transportRecenzija ON recenzija_transporta.id_recenzija = transportRecenzija.id
+JOIN 
+  osoba ON transportRecenzija.id_osoba = osoba.id
+WHERE 
+  transport.id IN (SELECT id_transport FROM putni_plan_stavka WHERE id_paket = 49))
+UNION
+(SELECT 
+  aktivnost.ime AS ReviewSubject,
+  aktivnostRecenzija.ocjena AS Rating,
+  aktivnostRecenzija.komentar AS Comment,
+  osoba.puno_ime AS ReviewerName,
+  aktivnostRecenzija.datum AS ReviewDate
+FROM 
+  aktivnost 
+JOIN 
+  recenzija_aktivnosti ON aktivnost.id = recenzija_aktivnosti.id_aktivnost 
+JOIN 
+  recenzija aktivnostRecenzija ON recenzija_aktivnosti.id_recenzija = aktivnostRecenzija.id
+JOIN 
+  osoba ON aktivnostRecenzija.id_osoba = osoba.id
+WHERE 
+  aktivnost.id IN (SELECT id_aktivnost FROM putni_plan_stavka WHERE id_paket = 49));
 
 
 ########sve drzave di moze osoba ici sa cjepivima dokumentima i jezicima
