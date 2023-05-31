@@ -676,11 +676,34 @@ UNION
 SELECT osoba.id, dodatni_jezik.dodatni_jezik FROM dodatni_jezik
 JOIN osoba WHERE dodatni_jezik.id_osoba = osoba.id;
 
-
-
 CREATE VIEW jezici_zaposlenika AS
 SELECT zaposlenik.id, jezici_osobe.jezik FROM zaposlenik
 JOIN jezici_osobe WHERE zaposlenik.id = jezici_osobe.id;
+
+SELECT rezervacija.id AS rezervacija_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
+FROM rezervacija
+JOIN zaposlenik ON rezervacija.id_zaposlenik = zaposlenik.id
+JOIN osoba ON rezervacija.id_osoba = osoba.id
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM jezici_zaposlenika jz 
+    JOIN jezici_osobe jo ON jz.jezik = jo.jezik
+    WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
+);
+
+SELECT stavka_korisnicke_podrske.id AS stavka_korisnicke_podrske_id, zaposlenik.id AS zaposlenik_id, osoba.id AS osoba_id
+FROM stavka_korisnicke_podrske
+JOIN zaposlenik ON stavka_korisnicke_podrske.id_zaposlenik = zaposlenik.id
+JOIN osoba ON stavka_korisnicke_podrske.id_osoba = osoba.id
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM jezici_zaposlenika jz 
+    JOIN jezici_osobe jo ON jz.jezik = jo.jezik
+    WHERE jz.id = zaposlenik.id AND jo.id = osoba.id
+);
+
+-- TREBA DODATI DA SE REASSIGNA!!
+
 
 #SELECT id_osoba, id_zaposlenik FROM rezervacija
 #JOIN jezici_osobe ON id_osoba;
