@@ -5,17 +5,19 @@ SET GLOBAL local_infile=1;
 
 
 -- Odjeljak relacije
+### Lucia Labinjan ###
 CREATE TABLE cjepivo (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     naziv VARCHAR(50) UNIQUE
 );
-
+### Lucia Labinjan ###
 CREATE TABLE kontinent (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(25) NOT NULL UNIQUE,
     opis TEXT(500)
 );
 
+### Juraj Štern-Vukotić ###
 CREATE TABLE drzava (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL UNIQUE, # Najduzi naziv drzave je 56, tako da bi ovo trebalo biti dovoljno, ime mora biti jedinstveno
@@ -28,6 +30,7 @@ CREATE TABLE drzava (
 	CHECK (pozivni_broj > 0) # pozivni broj ne moze biti negativan niti nula
 );
 
+### Juraj Štern-Vukotić ###
 CREATE TABLE drzava_kontinent ( 
 	id_drzava INT NOT NULL,
     id_kontinent INT NOT NULL,
@@ -35,6 +38,7 @@ CREATE TABLE drzava_kontinent (
     FOREIGN KEY (id_kontinent) REFERENCES kontinent (id) ON DELETE CASCADE
 );
 
+### Lucia Labinjan ###
 CREATE TABLE cjepivo_drzava (
 	id_drzava INT NOT NULL,
     id_cjepivo INT NOT NULL,
@@ -43,6 +47,7 @@ CREATE TABLE cjepivo_drzava (
     FOREIGN KEY (id_cjepivo) REFERENCES cjepivo (id)
 );
 
+### Juraj Štern-Vukotić ###
 CREATE TABLE grad (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR(64) NOT NULL, # Najduzi naziv grada na svijetu ima 58 znakova, 64 bi trebalo biti dovoljno
@@ -52,6 +57,7 @@ CREATE TABLE grad (
     FOREIGN KEY (id_drzava) REFERENCES drzava (id) ON DELETE CASCADE
 );
 
+### Juraj Štern-Vukotić ###
 CREATE TABLE adresa (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
 	naziv_ulice VARCHAR(128) NOT NULL, # 128 bi trebalo biti dovoljno za bilo koju ulicu
@@ -60,6 +66,7 @@ CREATE TABLE adresa (
     FOREIGN KEY (id_grad) REFERENCES grad (id) ON DELETE CASCADE
 );
 
+### Mateo Udovičić ###
 CREATE TABLE osoba (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     puno_ime VARCHAR(100) NOT NULL,
@@ -71,6 +78,7 @@ CREATE TABLE osoba (
     id_adresa INT NOT NULL REFERENCES adresa (id)
 );
 
+### Mateo Udovičić ###
 CREATE TABLE dodatni_jezik (
     id_osoba INT NOT NULL,
     dodatni_jezik VARCHAR (50) NOT NULL,
@@ -78,12 +86,14 @@ CREATE TABLE dodatni_jezik (
     FOREIGN KEY (id_osoba) REFERENCES osoba (id) ON DELETE CASCADE
 );
 
+### Mateo Udovičić ###
 CREATE TABLE cjepljena_osoba (
     id_osoba INT NOT NULL REFERENCES osoba (id),
 	id_cjepivo INT NOT NULL REFERENCES cjepivo (id),
     PRIMARY KEY (id_cjepivo, id_osoba)
 );
 
+### Mateo Udovičić ###
 CREATE TABLE recenzija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_osoba INT NOT NULL,
@@ -93,6 +103,7 @@ CREATE TABLE recenzija (
     FOREIGN KEY (id_osoba) REFERENCES osoba (id)
 );
 
+### Karlo Bazina ###
 CREATE TABLE zaposlenik (
     id INT NOT NULL PRIMARY KEY,
     ugovor_o_radu ENUM ('studentski', 'honorarno', 'na neodređeno','na određeno') NOT NULL,
@@ -101,12 +112,14 @@ CREATE TABLE zaposlenik (
     FOREIGN KEY (id) REFERENCES osoba (id) ON DELETE CASCADE
 );
 
+### Karlo Bazina ###
 CREATE TABLE pozicija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime_pozicije ENUM ('turistički agent', 'putni agent', 'računovođa', 'promotor', 'IT podrška') NOT NULL UNIQUE,
     opis_pozicije TEXT(500)
 );
 
+### Karlo Bazina ###
 CREATE TABLE pozicija_zaposlenika (
 	id_zaposlenik INT NOT NULL,
     id_pozicija INT NOT NULL,
@@ -115,6 +128,7 @@ CREATE TABLE pozicija_zaposlenika (
     PRIMARY KEY (id_zaposlenik, id_pozicija)
 );
 
+### Karlo Bazina ###
 CREATE TABLE radna_smjena (
 	id_zaposlenik INT NOT NULL,
     smjena ENUM('jutarnja', 'popodnevna') NOT NULL,
@@ -122,6 +136,7 @@ CREATE TABLE radna_smjena (
     FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id) ON DELETE CASCADE
 );
 
+### Juraj Štern-Vukotić ###
 CREATE TABLE stavka_korisnicke_podrske ( #support ticket
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
 	id_osoba INT NOT NULL, # zelimo znati koji korisnik je zatrazio podrsku, i da to ostane cak i ako korisnika vise nema
@@ -134,6 +149,7 @@ CREATE TABLE stavka_korisnicke_podrske ( #support ticket
     FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id)
 );
 
+### Mateo Udovičić ###
 CREATE TABLE recenzija_zaposlenika (
 	id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE CASCADE,
     id_recenzija INT NOT NULL REFERENCES recenzija (id) ON DELETE CASCADE,
@@ -142,6 +158,7 @@ CREATE TABLE recenzija_zaposlenika (
     FOREIGN KEY (id_recenzija) REFERENCES recenzija (id) ON DELETE CASCADE
 ); 
 
+### Juraj Štern-Vukotić ###
 CREATE TABLE paket (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     naziv VARCHAR (100) NOT NULL UNIQUE, # unique kako ne bi imali duplikatne nazive paketa, 64 znakova bi trebalo biti dovoljno za naslov 
@@ -153,6 +170,7 @@ CREATE TABLE paket (
     cijena_po_turistu NUMERIC(10, 2) NOT NULL # koliko kosta za jednu osobu paket
 );
 
+### Mateo Udovičić ###
 CREATE TABLE recenzija_paketa (
 	id_paket INT NOT NULL REFERENCES paket (id) ON DELETE CASCADE,
     id_recenzija INT NOT NULL REFERENCES recenzija (id) ON DELETE CASCADE,
@@ -161,6 +179,7 @@ CREATE TABLE recenzija_paketa (
     FOREIGN KEY (id_recenzija) REFERENCES recenzija (id) ON DELETE CASCADE
 );
 
+### Alan Burić ###
 CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_osoba INT NOT NULL, # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
@@ -172,6 +191,7 @@ CREATE TABLE rezervacija (
 	FOREIGN KEY (id_zaposlenik) REFERENCES zaposlenik (id)
 );
 
+### Alan Burić ###
 CREATE TABLE kupon (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	kod VARCHAR(20) NOT NULL,
@@ -183,6 +203,7 @@ CREATE TABLE kupon (
     CHECK (iznos > 0 AND (NOT postotni OR iznos <= 100)) # Kupon je postojan ako uopće ima neki iznos (=/= 0), a postotni popust ne bi trebao prekoraciti 100%
 );
 
+### Alan Burić ###
 CREATE TABLE kupon_rezervacija (
 	id_kupon INT NOT NULL,
     id_rezervacija INT NOT NULL,
@@ -191,7 +212,7 @@ CREATE TABLE kupon_rezervacija (
     FOREIGN KEY (id_rezervacija) REFERENCES rezervacija (id)
 );
 
-
+### Alan Burić ###
 CREATE TABLE osiguranje (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_rezervacija INT NOT NULL UNIQUE,
@@ -203,6 +224,7 @@ CREATE TABLE osiguranje (
     FOREIGN KEY (id_rezervacija) REFERENCES rezervacija (id) ON DELETE CASCADE
 );
 
+### Alan Burić ###
 CREATE TABLE uplata (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_rezervacija INT NOT NULL,
@@ -213,6 +235,7 @@ CREATE TABLE uplata (
     FOREIGN KEY (id_rezervacija) REFERENCES rezervacija (id) ON DELETE CASCADE
 );
 
+### Alan Burić ###
 CREATE TABLE posebni_zahtjev (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_rezervacija INT NOT NULL,
@@ -220,6 +243,7 @@ CREATE TABLE posebni_zahtjev (
     FOREIGN KEY (id_rezervacija) REFERENCES rezervacija (id) ON DELETE CASCADE
 );
 
+### Lucia Labinjan ###
 CREATE TABLE hotel (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(100) NOT NULL,
@@ -233,6 +257,7 @@ CREATE TABLE hotel (
     CHECK (slobodne_sobe >= 0)
 );
 
+### Lucia Labinjan ###
 CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezerviranim hotelima
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_hotel INT NOT NULL,
@@ -242,6 +267,7 @@ CREATE TABLE hoteli_paketa ( # ova relacija povezuje paket sa njegovim rezervira
     FOREIGN KEY (id_paket) REFERENCES paket (id) ON DELETE CASCADE
 );
 
+### Mateo Udovičić ###
 CREATE TABLE recenzija_hotela (
 	id_hotel INT NOT NULL REFERENCES hotel (id) ON DELETE CASCADE,
     id_recenzija INT NOT NULL REFERENCES recenzija (id) ON DELETE CASCADE,
@@ -250,6 +276,7 @@ CREATE TABLE recenzija_hotela (
     FOREIGN KEY (id_recenzija) REFERENCES recenzija (id) ON DELETE CASCADE
 );
 
+### Lucia Labinjan ###
 CREATE TABLE transport (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	tip_transporta ENUM ('autobus', 'zrakoplov', 'brod', 'vlak') NOT NULL,
@@ -263,6 +290,7 @@ CREATE TABLE transport (
 	CHECK (cijena >= 0)
 );
 
+### Mateo Udovičić ###
 CREATE TABLE recenzija_transporta (
 	id_transport INT NOT NULL,
     id_recenzija INT NOT NULL,
@@ -271,6 +299,7 @@ CREATE TABLE recenzija_transporta (
     FOREIGN KEY (id_recenzija) REFERENCES recenzija (id) ON DELETE CASCADE
 );
 
+### Lucia Labinjan ###
 CREATE TABLE odrediste (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(100) NOT NULL UNIQUE,
@@ -280,6 +309,7 @@ CREATE TABLE odrediste (
     FOREIGN KEY (id_grad) REFERENCES grad (id)
 );
 
+### Lucia Labinjan ###
 CREATE TABLE aktivnost (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     ime VARCHAR(100) NOT NULL UNIQUE,
@@ -293,6 +323,7 @@ CREATE TABLE aktivnost (
     FOREIGN KEY (id_adresa) REFERENCES adresa (id)
 );
 
+### Mateo Udovičić ###
 CREATE TABLE recenzija_aktivnosti (
 	id_aktivnost INT NOT NULL REFERENCES aktivnost (id) ON DELETE CASCADE,
     id_recenzija INT NOT NULL REFERENCES recenzija (id) ON DELETE CASCADE,
@@ -301,6 +332,7 @@ CREATE TABLE recenzija_aktivnosti (
     FOREIGN KEY (id_recenzija) REFERENCES recenzija (id) ON DELETE CASCADE
 );
 
+### Lucia Labinjan ###
 CREATE TABLE vodic (
     id INT NOT NULL PRIMARY KEY,
 	godine_iskustva INT NOT NULL,
@@ -308,6 +340,7 @@ CREATE TABLE vodic (
     FOREIGN KEY (id) REFERENCES osoba (id) ON DELETE CASCADE
 );
 
+### Mateo Udovičić ###
 CREATE TABLE recenzija_vodica (
 	id_vodic INT NOT NULL REFERENCES vodic (id) ON DELETE CASCADE,
     id_recenzija INT NOT NULL REFERENCES recenzija (id) ON DELETE CASCADE,
@@ -316,6 +349,7 @@ CREATE TABLE recenzija_vodica (
     FOREIGN KEY (id_recenzija) REFERENCES recenzija (id) ON DELETE CASCADE
 );
 
+### Juraj Štern-Vukotić ###
 CREATE TABLE putni_plan_stavka (
 	id INT AUTO_INCREMENT PRIMARY KEY, # ID je numericki, sam se povecava kako ne bi morali unositi uvijek, te nam je to primarni kljuc uvijek
     id_paket INT NOT NULL, # poveznica sa paketom kojem pripada stavka
@@ -916,7 +950,7 @@ WHERE
 
 -- ---------------------
 
-
+#############################################
 -- Autor: Lucia Labinjan
 SELECT
     paket.naziv AS Naziv_Paketa,
