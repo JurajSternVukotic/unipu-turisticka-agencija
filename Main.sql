@@ -365,235 +365,12 @@ CREATE TABLE putni_plan_stavka (
 );
 
 
--- Odjeljak učitavanje podataka
-SHOW VARIABLES LIKE "secure_file_priv";
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo.csv'
-	INTO TABLE cjepivo
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kontinent.csv'
-	INTO TABLE kontinent
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/drzava.csv'
-	INTO TABLE drzava
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/drzava_kontinent.csv'
-	INTO TABLE drzava_kontinent
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo_drzava.csv'
-	INTO TABLE cjepivo_drzava
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/grad.csv'
-	INTO TABLE grad
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/adresa.csv'
-	INTO TABLE adresa
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osoba.csv'
-	INTO TABLE osoba
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/dodatni_jezik.csv' 
-	INTO TABLE dodatni_jezik
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n'
-	IGNORE 1 ROWS
-	(id_osoba, dodatni_jezik);
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cijepljena_osoba.csv' 
-	INTO TABLE cjepljena_osoba
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija.csv'
-	INTO TABLE recenzija
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/zaposlenik.csv'
-	INTO TABLE zaposlenik
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pozicija.csv'
-	INTO TABLE pozicija
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/pozicija_zaposlenika.csv'
-	INTO TABLE pozicija_zaposlenika
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/radna_smjena.csv'
-	INTO TABLE radna_smjena
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/stavka_korisnicke_podrske.csv'
-	INTO TABLE stavka_korisnicke_podrske
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_zaposlenika.csv'
-	INTO TABLE recenzija_zaposlenika
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/paket.csv'
-	INTO TABLE paket
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_paketa.csv'
-	INTO TABLE recenzija_paketa
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/rezervacija.csv'
-	INTO TABLE rezervacija
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon.csv' 
-	INTO TABLE kupon
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n'
-	IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/kupon_rezervacija.csv' 
-	INTO TABLE kupon_rezervacija
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n'
-	IGNORE 1 ROWS;
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/osiguranje.csv'
-	INTO TABLE osiguranje
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/uplata.csv' 
-	INTO TABLE uplata
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n'
-	(id_rezervacija, metoda, iznos, vrijeme);
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/posebni_zahtjev.csv'
-	INTO TABLE posebni_zahtjev
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hotel.csv'
-	INTO TABLE hotel
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/hoteli_paketa.csv'
-	INTO TABLE hoteli_paketa
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_hotela.csv'
-	INTO TABLE recenzija_hotela
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/transport.csv' 
-	INTO TABLE transport
-	FIELDS TERMINATED BY ',' 
-	ENCLOSED BY '"' 
-	LINES TERMINATED BY '\r\n'
-	IGNORE 1 ROWS; 
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_transporta.csv'
-	INTO TABLE recenzija_transporta
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/odrediste.csv'
-	INTO TABLE odrediste
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/aktivnost.csv'
-	INTO TABLE aktivnost
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_aktivnosti.csv'
-	INTO TABLE recenzija_aktivnosti
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/vodic.csv'
-	INTO TABLE vodic
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/recenzija_vodica.csv'
-	INTO TABLE recenzija_vodica
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
-
-LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/putni_plan_stavka.csv'
-	INTO TABLE putni_plan_stavka
-	FIELDS TERMINATED BY ','
-	ENCLOSED BY '"'
-	LINES TERMINATED BY '\r\n';
 
 -- Odjeljak EXECUTABLES
 
 -- Autor: Alan Burić
 
+### Alan Burić ###
 -- POGLEDI - pohranjeni upiti
 
 -- Prikazuje sve IDjeve zaposlenika koji su putni agenti.
@@ -659,7 +436,7 @@ LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/putni
 
 -- Autor: Juraj Štern-Vukotić
 
-
+### Juraj Štern-Vukotić ###
 -- Prikaz osoba sa materinjim jezikom
 CREATE VIEW materini_jezik AS
 SELECT osoba.id, drzava.jezik
@@ -950,8 +727,9 @@ WHERE
 
 -- ---------------------
 
-#############################################
 -- Autor: Lucia Labinjan
+
+### Lucia Labinjan ###
 SELECT
     paket.naziv AS Naziv_Paketa,
     COUNT(rezervacija.id) AS Broj_Rezervacija,
@@ -1048,9 +826,11 @@ ORDER BY
 
 
 -- Autor: Mateo Udovčić
+### Mateo Udovčić ###
 
 -- Autor: Karlo Bazina
 
+### Karlo Bazina ###
 -- osoba XX se zeli uzivo naci u popodnevnim satima sa nasim zaposlenikom
 -- Pronađi sve zaposlenike 'turistički agent', koji XX datuma rade 'popodnevna smjenu' i nalaze se u gradu gdje je osoba XX, 
 -- te ih poredaj po veličini prihoda (pretpostavka je da je najbolji zaposelnik najplaćeniji) 
@@ -1061,35 +841,6 @@ ORDER BY
 -- prikaži mi samo zaposelnika sa najvecom placom iz gradova (Zagreb, Split, Rijeka, Osijek) 
 
 -- prikaži mi 3 zaposelnika koja pričaju najviše stranih jezika, a jedan od tih jezikam ora biti njemački
-
-
--- Odjeljak VRIJEDNOSTI
-
-/*
- * Ukoliko je MySQL server (lokalno na računalu ili negdje drugdje) inicijaliziran sa opcijom
- * --secure_file_priv, koristit će samo postavljenu mapu čija je putanja navedena u rezultatu
- * sljedećeg upita. Potom se ta mapa može upotrebljavati za pohranu datoteka za učitavanje i
- * zapis.
- * Očekivani rezultat: C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/
- * Ukoliko se rezultat razlikuje, lokalno promijenite u skripti datoteku te tamo postavite datoteke.
- */
- 
---  INSERT INTO putni_plan_stavka (id, id_paket, id_transport, id_odrediste, id_aktivnost, id_vodic, opis, pocetak, trajanje_u_minutama)
---  VALUES (1, 1, 253, 736, 327, 1, 'Visit Zagreb Cathedral, located in the heart of the city. Explore the stunning interior, including beautiful stained glass windows and an impressive altar. Afterwards, take a walk around Jelacic Square and savor the flavors of Croatian traditional food.', '2023-06-01 09:00:00', 180),
--- 		(2, 1, 253, NULL, NULL, 1, 'We will return to the Zagreb hotel for a well-deserved rest and a delicious dinner nearby. Recharge and relax in the hotels comfortable ambiance, savoring local cuisine and preparing for the next days adventures.', '2023-06-01 12:00:00', 30),
---         (3, 1, 253, 737, NULL, 1, 'Visiting Mirogoj will be an unforgettable experience. This beautiful cemetery park in Zagreb offers a peaceful oasis for walking and contemplation. After exploring Mirogoj, its time for us to part ways and head back to our respective homes.' '2023-06-01 09:00:00', 180),
---         (4, 2, 209, 740, 327, 1, 'X' '2023-06-01 09:00:00', 180),
---         (1, 1, 253, 736, 327, 1, 'X' '2023-06-01 09:00:00', 180);
--- 		
---  ;
- 
---  INSERT INTO hotel (ime, id_adresa, kontaktni_broj, email, slobodne_sobe, pogodnosti, opis)
--- VALUES ('Hotel Pula', 1834, '123454321', 'hotelpula@example.com', 100, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A luxurious hotel situated in the beautiful city of Pula, offering stunning views of the Adriatic Sea and top-notch amenities for a memorable stay.'),
--- 		('Hotel Osijek', 1843, '383654322', 'hotelosijek@example.com', 80, "['Free Wi-Fi', 'Fitness Center', 'Conference Rooms']", 'A modern hotel located in the vibrant city of Osijek, offering comfortable accommodations and excellent facilities for both business and leisure travelers.'),
--- 		('Hotel Sakura', 752, '9935437899', 'hotelsakura@example.com', 120, "['Free Wi-Fi', 'Swimming Pool', 'Spa']", 'A serene and elegant hotel nestled amidst the cherry blossoms in Hiroshima, offering a harmonious blend of traditional Japanese hospitality and modern comforts.');
-#id ovog hotela pula amora biti 189 
-#ID OSIJEK 190
-#HIROSHIMA 191
 
 
 -- Odjeljak TESTIRANJE
