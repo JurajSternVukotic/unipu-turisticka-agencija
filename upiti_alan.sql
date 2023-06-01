@@ -8,18 +8,23 @@ SELECT * FROM kupon;
 
 INSERT INTO rezervacija VALUE(NULL, 50, 113, 48, NOW());
 
--- Pogled rezervacija i kupona koji su primjenjeni na njih s iznosom i vrsti kupona
+-- 1. Pogled rezervacija i kupona koji su primjenjeni na njih s iznosom i vrsti kupona
 CREATE VIEW kuponi_rezervacije AS SELECT * FROM kupon INNER JOIN kupon_rezervacija USING (id_kupon);
 
 -- Test
 SELECT * FROM kuponi_rezervacije;
 
--- Pogled cijena rezervacija prema njihovim paketima
-CREATE VIEW rezervacija_paket_cijena AS SELECT * FROM (SELECT id AS id_paket, cijena_po_turistu AS cijena FROM paket) AS paket INNER JOIN (SELECT id AS id_rezervacija, id_paket FROM rezervacija) AS rezervacija USING (id_paket);
+-- 2. Pogled cijena rezervacija prema njihovim paketima
+CREATE VIEW rezervacija_paket_cijena AS 
+		SELECT * FROM 
+			(SELECT id AS id_paket, cijena_po_turistu AS cijena FROM paket) AS paket 
+		INNER JOIN 
+			(SELECT id AS id_rezervacija, id_paket FROM rezervacija) AS rezervacija USING (id_paket);
 
+-- Test
 SELECT * FROM rezervacija_paket_cijena;
 
--- 1. Pronađite prave iznose cijena rezervacija s obzirom na primjenu kupon koda prema formuli novi_iznos = max(0, (cijena - SUM(ne postotnih kupona)) * max(1, 1 - SUM(postotnih kupona) / 100)
+-- 3. Pronađite prave iznose cijena rezervacija s obzirom na primjenu kupon koda prema formuli novi_iznos = max(0, (cijena - SUM(ne postotnih kupona)) * max(1, 1 - SUM(postotnih kupona) / 100)
 CREATE VIEW cijene_rezervacija AS SELECT id_rezervacija, 
 			GREATEST(0, 
 				cijena - IFNULL((SELECT SUM(iznos) 
@@ -36,7 +41,7 @@ CREATE VIEW cijene_rezervacija AS SELECT id_rezervacija,
 -- Test
 SELECT * FROM cijene_rezervacija;
 
--- 2. Prikažite sve potpuno plaćene rezervacije
+-- 4. Prikažite sve potpuno plaćene rezervacije
 SELECT * FROM 
 		(SELECT id_rezervacija, SUM(iznos) AS uplaceno 
 			FROM uplata 
@@ -53,13 +58,13 @@ SELECT * FROM
 	USING (id_rezervacija) 
     HAVING uplaceno >= cijena;
 
--- 4. Pronađite najčešće korištene kupone sortirane prema padajućemu poretku s novim stupcem "kolicina"
+-- 5. Pronađite najčešće korištene kupone sortirane prema padajućemu poretku s novim stupcem "kolicina"
 SELECT id_kupon, kod, datum_pocetka, datum_kraja, iznos, postotni, COUNT(*) AS kolicina 
 	FROM kupon_rezervacija INNER JOIN kupon USING (id_kupon) 
     GROUP BY id_kupon 
     ORDER BY kolicina DESC;
 
--- 5. Pronađite pakete čija su putovanja popunjena
+-- 6. Pronađite pakete čija su putovanja popunjena
 SELECT * FROM 
 		(SELECT id AS id_paket, naziv, opis, min_ljudi, max_ljudi, cijena_po_turistu 
         FROM paket) 
@@ -72,7 +77,7 @@ SELECT * FROM
 	USING (id_paket) 
     HAVING broj_ljudi >= max_ljudi;
 
--- 6. Prikažite drugu po redu stranicu najpopularnijih paketa s obzirom na rezervacije s time da se na svakoj stranici prikazuje 20 rezultata.
+-- 7. Prikažite drugu po redu stranicu najpopularnijih paketa s obzirom na rezervacije s time da se na svakoj stranici prikazuje 20 rezultata.
 SELECT * FROM
 		(SELECT id_paket, COUNT(*) AS popularnost 
 		FROM rezervacija
@@ -83,7 +88,7 @@ SELECT * FROM
 		(SELECT id AS id_paket, naziv, opis, min_ljudi, max_ljudi, cijena_po_turistu FROM paket) AS p
 	USING (id_paket);
 
--- 7. Povežite putne agente rezervacija s prvim posebnim zahtjevom čak i ako nema posebnih zahtjeva, u vremenskome intervalu od 06.05.2023. do 14.05.2023. i čija je cijena rezervacije natprosječna
+-- 8. Povežite putne agente rezervacija s prvim posebnim zahtjevom čak i ako nema posebnih zahtjeva, u vremenskome intervalu od 06.05.2023. do 14.05.2023. i čija je cijena rezervacije natprosječna
 SELECT * FROM 
 		posebni_zahtjev 
     RIGHT OUTER JOIN 
@@ -101,3 +106,9 @@ SELECT * FROM
 				> 
             (SELECT AVG(cijena) 
             FROM cijene_rezervacija);
+
+-- 9. Prikažite količinu rezervacija prema datumima i sortirajte ju silazno
+SELECT DATE(vrijeme) AS datum, COUNT(*) AS rezervacije 
+	FROM rezervacija 
+    GROUP BY datum # Moguće je da ovakav oblik ne radi na npr. SQL Server implementacijama jer referencira agregirani atribut
+    ORDER BY rezervacije DESC;
