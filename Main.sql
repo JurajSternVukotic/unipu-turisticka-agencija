@@ -200,8 +200,25 @@ CREATE TABLE kupon (
     iznos NUMERIC (10, 2) NOT NULL,
     postotni BOOL NOT NULL, # Ukazuje na to radi li se o postotnom popustu ili o oduzimanju iznosom.
 	CHECK (datum_pocetka < datum_kraja), # Datum početka nikako ne može biti poslije datuma završetka.
-    CHECK (iznos > 0 AND (NOT postotni OR iznos <= 100)) # Kupon je postojan ako uopće ima neki iznos (=/= 0), a postotni popust ne bi trebao prekoraciti 100%
+	CHECK (iznos > 0 AND (NOT postotni OR iznos <= 100)), # Kupon je postojan ako uopće ima neki iznos (=/= 0), a postotni popust ne bi trebao prekoraciti 100%
+    CHECK (kod REGEXP '^[A-Z0-9]+$')
 );
+
+DELIMITER //
+CREATE TRIGGER verifikacija_novog_koda BEFORE INSERT ON kupon
+	FOR EACH ROW
+ 		BEGIN
+			DECLARE poruka VARCHAR(128);
+             
+			-- Želimo da su svi kodovi zapisani velikim slovima radi jednostavnosti i tipičnog formata.
+ 			SET NEW.kod = UPPER(NEW.kod);
+         
+			IF EXISTS(SELECT * FROM kupon WHERE NEW.kod = kupon.kod AND NEW.datum_pocetka <= datum_kraja AND NEW.datum_kraja > datum_pocetka) THEN
+ 				SET poruka = CONCAT('Već postoji isti kod u preklapajućem vremenu za kod ', NEW.kod);
+ 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
+ 			END IF;
+ 		END//
+DELIMITER ;
 
 ### Alan Burić ###
 CREATE TABLE kupon_rezervacija (
@@ -364,64 +381,61 @@ CREATE TABLE putni_plan_stavka (
     FOREIGN KEY (id_vodic) REFERENCES vodic (id)
 );
 
+-- Autor: Alan Burić
+-- Okidači vezani za tablice prije ikakvog učitavanja podataka
 
+-- Prikazuje sve IDjeve zaposlenika koji su putni agenti.
+CREATE VIEW svi_putni_agenti AS 
+	SELECT id_zaposlenik 
+    FROM pozicija_zaposlenika 
+    WHERE id_pozicija = (SELECT id 
+						FROM pozicija 
+                        WHERE ime_pozicije = 'putni agent');
+/*
+ * I. Pronađi ID pozicije 'putni agent'
+ * II. Pronađi sve zaposlenike s tom pozicijom (preko IDja)
+ * III. Pobroji njihova pojavljivanja
+ * IV. Sortiraj ih od najmanjeg prema najvećem
+ */
+-- SELECT * FROM zaposlenost_rezervacije;
+CREATE OR REPLACE VIEW zaposlenost_rezervacije AS SELECT id_zaposlenik, COUNT(*) AS kolicina_posla FROM svi_putni_agenti LEFT JOIN rezervacija USING (id_zaposlenik) GROUP BY id_zaposlenik;
 
 -- OKIDAČI - event handlers
 
--- Nužno je za razlikovanja završetka naredbe.
--- DELIMITER //
+ -- Nužno je za razlikovanja završetka naredbe.
+ DELIMITER //
 
--- CREATE TRIGGER ogranicenje_putnog_agenta BEFORE INSERT ON rezervacija
--- 	FOR EACH ROW
--- 		BEGIN
--- 			DECLARE poruka VARCHAR(128);
---         
--- 			IF NEW.zaposlenik_id NOT IN (svi_putni_agenti) THEN
--- 				SET poruka = CONCAT('Zadani zaposlenik s IDjem ', NEW.zaposlenik_id, ' nije putni agent za rezervacije!');
--- 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
--- 			END IF;
--- 		END//
+CREATE TRIGGER ogranicenje_putnog_agenta BEFORE INSERT ON rezervacija
+	FOR EACH ROW
+		BEGIN
+			DECLARE poruka VARCHAR(128);
+         
+ 			IF NEW.id_zaposlenik NOT IN (SELECT * FROM svi_putni_agenti) THEN
+ 				SET poruka = CONCAT('Zadani zaposlenik s IDjem ', NEW.id_zaposlenik, ' nije putni agent za rezervacije!');
+ 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
+ 			END IF;
+ 		END//
 
--- /*
---  * Ukoliko se zaposlenika otpusti, prema ON DELETE SET NULL ograničenju atributa zaposlenik_id u
---  * relaciji rezervacije će atribut s IDjem otpuštenog zaposlenika postati NULL. Potrebno je postaviti novog
---  * zaposlenika na tu poziciju kako bi korisnici imali zaposlenika turističke agencije kojeg mogu kontaktirati
---  * u vezi s njihovom rezervacijom.
---  */
--- CREATE TRIGGER postavi_novog_zaposlenika BEFORE UPDATE ON rezervacija
--- 	FOR EACH ROW
--- 		BEGIN
--- 			IF NEW.zaposlenik_id IS NULL THEN
--- 				SET NEW.zaposlenik_id = (SELECT * FROM zaposlenost_rezervacije GROUP BY id ORDER BY kolicina_posla ASC LIMIT 1);
--- 			END IF;
--- 		END//
+/*
+* Ukoliko se zaposlenika otpusti, prema ON DELETE SET NULL ograničenju atributa zaposlenik_id u
+* relaciji rezervacije će atribut s IDjem otpuštenog zaposlenika postati NULL. Potrebno je postaviti novog
+* zaposlenika na tu poziciju kako bi korisnici imali zaposlenika turističke agencije kojeg mogu kontaktirati
+* u vezi s njihovom rezervacijom.
+*/
+CREATE TRIGGER postavi_novog_zaposlenika BEFORE UPDATE ON rezervacija
+	FOR EACH ROW
+		BEGIN
+			IF NEW.id_zaposlenik IS NULL THEN
+				SET NEW.id_zaposlenik = (SELECT * FROM zaposlenost_rezervacije GROUP BY id ORDER BY kolicina_posla ASC LIMIT 1);
+			END IF;
+		END//
 
--- CREATE TRIGGER istovremeni_kod BEFORE INSERT ON kupon
--- 	FOR EACH ROW
--- 		BEGIN
---             DECLARE poruka VARCHAR(128);
---             
---             -- Želimo da su svi kodovi zapisani velikim slovima radi jednostavnosti i tipičnog formata.
--- 			SET NEW.kod = UPPER(NEW.kod);
---         
--- 			IF EXISTS(SELECT * FROM kupon WHERE NEW.kod = kupon.kod AND NEW.datum_pocetka <= datum_kraja AND NEW.datum_kraja > datum_pocetka) THEN
--- 				SET poruka = CONCAT('Već postoji isti kod u preklapajućem vremenu za kod ', NEW.kod);
--- 				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = poruka;
--- 			END IF;
--- 		END//
-
--- DELIMITER ;
-
-
-
-
-
-
+DELIMITER ;
 
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
- SELECT * FROM aktivnost;
+-- SELECT * FROM aktivnost;
 -- SELECT * FROM cjepivo_drzava;
 -- SELECT * FROM drzava;
 -- SELECT * FROM drzava_kontinent;
