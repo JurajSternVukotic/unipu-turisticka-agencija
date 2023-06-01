@@ -59,3 +59,13 @@ ORDER BY z.placa DESC
 LIMIT 1
 ;
 
+-- Putnik se boji želi ići u Pariz, pronađi sve pakete koji posječuju Pariz, a da se ne ide avionom, te prikaži
+-- koje su tamo atrakcije, koji je tip transporta i poredaj ih od najjeftinijeg
+
+SELECT pp.id_paket, g.naziv, od.ime, od.popularne_atrakcije, g.postanski_broj, t.tip_transporta, t.cijena
+FROM  putni_plan_stavka pp JOIN odrediste od ON pp.id_odrediste=od.id
+JOIN grad g ON od.id_grad=g.id 
+JOIN transport t ON t.id=pp.id_transport
+WHERE g.naziv='Paris' AND t.tip_transporta != 'zrakoplov'
+ORDER BY t.cijena ASC
+;
