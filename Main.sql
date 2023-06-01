@@ -87,6 +87,7 @@ CREATE TABLE dodatni_jezik (
 );
 
 
+### Lucia Labinjan ###
 CREATE TABLE cjepljena_osoba (
     id_osoba INT NOT NULL REFERENCES osoba (id),
 	id_cjepivo INT NOT NULL REFERENCES cjepivo (id),
