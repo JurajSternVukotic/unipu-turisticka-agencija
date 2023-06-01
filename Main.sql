@@ -78,7 +78,7 @@ CREATE TABLE osoba (
     id_adresa INT NOT NULL REFERENCES adresa (id)
 );
 
-### Mateo Udovičić ###
+### Juraj Štern-Vukotić ###
 CREATE TABLE dodatni_jezik (
     id_osoba INT NOT NULL,
     dodatni_jezik VARCHAR (50) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE dodatni_jezik (
     FOREIGN KEY (id_osoba) REFERENCES osoba (id) ON DELETE CASCADE
 );
 
-### Mateo Udovičić ###
+
 CREATE TABLE cjepljena_osoba (
     id_osoba INT NOT NULL REFERENCES osoba (id),
 	id_cjepivo INT NOT NULL REFERENCES cjepivo (id),
