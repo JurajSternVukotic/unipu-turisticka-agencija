@@ -449,10 +449,10 @@ CREATE TABLE putni_plan_stavka (
 -- SELECT * FROM recenzija_vodica;
 -- SELECT * FROM recenzija_zaposlenika;
 -- SELECT * FROM stavka_korisnicke_podrske;
--- SELECT * FROM uplata;
+ SELECT * FROM uplata;
 -- SELECT * FROM stavka_korisnicke_podrske;
 -- SELECT * FROM rezervacija;
--- SELECT * FROM kupon_rezervacija;
+SELECT * FROM kupon_rezervacija;
 -- SELECT * FROM grad JOIN drzava ON grad.id_drzava = drzava.id;
 -- SELECT DISTINCT id_vodic
 -- FROM recenzija_vodica
