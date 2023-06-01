@@ -393,8 +393,9 @@ CREATE VIEW svi_putni_agenti AS
 						FROM pozicija 
                         WHERE ime_pozicije = 'putni agent');
 
--- SELECT * FROM zaposlenost_rezervacije;
+-- SELECT * FROM svi_putni_agenti;
 CREATE VIEW zaposlenost_rezervacije AS SELECT id_zaposlenik, COUNT(*) AS kolicina_posla FROM svi_putni_agenti LEFT JOIN rezervacija USING (id_zaposlenik) GROUP BY id_zaposlenik;
+-- SELECT * FROM zaposlenost_rezervacije;
 
 -- OKIDAČI - event handlers
 
