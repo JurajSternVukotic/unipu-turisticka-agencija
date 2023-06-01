@@ -292,7 +292,7 @@ CREATE TABLE transport (
 
 ### Mateo Udovičić ###
 CREATE TABLE recenzija_transporta (
-	id_transport INT NOT NULL,
+	id_transport  INT NOT NULL,
     id_recenzija INT NOT NULL,
     PRIMARY KEY (id_transport, id_recenzija),
     FOREIGN KEY (id_transport) REFERENCES transport (id) ON DELETE CASCADE,
@@ -421,7 +421,7 @@ CREATE TABLE putni_plan_stavka (
 -- Odjeljak TESTIRANJE
 
 -- SELECT * FROM adresa;
--- SELECT * FROM cjepivo;
+ SELECT * FROM aktivnost;
 -- SELECT * FROM cjepivo_drzava;
 -- SELECT * FROM drzava;
 -- SELECT * FROM drzava_kontinent;
@@ -449,10 +449,10 @@ CREATE TABLE putni_plan_stavka (
 -- SELECT * FROM recenzija_vodica;
 -- SELECT * FROM recenzija_zaposlenika;
 -- SELECT * FROM stavka_korisnicke_podrske;
- SELECT * FROM uplata;
+-- SELECT * FROM uplata;
 -- SELECT * FROM stavka_korisnicke_podrske;
 -- SELECT * FROM rezervacija;
-SELECT * FROM kupon_rezervacija;
+-- SELECT * FROM kupon_rezervacija;
 -- SELECT * FROM grad JOIN drzava ON grad.id_drzava = drzava.id;
 -- SELECT DISTINCT id_vodic
 -- FROM recenzija_vodica
