@@ -8,7 +8,7 @@
  */
 
 -- Odjeljak učitavanje podataka
-SHOW VARIABLES LIKE "secure_file_priv";
+-- SHOW VARIABLES LIKE "secure_file_priv";
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/data/cjepivo.csv'
 	INTO TABLE cjepivo
