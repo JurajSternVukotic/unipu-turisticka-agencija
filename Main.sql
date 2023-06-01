@@ -184,7 +184,7 @@ CREATE TABLE rezervacija (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     id_osoba INT NOT NULL, # Nema kaskadnoga brisanja jer moramo biti sigurni da ta osoba želi i otkazati sve rezervacije ukoliko se radi o grešci, inače zadržavamo ovaj podatak o provedenoj povijesti.
     id_paket INT NOT NULL, # Nema kaskadnog brisanja jer se od turističke agencije očekuje odgovornost - prvo se pojedinačne rezervacije u stvarnosti trebaju razriješiti.
-    id_zaposlenik INT NOT NULL REFERENCES zaposlenik (id) ON DELETE SET NULL,
+    id_zaposlenik INT NOT NULL, # Putni agent koji pomaže u rezervaciji
     vrijeme DATETIME NOT NULL, # Točno vrijeme u kojem je uspostavljena rezervacija.
     FOREIGN KEY (id_osoba) REFERENCES osoba (id),
     FOREIGN KEY (id_paket) REFERENCES paket (id),
@@ -193,7 +193,7 @@ CREATE TABLE rezervacija (
 
 ### Alan Burić ###
 CREATE TABLE kupon (
-	id INT AUTO_INCREMENT PRIMARY KEY,
+	id_kupon INT AUTO_INCREMENT PRIMARY KEY,
 	kod VARCHAR(20) NOT NULL,
     datum_pocetka DATETIME NOT NULL,
     datum_kraja DATETIME NOT NULL,
@@ -204,6 +204,7 @@ CREATE TABLE kupon (
     CHECK (kod REGEXP '^[A-Z0-9]+$')
 );
 
+### Alan Burić ###
 DELIMITER //
 CREATE TRIGGER verifikacija_novog_koda BEFORE INSERT ON kupon
 	FOR EACH ROW
@@ -225,7 +226,7 @@ CREATE TABLE kupon_rezervacija (
 	id_kupon INT NOT NULL,
     id_rezervacija INT NOT NULL,
     PRIMARY KEY (id_kupon, id_rezervacija),
-    FOREIGN KEY (id_kupon) REFERENCES kupon (id),
+    FOREIGN KEY (id_kupon) REFERENCES kupon (id_kupon),
     FOREIGN KEY (id_rezervacija) REFERENCES rezervacija (id)
 );
 
@@ -412,17 +413,14 @@ CREATE TRIGGER ogranicenje_putnog_agenta BEFORE INSERT ON rezervacija
  		END//
 
 /*
-* Ukoliko se zaposlenika otpusti, prema ON DELETE SET NULL ograničenju atributa zaposlenik_id u
-* relaciji rezervacije će atribut s IDjem otpuštenog zaposlenika postati NULL. Potrebno je postaviti novog
-* zaposlenika na tu poziciju kako bi korisnici imali zaposlenika turističke agencije kojeg mogu kontaktirati
-* u vezi s njihovom rezervacijom.
-*/
-CREATE TRIGGER postavi_novog_zaposlenika BEFORE UPDATE ON rezervacija
+ * Ukoliko se zaposlenika otpusti, potrebno je postaviti novog zaposlenika na tu poziciju kako bi korisnici imali 
+ * zaposlenika turističke agencije kojeg mogu kontaktirati vezi s njihovom rezervacijom. Prije brisanja zaposlenika
+ * ažuriramo retke u tablici rezervacija tako da ih zamijenimo s novim zaposlenikom s najmanjim brojem rezervacija.
+ */
+CREATE TRIGGER postavi_novog_zaposlenika BEFORE DELETE ON zaposlenik
 	FOR EACH ROW
 		BEGIN
-			IF NEW.id_zaposlenik IS NULL THEN
-				SET NEW.id_zaposlenik = (SELECT * FROM zaposlenost_rezervacije GROUP BY id ORDER BY kolicina_posla ASC LIMIT 1);
-			END IF;
+			UPDATE rezervacija SET id_zaposlenik = (SELECT * FROM zaposlenost_rezervacije ORDER BY kolicina_posla ASC LIMIT 1) WHERE id_zaposlenik = OLD.id;
 		END//
 
 DELIMITER ;
