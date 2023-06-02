@@ -101,54 +101,36 @@ FROM radna_smjena
 GROUP BY datum, smjena;
 
 -- Prebrojati koliko imamo zaposlenika na nekoj poziciji
-CREATE VIEW broj_pozicija AS
 SELECT p.ime_pozicije, COUNT(pz.id_zaposlenik) AS broj_zaposlenika
 FROM pozicija_zaposlenika pz
 JOIN pozicija p ON pz.id_pozicija = p.id
 GROUP BY p.ime_pozicije;
 
-CREATE VIEW radna_smjena_view AS
-SELECT datum, smjena, id_zaposlenik
-FROM radna_smjena;
-
-CREATE VIEW pozicija_zaposlenika_view AS
+CREATE VIEW pozicije_zaposlenika AS
 SELECT pz.id_zaposlenik, p.ime_pozicije
 FROM pozicija_zaposlenika pz
 JOIN pozicija p ON pz.id_pozicija = p.id;
 
 -- Koliko je u svakoj smjeni određene pozicije zaposlenika
-SELECT rs_view.datum, rs_view.smjena, pz_view.ime_pozicije, COUNT(rs_view.id_zaposlenik) AS broj_zaposlenika
-FROM radna_smjena_view rs_view
-JOIN pozicija_zaposlenika_view pz_view ON rs_view.id_zaposlenik = pz_view.id_zaposlenik
-GROUP BY rs_view.datum, rs_view.smjena, pz_view.ime_pozicije;
+SELECT radna_smjena.datum, radna_smjena.smjena, pozicije_zaposlenika.ime_pozicije, COUNT(radna_smjena.id_zaposlenik) AS broj_zaposlenika
+FROM radna_smjena
+JOIN pozicije_zaposlenika ON radna_smjena.id_zaposlenik = pozicije_zaposlenika.id_zaposlenik
+GROUP BY radna_smjena.datum, radna_smjena.smjena, pozicije_zaposlenika.ime_pozicije;
 
 -- ----------------------------------------
--- nac broj rezervacija za svaki paket
-SELECT p.naziv AS Paket, COUNT(r.id) AS Broj_Rezervacija
-FROM paket p
-LEFT JOIN rezervacija r ON p.id = r.id_paket
-GROUP BY p.id;
-
 -- naci sve posebne zahjeve za paket X
 SELECT pz.*, os.puno_ime, os.kontaktni_broj
 FROM posebni_zahtjev pz
 JOIN rezervacija r ON pz.id_rezervacija = r.id
 JOIN osoba os ON r.id_osoba = os.id
-WHERE r.id_paket = 40;
-
--- Naci sva osiguranja za paket X
-SELECT o.*, os.puno_ime
-FROM osiguranje o
-JOIN rezervacija r ON o.id_rezervacija = r.id
-JOIN osoba os ON r.id_osoba = os.id
-WHERE r.id_paket = 40;
+WHERE r.id_paket = 12;
 
 -- naci sve rezervacije bez osiguranja za paket X
 SELECT r.*, os.puno_ime, os.kontaktni_broj
 FROM rezervacija r
 JOIN osoba os ON r.id_osoba = os.id
 LEFT JOIN osiguranje o ON r.id = o.id_rezervacija
-WHERE r.id_paket = 40 AND o.id IS NULL;
+WHERE r.id_paket = 12 AND o.id IS NULL;
 
 -- --------------------------
 
@@ -171,124 +153,140 @@ WHERE NOT EXISTS (
     AND NOT EXISTS (
       SELECT 1
       FROM cjepljena_osoba co
-      WHERE co.id_cjepivo = cd.id_cjepivo AND co.id_osoba = 99 -- KOJU OSOBU GLEDAMO
+      WHERE co.id_cjepivo = cd.id_cjepivo AND co.id_osoba = 532 -- KOJU OSOBU GLEDAMO
     )
 );
-
-
 
 -- -------------------------
 
 SELECT 
-  paket.naziv AS PackageName,
-  hotel.ime AS HotelName,
-  transport.tip_transporta AS TransportType,
-  transport.ime_tvrtke AS TransportCompany,
-  vodic.godine_iskustva AS GuideExperienceYears,
-  odrediste.ime AS DestinationName,
-  aktivnost.ime AS ActivityName
+  paket.naziv AS naziv_paketa,
+  GROUP_CONCAT(DISTINCT hotel.ime) AS hoteli,
+  GROUP_CONCAT(DISTINCT transport.ime_tvrtke) AS trvtka_transport,
+  GROUP_CONCAT(DISTINCT transport.tip_transporta) AS tip_transporta,
+  GROUP_CONCAT(DISTINCT vodic.godine_iskustva) AS vodic_iskustvo,
+  GROUP_CONCAT(DISTINCT odrediste.ime) AS odrediste,
+  GROUP_CONCAT(DISTINCT aktivnost.ime) AS aktivnosti
 FROM 
   putni_plan_stavka 
 JOIN 
   paket ON putni_plan_stavka.id_paket = paket.id 
-JOIN 
+LEFT JOIN 
   hoteli_paketa ON paket.id = hoteli_paketa.id_paket 
-JOIN 
+LEFT JOIN 
   hotel ON hoteli_paketa.id_hotel = hotel.id
-JOIN 
+LEFT JOIN 
   transport ON putni_plan_stavka.id_transport = transport.id
-JOIN 
+LEFT JOIN 
   vodic ON putni_plan_stavka.id_vodic = vodic.id
-JOIN 
+LEFT JOIN 
   odrediste ON putni_plan_stavka.id_odrediste = odrediste.id
-JOIN 
+LEFT JOIN 
   aktivnost ON putni_plan_stavka.id_aktivnost = aktivnost.id
 WHERE 
-  paket.id = 45;
+  paket.id = 25
+GROUP BY
+  paket.id;
+
+
+CREATE VIEW putni_plan_stavka_vodici AS 
+SELECT id_vodic FROM putni_plan_stavka WHERE id_paket = 9;
+
+CREATE VIEW putni_plan_stavka_transporti AS 
+SELECT id_transport FROM putni_plan_stavka WHERE id_paket = 9;
+
+CREATE VIEW putni_plan_stavka_aktivnosti AS 
+SELECT id_aktivnost FROM putni_plan_stavka WHERE id_paket = 9;
+
+CREATE VIEW hoteli_paketa_hoteli AS 
+SELECT id_hotel FROM hoteli_paketa WHERE id_paket = 9;
 
 (SELECT 
-  paket.naziv AS ReviewSubject,
-  paketRecenzija.ocjena AS Rating,
-  paketRecenzija.komentar AS Comment,
-  osoba.puno_ime AS ReviewerName,
-  paketRecenzija.datum AS ReviewDate
+  paket.naziv AS predmet_recenzije,
+  pake_recenzija.ocjena AS ocjena,
+  pake_recenzija.komentar AS komentar,
+  osoba.puno_ime AS ime_ocjenjivaca,
+  pake_recenzija.datum AS datum_recenzije
 FROM 
   paket 
 JOIN 
   recenzija_paketa ON paket.id = recenzija_paketa.id_paket 
 JOIN 
-  recenzija paketRecenzija ON recenzija_paketa.id_recenzija = paketRecenzija.id
+  recenzija pake_recenzija ON recenzija_paketa.id_recenzija = pake_recenzija.id
 JOIN 
-  osoba ON paketRecenzija.id_osoba = osoba.id
+  osoba ON pake_recenzija.id_osoba = osoba.id
 WHERE 
-  paket.id = 49)
+  paket.id = 9)
+UNION
+(SELECT   
+  osoba.puno_ime AS predmet_recenzije,   
+  vodic_recenzija.ocjena AS ocjena,   
+  vodic_recenzija.komentar AS komentar,   
+  osoba.puno_ime AS ime_ocjenjivaca,   
+  vodic_recenzija.datum AS datum_recenzije 
+FROM    
+  vodic  
+JOIN    
+  recenzija_vodica ON vodic.id = recenzija_vodica.id_vodic  
+JOIN    
+  recenzija vodic_recenzija ON recenzija_vodica.id_recenzija = vodic_recenzija.id 
+JOIN    
+  osoba ON vodic_recenzija.id_osoba = osoba.id 
+WHERE    
+  vodic.id IN (SELECT id_vodic FROM putni_plan_stavka_vodici))
 UNION
 (SELECT 
-  vodic.id AS ReviewSubject,
-  vodicRecenzija.ocjena AS Rating,
-  vodicRecenzija.komentar AS Comment,
-  osoba.puno_ime AS ReviewerName,
-  vodicRecenzija.datum AS ReviewDate
-FROM 
-  vodic 
-JOIN 
-  recenzija_vodica ON vodic.id = recenzija_vodica.id_vodic 
-JOIN 
-  recenzija vodicRecenzija ON recenzija_vodica.id_recenzija = vodicRecenzija.id
-JOIN 
-  osoba ON vodicRecenzija.id_osoba = osoba.id
-WHERE 
-  vodic.id IN (SELECT id_vodic FROM putni_plan_stavka WHERE id_paket = 49))
-UNION
-(SELECT 
-  hotel.ime AS ReviewSubject,
-  hotelRecenzija.ocjena AS Rating,
-  hotelRecenzija.komentar AS Comment,
-  osoba.puno_ime AS ReviewerName,
-  hotelRecenzija.datum AS ReviewDate
+  hotel.ime AS predmet_recenzije,
+  hotel_recenzija.ocjena AS ocjena,
+  hotel_recenzija.komentar AS komentar,
+  osoba.puno_ime AS ime_ocjenjivaca,
+  hotel_recenzija.datum AS datum_recenzije
 FROM 
   hotel 
 JOIN 
   recenzija_hotela ON hotel.id = recenzija_hotela.id_hotel 
 JOIN 
-  recenzija hotelRecenzija ON recenzija_hotela.id_recenzija = hotelRecenzija.id
+  recenzija hotel_recenzija ON recenzija_hotela.id_recenzija = hotel_recenzija.id
 JOIN 
-  osoba ON hotelRecenzija.id_osoba = osoba.id
+  osoba ON hotel_recenzija.id_osoba = osoba.id
 WHERE 
-  hotel.id IN (SELECT id_hotel FROM hoteli_paketa WHERE id_paket = 49))
+  hotel.id IN (SELECT id_hotel FROM hoteli_paketa_hoteli))
 UNION
 (SELECT 
-  transport.tip_transporta AS ReviewSubject,
-  transportRecenzija.ocjena AS Rating,
-  transportRecenzija.komentar AS Comment,
-  osoba.puno_ime AS ReviewerName,
-  transportRecenzija.datum AS ReviewDate
+  transport.tip_transporta AS predmet_recenzije,
+  transport_recenzija.ocjena AS ocjena,
+  transport_recenzija.komentar AS komentar,
+  osoba.puno_ime AS ime_ocjenjivaca,
+  transport_recenzija.datum AS datum_recenzije
 FROM 
   transport 
 JOIN 
   recenzija_transporta ON transport.id = recenzija_transporta.id_transport 
 JOIN 
-  recenzija transportRecenzija ON recenzija_transporta.id_recenzija = transportRecenzija.id
+  recenzija transport_recenzija ON recenzija_transporta.id_recenzija = transport_recenzija.id
 JOIN 
-  osoba ON transportRecenzija.id_osoba = osoba.id
+  osoba ON transport_recenzija.id_osoba = osoba.id
 WHERE 
-  transport.id IN (SELECT id_transport FROM putni_plan_stavka WHERE id_paket = 49))
+  transport.id IN (SELECT id_transport FROM putni_plan_stavka_transporti))
 UNION
 (SELECT 
-  aktivnost.ime AS ReviewSubject,
-  aktivnostRecenzija.ocjena AS Rating,
-  aktivnostRecenzija.komentar AS Comment,
-  osoba.puno_ime AS ReviewerName,
-  aktivnostRecenzija.datum AS ReviewDate
+  aktivnost.ime AS predmet_recenzije,
+  aktivnost_recenzija.ocjena AS ocjena,
+  aktivnost_recenzija.komentar AS komentar,
+  osoba.puno_ime AS ime_ocjenjivaca,
+  aktivnost_recenzija.datum AS datum_recenzije
 FROM 
   aktivnost 
 JOIN 
   recenzija_aktivnosti ON aktivnost.id = recenzija_aktivnosti.id_aktivnost 
 JOIN 
-  recenzija aktivnostRecenzija ON recenzija_aktivnosti.id_recenzija = aktivnostRecenzija.id
+  recenzija aktivnost_recenzija ON recenzija_aktivnosti.id_recenzija = aktivnost_recenzija.id
 JOIN 
-  osoba ON aktivnostRecenzija.id_osoba = osoba.id
+  osoba ON aktivnost_recenzija.id_osoba = osoba.id
 WHERE 
-  aktivnost.id IN (SELECT id_aktivnost FROM putni_plan_stavka WHERE id_paket = 49));
+  aktivnost.id IN (SELECT id_aktivnost FROM putni_plan_stavka_aktivnosti));
+
+
+
 
 -- ---------------------
