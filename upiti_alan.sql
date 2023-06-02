@@ -84,15 +84,16 @@ SELECT * FROM
     WHERE broj_ljudi >= max_ljudi;
 
 -- 7. Prikažite drugu po redu stranicu najpopularnijih paketa s obzirom na rezervacije s time da se na svakoj stranici prikazuje 20 rezultata.
-SELECT * FROM
-		(SELECT id_paket, COUNT(*) AS popularnost 
+SELECT id, naziv, opis, min_ljudi, max_ljudi, cijena_po_turistu, IFNULL(popularnost, 0) AS popularnost FROM 
+	(SELECT id_paket AS id, COUNT(*) AS popularnost 
 		FROM rezervacija
 		GROUP BY id_paket 
-		ORDER BY popularnost DESC
-		LIMIT 20, 20) AS r
-	INNER JOIN
-		(SELECT id AS id_paket, naziv, opis, min_ljudi, max_ljudi, cijena_po_turistu FROM paket) AS p
-	USING (id_paket);
+		) AS r
+	RIGHT OUTER JOIN
+		paket
+	USING (id)
+    ORDER BY popularnost DESC
+	LIMIT 20, 20;
 
 -- 8. Povežite putne agente rezervacija s prvim posebnim zahtjevom čak i ako nema posebnih zahtjeva, u vremenskome intervalu od 06.05.2023. do 14.05.2023. i čija je cijena rezervacije natprosječna
 SELECT * FROM 
@@ -113,7 +114,7 @@ SELECT * FROM
             (SELECT AVG(cijena) 
             FROM cijene_rezervacija);
 
--- 9. Prikažite količinu rezervacija prema datumima i sortirajte ju silazno
+-- 9. Prikažite količinu rezervacija prema datumima i sortirajte ju silazno prema količini.
 SELECT DATE(vrijeme) AS datum, COUNT(*) AS rezervacije 
 	FROM rezervacija 
     GROUP BY datum # Moguće je da ovakav oblik ne radi na npr. SQL Server implementacijama jer referencira agregirani atribut
