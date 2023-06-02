@@ -3,13 +3,13 @@ USE turisticka_agencija;
 ### Alan Burić ###
 
 -- Testni primjeri:
-INSERT INTO kupon VALUE(NULL, 'Čščđćž32', MAKEDATE(2023, 100), MAKEDATE(2023, 140), 20, 1);
-SELECT * FROM kupon;
+-- INSERT INTO kupon VALUE(NULL, 'Čščđćž32', MAKEDATE(2023, 100), MAKEDATE(2023, 140), 20, 1);
+-- SELECT * FROM kupon;
 
-INSERT INTO rezervacija VALUE(NULL, 50, 113, 48, NOW());
+-- INSERT INTO rezervacija VALUE(NULL, 50, 113, 48, NOW());
 
 -- 1. Pogled rezervacija i kupona koji su primjenjeni na njih s iznosom i vrsti kupona
-CREATE VIEW kuponi_rezervacije AS SELECT * FROM kupon INNER JOIN kupon_rezervacija USING (id_kupon);
+CREATE VIEW kuponi_rezervacije AS SELECT * FROM (SELECT id AS id_kupon, kod, datum_pocetka, datum_kraja, iznos, postotni FROM kupon) AS kupon INNER JOIN kupon_rezervacija USING (id_kupon);
 
 -- Test
 SELECT * FROM kuponi_rezervacije;
@@ -30,11 +30,12 @@ CREATE VIEW cijene_rezervacija AS SELECT id_rezervacija,
 				cijena - IFNULL((SELECT SUM(iznos) 
 								FROM kuponi_rezervacije AS kr 
 								WHERE NOT postotni AND kr.id_rezervacija = rpc.id_rezervacija),
-								0) 
-            * GREATEST(1, 
+								0)) 
+			# Ako je zbroj kupona prešao 100%, to je besplatno putovanje, stoga ćemo pomnožiti cijenu s 0.
+            * GREATEST(0, 
 				IFNULL(1 - (SELECT SUM(iznos) 
 							FROM kuponi_rezervacije AS kr 
-                            WHERE postotni AND kr.id_rezervacija = rpc.id_rezervacija) / 100, 1))) 
+                            WHERE postotni AND kr.id_rezervacija = rpc.id_rezervacija) / 100, 1)) 
 			AS cijena
 	FROM rezervacija_paket_cijena AS rpc;
 
@@ -51,16 +52,21 @@ SELECT * FROM
 		(SELECT id_rezervacija, cijena 
         FROM cijene_rezervacija) 
         AS cr
+	USING (id_rezervacija)
 	INNER JOIN 
 		(SELECT id AS id_rezervacija, id_osoba, id_paket, id_zaposlenik, vrijeme 
         FROM rezervacija) 
         AS r
 	USING (id_rezervacija) 
-    HAVING uplaceno >= cijena;
+    WHERE uplaceno >= cijena;
 
 -- 5. Pronađite najčešće korištene kupone sortirane prema padajućemu poretku s novim stupcem "kolicina"
 SELECT id_kupon, kod, datum_pocetka, datum_kraja, iznos, postotni, COUNT(*) AS kolicina 
-	FROM kupon_rezervacija INNER JOIN kupon USING (id_kupon) 
+		FROM kupon_rezervacija 
+	INNER JOIN 
+		(SELECT id AS id_kupon, kod, datum_pocetka, datum_kraja, iznos, postotni FROM kupon) 
+        AS kupon 
+	USING (id_kupon) 
     GROUP BY id_kupon 
     ORDER BY kolicina DESC;
 
@@ -75,7 +81,7 @@ SELECT * FROM
         GROUP BY id_paket) 
         AS p2 
 	USING (id_paket) 
-    HAVING broj_ljudi >= max_ljudi;
+    WHERE broj_ljudi >= max_ljudi;
 
 -- 7. Prikažite drugu po redu stranicu najpopularnijih paketa s obzirom na rezervacije s time da se na svakoj stranici prikazuje 20 rezultata.
 SELECT * FROM
@@ -100,7 +106,7 @@ SELECT * FROM
     LEFT OUTER JOIN 
 		(SELECT id AS id_zaposlenik, ugovor_o_radu, placa FROM zaposlenik) AS z
 	USING (id_zaposlenik)
-    HAVING (SELECT cijena 
+    WHERE (SELECT cijena 
 			FROM cijene_rezervacija 
             WHERE cijene_rezervacija.id_rezervacija = rez.id_rezervacija) 
 				> 

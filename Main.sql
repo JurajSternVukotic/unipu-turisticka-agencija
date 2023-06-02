@@ -193,7 +193,7 @@ CREATE TABLE rezervacija (
 
 ### Alan Burić ###
 CREATE TABLE kupon (
-	id_kupon INT AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	kod VARCHAR(20) NOT NULL,
     datum_pocetka DATETIME NOT NULL,
     datum_kraja DATETIME NOT NULL,
@@ -226,7 +226,7 @@ CREATE TABLE kupon_rezervacija (
 	id_kupon INT NOT NULL,
     id_rezervacija INT NOT NULL,
     PRIMARY KEY (id_kupon, id_rezervacija),
-    FOREIGN KEY (id_kupon) REFERENCES kupon (id_kupon),
+    FOREIGN KEY (id_kupon) REFERENCES kupon (id),
     FOREIGN KEY (id_rezervacija) REFERENCES rezervacija (id)
 );
 
@@ -391,11 +391,15 @@ CREATE VIEW svi_putni_agenti AS
     FROM pozicija_zaposlenika 
     WHERE id_pozicija = (SELECT id 
 						FROM pozicija 
-                        WHERE ime_pozicije = 'putni agent');
+                        WHERE ime_pozicije LIKE '%putni agent%');
 
--- SELECT * FROM svi_putni_agenti;
-CREATE VIEW zaposlenost_rezervacije AS SELECT id_zaposlenik, COUNT(*) AS kolicina_posla FROM svi_putni_agenti LEFT JOIN rezervacija USING (id_zaposlenik) GROUP BY id_zaposlenik;
--- SELECT * FROM zaposlenost_rezervacije;
+CREATE VIEW zaposlenost_rezervacije AS 
+		SELECT id_zaposlenik, COUNT(*) AS kolicina_posla 
+		FROM svi_putni_agenti 
+    INNER JOIN 
+		rezervacija 
+    USING (id_zaposlenik) 
+    GROUP BY id_zaposlenik;
 
 -- OKIDAČI - event handlers
 
@@ -425,44 +429,3 @@ CREATE TRIGGER postavi_novog_zaposlenika BEFORE DELETE ON zaposlenik
 		END//
 
 DELIMITER ;
-
--- Odjeljak TESTIRANJE
-
--- SELECT * FROM adresa;
--- SELECT * FROM aktivnost;
--- SELECT * FROM cjepivo_drzava;
--- SELECT * FROM drzava;
--- SELECT * FROM drzava_kontinent;
--- SELECT * FROM grad;
--- SELECT * FROM hotel;
--- SELECT * FROM kontinent;
--- SELECT * FROM kupon;
--- SELECT * FROM pozicija;
--- SELECT * FROM transport;
--- SELECT * FROM odrediste;
--- SELECT * FROM aktivnost;
--- SELECT * FROM osoba;
--- SELECT * FROM cijepljena_osoba
--- SELECT * FROM dodatni_jezik;
--- SELECT * FROM zaposlenik;
--- SELECT * FROM pozicija_zaposlenika;
--- SELECT * FROM vodic;
--- SELECT * FROM radna_smjena;
--- SELECT * FROM paket;
--- SELECT * FROM recenzija;
--- SELECT * FROM recenzija_aktivnosti;
--- SELECT * FROM recenzija_paketa;
--- SELECT * FROM recenzija_hotela;
--- SELECT * FROM recenzija_transporta;
--- SELECT * FROM recenzija_vodica;
--- SELECT * FROM recenzija_zaposlenika;
--- SELECT * FROM stavka_korisnicke_podrske;
--- SELECT * FROM uplata;
--- SELECT * FROM stavka_korisnicke_podrske;
--- SELECT * FROM rezervacija;
--- SELECT * FROM kupon_rezervacija;
--- SELECT * FROM grad JOIN drzava ON grad.id_drzava = drzava.id;
--- SELECT DISTINCT id_vodic
--- FROM recenzija_vodica
--- WHERE id_vodic NOT IN (SELECT id FROM vodic);
--- SELECT * FROM recenzija_transporta WHERE id_recenzija = 0; 
